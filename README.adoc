@@ -238,10 +238,20 @@ a|
 * `*SubscriptionRepository*`: do technology-specified persistence operations
 
 .Sequence Diagram for Chaos Architecture
+ifdef::env-github[]
+image::chaos-sequence.png[]
+endif::env-github[]
+ifdef::env-idea[]
 plantuml::docs/chaos/chaos-sequence.puml[target=chaos-sequence,format=png]
+endif::env-idea[]
 
 .Class Diagram for Chaos Architecture
+ifdef::env-github[]
+image::chaos-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
 plantuml::docs/chaos/chaos-class.puml[target=chaos-class,format=png]
+endif::env-idea[]
 
 == 3-tier Architecture
 
@@ -252,10 +262,20 @@ plantuml::docs/chaos/chaos-class.puml[target=chaos-class,format=png]
 * `*SubscriptionRepository*`: do technology-specified persistence operations
 
 .Sequence Diagram for 3-tier Architecture
+ifdef::env-github[]
+image::3-tier-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
 plantuml::docs/3-tier/3-tier-sequence.puml[target=3-tier-sequence,format=png,opts="inline"]
+endif::env-idea[]
 
 .Class Diagram for 3-tier Architecture
+ifdef::env-github[]
+image::3-tier-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
 plantuml::docs/3-tier/3-tier-class.puml[target=3-tier-class,format=png,png-type="inline"]
+endif::env-idea[]
 
 === DDD
 
@@ -276,7 +296,12 @@ plantuml::docs/ddd/ddd-sequence.puml[target=ddd-sequence,format=png]
 endif::env-idea[]
 
 .Class Diagram for DDD Architecture
+ifdef::env-github[]
+image::ddd-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
 plantuml::docs/ddd/ddd-class.puml[target=ddd-class,format=png]
+endif::env-idea[]
 
 === Hexagonal Architecture (Ports and Adapters)
 
@@ -289,10 +314,20 @@ plantuml::docs/ddd/ddd-class.puml[target=ddd-class,format=png]
 * `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
 
 .Sequence Diagram for Hexagonal Architecture
+ifdef::env-github[]
+image::hex-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
 plantuml::docs/hex/hex-sequence.puml[target=hex-sequence,format=png]
+endif::env-idea[]
 
 .Class Diagram for Hexagonal Architecture
+ifdef::env-github[]
+image::hex-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
 plantuml::docs/hex/hex-class.puml[target=hex-class,format=png]
+endif::env-idea[]
 
 === Hexagonal DDD
 
@@ -305,8 +340,18 @@ plantuml::docs/hex/hex-class.puml[target=hex-class,format=png]
 * `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
 
 .Sequence Diagram for Hexagonal DDD Architecture
+ifdef::env-github[]
+image::hddd-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
 plantuml::docs/hddd/hddd-sequence.puml[target=hddd-sequence,format=png]
+endif::env-idea[]
 
 .Class Diagram for Hexagonal DDD Architecture
+ifdef::env-github[]
+image::hddd-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
 plantuml::docs/hddd/hddd-class.puml[target=hddd-class,format=png]
+endif::env-idea[]
 
