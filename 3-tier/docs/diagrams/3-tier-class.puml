@@ -24,9 +24,9 @@ rectangle "Data Layer" {
 	}
 }
 
-actor Http
+actor User
 
-Http -down-> SubscriptionController
+User -down-> SubscriptionController
 SubscriptionController .left.> SubscriptionDto: uses
 SubscriptionController -down-> SubscriptionService
 SubscriptionService -down-> SubscriptionRepository

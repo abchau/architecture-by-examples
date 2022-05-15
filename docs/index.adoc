@@ -129,12 +129,12 @@ a|
 
 |===
 
-link:chaos/README.adoc[Chaos Architecture]
+link:chaos/[Chaos Architecture]
 
-link:3-tier/README.adoc[3-tier Architecture]
+link:3-tier/[3-tier Architecture]
 
-link:ddd/README.adoc[DDD]
+link:ddd/[DDD]
 
-link:hex/README.adoc[Hexagonal Architecture]
+link:hex/[Hexagonal Architecture]
 
-link:hddd/README.adoc[Hexagonal DDD]
+link:hddd/[Hexagonal DDD]

@@ -27,16 +27,17 @@ This repository demonstrates different architectures by implementing a simple us
 
 The application has
 
-* one external e*ndpoint*
+* one external *endpoint*
 * one *use case*
 * one *aggregate*
 ** one *entity*
 ** one *value object*
 * one database *table*
-* three *exceptions*
+* four *exceptions*
 ** one *exception* that can be thrown in presentation layer or application layer or domain layer
 ** one *exception* that can be thrown in domain layer
 ** one *exception* that can be thrown in domain layer but requires input from infrastructure layer
+** one *exception* that can be thrown in infrastructure layer
 
 === Out Scope
 
@@ -107,19 +108,19 @@ image::demo6.png[]
 |===
 |#|Name|Architecture|Description
 |1
-|link:chaos/README.adoc[chaos]
+|link:chaos/[chaos]
 |Chaos Architecture|A big ball of mud. It's just &#128169; everywhere. (Or should we call it Anarchy Architecture?)
 |2
-|link:3-tier/README.adoc[3-tier]
+|link:3-tier/[3-tier]
 |3-tier Architecture
 |Most common way. Easy to understand. Easy to build. Difficult to maintain when it grows bigger.
 |3
-|link:ddd/README.adoc[ddd]
+|link:ddd/[ddd]
 |Domain Driven Design|Implement Eric Evan's masterpiece. Best effort to honor original intention
 |4
-|link:hex/README.adoc[hex]
+|link:hex/[hex]
 |Hexagonal Architecture (Ports and Adapters)|Implement Alistair Cockburn's masterpiece. Best effort to honor original intention
 |5
-|link:hddd/README.adoc[hddd]
+|link:hddd/[hddd]
 |Hexagonal Domain Driven Design| Implement DDD using Hexagonal Architecture (also added personal preference)
 |===

@@ -56,8 +56,8 @@ rectangle "Infrastructure Layer" {
 	}
 }
 
-actor Http
-Http -down-> SubscriptionController
+actor User
+User -down-> SubscriptionController
 
 SubscriptionController -down-> SubscriptionFacade
 SubscriptionController .down.> SubscriptionCommand: uses

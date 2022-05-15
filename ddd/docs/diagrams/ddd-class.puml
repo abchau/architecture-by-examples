@@ -52,8 +52,8 @@ rectangle "Infrastructure Layer" {
 	}
 }
 
-actor Http
-Http -down-> SubscriptionController
+actor User
+User -down-> SubscriptionController
 
 SubscriptionController --> SubscriptionFacade
 SubscriptionFacadeImpl -up-> SubscriptionFacade: implements

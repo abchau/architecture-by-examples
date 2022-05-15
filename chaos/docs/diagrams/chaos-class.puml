@@ -22,9 +22,9 @@ rectangle "Data Layer" {
 	}
 }
 
-actor Http
+actor User
 
-Http -down-> SubscriptionController
+User -down-> SubscriptionController
 SubscriptionController -down-> SubscriptionService
 SubscriptionController -down-> SubscriptionRepository
 SubscriptionService -down-> SubscriptionRepository
