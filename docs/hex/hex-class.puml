@@ -1,0 +1,59 @@
+@startuml
+allowmixing
+
+rectangle "Input/Driving/Primary Adapter" {
+	package inputadapter {
+		package web {
+			class SubscriptionController
+		}
+	}
+}
+
+rectangle "Application" {
+	package application {
+		interface SubscriptionFacade
+		class SubscriptionFacadeImpl
+
+		package core {
+			class Subscription
+			interface SubscriptionPersistencePort
+
+			package usecase {
+				class CreateSubscriptionUseCase
+			}
+		}
+	}
+}
+
+rectangle "Output/Driven/Secondary Adapter" {
+	package outputadapter {
+		package persistence {
+			package jpa {
+				class JpaSubscriptionPersistenceAdapter
+				class SubscriptionPersistenceJpaRepository
+				class SubscriptionPersistence
+			}
+		}
+	}
+}
+
+actor Http
+Http -down-> SubscriptionController
+
+SubscriptionController -down-> SubscriptionFacade
+SubscriptionFacadeImpl -up-> SubscriptionFacade
+SubscriptionFacadeImpl .down.> Subscription: uses
+
+
+SubscriptionFacadeImpl -down-> CreateSubscriptionUseCase: uses
+CreateSubscriptionUseCase ..> Subscription: uses
+
+SubscriptionPersistencePort .up.> Subscription: uses
+JpaSubscriptionPersistenceAdapter .up.> Subscription: uses
+
+JpaSubscriptionPersistenceAdapter -up-> SubscriptionPersistencePort: implements
+JpaSubscriptionPersistenceAdapter -left-> SubscriptionPersistenceJpaRepository
+SubscriptionPersistenceJpaRepository ..> SubscriptionPersistence: uses
+JpaSubscriptionPersistenceAdapter ..> SubscriptionPersistence: uses
+
+@enduml

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>Architecture By Examples</title>
+<title>Overview</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -438,262 +438,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>Architecture By Examples</h1>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-5">
-<p>This repository demonstrates different architectures by implementing a simple use case.</p>
-</div>
-</div>
-</div>
-<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-7">
-<h2 id="_rationale">Rationale</h2>
-<div class="sectionbody">
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-9">
-<ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-9">
-<p>majority of existing examples are often too bulky and too complicated</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-11">
-<h2 id="_scope">Scope</h2>
-<div class="sectionbody">
-<div class="sect2 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-13">
-<h3 id="_in_scope">In Scope</h3>
-<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-15">
-<p>The application has</p>
-</div>
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-17">
-<ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-17">
-<p>one external e*ndpoint*</p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-18">
-<p>one <strong>use case</strong></p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-19">
-<p>one <strong>aggregate</strong></p>
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-20">
-<ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-20">
-<p>one <strong>entity</strong></p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-21">
-<p>one <strong>value object</strong></p>
-</li>
-</ul>
-</div>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-22">
-<p>one database <strong>table</strong></p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-23">
-<p>three <strong>exceptions</strong></p>
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-24">
-<ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-24">
-<p>one <strong>exception</strong> that can be thrown in presentation layer or application layer or domain layer</p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-25">
-<p>one <strong>exception</strong> that can be thrown in domain layer</p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-26">
-<p>one <strong>exception</strong> that can be thrown in domain layer but requires input from infrastructure layer</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-28">
-<h3 id="_out_scope">Out Scope</h3>
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-30">
-<ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-30">
-<p>does not have a bug free and flawless design</p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-31">
-<p>does not demonstrates how to use various approach to tackle on same problem</p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-32">
-<p>does not demonstrates how to use various design patterns</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-34">
-<h2 id="_use_case">Use case</h2>
-<div class="sectionbody">
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-37">
-<div class="content">
-<img src="docs/images/use-case.png" alt="use case" width="512" height="101">
-</div>
-<div class="title">Figure 1. Single Use case</div>
-</div>
-<div class="listingblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-41">
-<div class="title">Database table</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="sql"><span style="color:#B06;font-weight:bold">CREATE</span> <span style="color:#339;font-weight:bold">TABLE</span> <span style="color:#080;font-weight:bold">IF</span> <span style="color:#080;font-weight:bold">NOT</span> <span style="color:#080;font-weight:bold">EXISTS</span> subscriptions (
-        id <span style="color:#0a8;font-weight:bold">BINARY</span>(<span style="color:#00D">36</span>) <span style="color:#088;font-weight:bold">PRIMARY</span> <span style="color:#339;font-weight:bold">KEY</span>,
-        email <span style="color:#0a8;font-weight:bold">VARCHAR</span>(<span style="color:#00D">512</span>) <span style="color:#080;font-weight:bold">NOT</span> <span style="color:#069">NULL</span>,
-        status <span style="color:#0a8;font-weight:bold">VARCHAR</span>(<span style="color:#00D">256</span>) <span style="color:#080;font-weight:bold">NOT</span> <span style="color:#069">NULL</span>,
-        created_at <span style="color:#0a8;font-weight:bold">TIMESTAMP</span> WITH <span style="color:#0a8;font-weight:bold">TIME</span> ZONE <span style="color:#080;font-weight:bold">NOT</span> <span style="color:#069">NULL</span>,
-        last_updated_at <span style="color:#0a8;font-weight:bold">TIMESTAMP</span> WITH <span style="color:#0a8;font-weight:bold">TIME</span> ZONE <span style="color:#080;font-weight:bold">NOT</span> <span style="color:#069">NULL</span>,
-        version <span style="color:#0a8;font-weight:bold">BIGINT</span> <span style="color:#080;font-weight:bold">NOT</span> <span style="color:#069">NULL</span>
-);</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-52">
-<h2 id="_architecture">Architecture</h2>
-<div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-55">
-<colgroup>
-<col style="width: 12.5%;">
-<col style="width: 12.5%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">#</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Architecture</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>chaos</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Chaos Architecture</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A big ball of mud. It&#8217;s just &#128169; everywhere. (Or should we call it Anarchy Architecture?)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>3-tier</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3-tier Architecture</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Most common way. Easy to understand. Easy to build. Difficult to maintain when it grows bigger.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ddd</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Domain Driven Design</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Implement Eric Evan&#8217;s masterpiece. Best effort to honor original intention</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hex</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hexagonal Architecture (Ports and Adapters)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Implement Alistair Cockburn&#8217;s masterpiece. Best effort to honor original intention</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hddd</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hexagonal Domain Driven Design</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Implement DDD using Hexagonal Architecture (also added personal preference)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-64">
-<h2 id="_how_to_test">How to test</h2>
-<div class="sectionbody">
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-66">
-<ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-66">
-<p>Import in your favourite IDE</p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-67">
-<p>Start each project as a spring boot application individually</p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-68">
-<p>Go to <a href="http://localhost:8080/subscribe" class="bare">http://localhost:8080/subscribe</a></p>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-69">
-<p><strong>Four</strong> conditions can be tested</p>
-<table class="tableblock frame-all grid-all stretch has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-72">
-<colgroup>
-<col style="width: 14.2857%;">
-<col style="width: 57.1428%;">
-<col style="width: 28.5715%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">#</th>
-<th class="tableblock halign-left valign-top">Input</th>
-<th class="tableblock halign-left valign-top">Expected outcome</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">empty input</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">fail</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">not empty but invalid email format</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">fail</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">correct email format</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">success</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">correct email format but duplicate</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">fail</p></td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-80">
-<p>To verify DB records, go to:</p>
-<table class="tableblock frame-all grid-all stretch has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-83">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
-</colgroup>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock">URL</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://localhost:8080/h2-console" class="bare">http://localhost:8080/h2-console</a></p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock">JDBC URL</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jdbc:h2:mem:testdb</code></p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock">username</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sa</code></p></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock">password</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
-</tr>
-</tbody>
-</table>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-90">
+<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/index.adoc-3">
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-93">
+<table class="tableblock frame-all grid-all stretch has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/index.adoc-6">
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 10%;">
@@ -1038,179 +788,179 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 </div>
-<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-218">
+<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/chaos/index.adoc-1">
 <h2 id="_chaos_architecture">Chaos Architecture</h2>
 <div class="sectionbody">
-<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-220">
+<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/chaos/index.adoc-3">
 <p><strong>Brief Description of Duties &amp; Responsibilities</strong>:</p>
 </div>
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-222">
+<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/chaos/index.adoc-5">
 <ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-222">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/chaos/index.adoc-5">
 <p><code><strong>SubscriptionController</strong></code>: supposed to be receiving tasks from specific interface but&#8230;&#8203;</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-223">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/chaos/index.adoc-6">
 <p><code><strong>SubscriptionServiceImpl</strong></code>: supposed to be business logic but&#8230;&#8203;</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-224">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/chaos/index.adoc-7">
 <p><code><strong>SubscriptionRepository</strong></code>: do technology-specified persistence operations</p>
 </li>
 </ul>
 </div>
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-227">
+<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/chaos/index.adoc-11">
 <div class="content">
-<img src="docs/images/chaos-sequence.png" alt="chaos sequence" width="749" height="449">
+<img src="images/chaos-sequence.svg" alt="chaos sequence" width="750" height="450">
 </div>
-<div class="title">Figure 2. Sequence Diagram for Chaos Architecture</div>
+<div class="title">Figure 1. Sequence Diagram for Chaos Architecture</div>
 </div>
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-230">
+<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/chaos/index.adoc-72">
 <div class="content">
-<img src="docs/images/chaos-class.png" alt="chaos class" width="434" height="663">
+<img src="images/chaos-class.svg" alt="chaos class" width="435" height="664">
 </div>
-<div class="title">Figure 3. Class Diagram for Chaos Architecture</div>
+<div class="title">Figure 2. Class Diagram for Chaos Architecture</div>
 </div>
 </div>
 </div>
-<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-232">
+<div class="sect1 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/3-tier/index.adoc-1">
 <h2 id="_3_tier_architecture">3-tier Architecture</h2>
 <div class="sectionbody">
-<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-234">
+<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/3-tier/index.adoc-3">
 <p><strong>Brief Description of Duties &amp; Responsibilities</strong>:</p>
 </div>
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-236">
+<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/3-tier/index.adoc-5">
 <ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-236">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/3-tier/index.adoc-5">
 <p><code><strong>SubscriptionController</strong></code>: receives tasks from specific interface but&#8230;&#8203;</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-237">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/3-tier/index.adoc-6">
 <p><code><strong>SubscriptionServiceImpl</strong></code>: do business logic</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-238">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/3-tier/index.adoc-7">
 <p><code><strong>SubscriptionRepository</strong></code>: do technology-specified persistence operations</p>
 </li>
 </ul>
 </div>
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-241">
+<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/3-tier/index.adoc-11">
 <div class="content">
-<img src="docs/images/3-tier-sequence.png" alt="3 tier sequence" width="749" height="354">
+<img src="images/3-tier-sequence.svg" alt="3 tier sequence" width="750" height="355">
 </div>
-<div class="title">Figure 4. Sequence Diagram for 3-tier Architecture</div>
+<div class="title">Figure 3. Sequence Diagram for 3-tier Architecture</div>
 </div>
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-244">
+<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/3-tier/index.adoc-57">
 <div class="content">
-<img src="docs/images/3-tier-class.png" alt="3 tier class" width="537" height="712">
+<img src="images/3-tier-class.svg" alt="3 tier class" width="538" height="713">
 </div>
-<div class="title">Figure 5. Class Diagram for 3-tier Architecture</div>
+<div class="title">Figure 4. Class Diagram for 3-tier Architecture</div>
 </div>
-<div class="sect2 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-246">
-<h3 id="_ddd">DDD</h3>
-<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-248">
+<div class="sect2 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/ddd/index.adoc-1">
+<h3 id="_domain_driven_design">Domain Driven Design</h3>
+<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/ddd/index.adoc-3">
 <p><strong>Brief Description of Duties &amp; Responsibilities</strong>:</p>
 </div>
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-250">
+<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/ddd/index.adoc-5">
 <ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-250">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/ddd/index.adoc-5">
 <p><code><strong>SubscriptionController</strong></code>: receives tasks from specific interface</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-251">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/ddd/index.adoc-6">
 <p><code><strong>SubscriptionServiceFacadeImpl</strong></code>: task coordination, transaction, anti-corruption</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-252">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/ddd/index.adoc-7">
 <p><code><strong>SubscriptionServiceImpl</strong></code>: business logic</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-253">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/ddd/index.adoc-8">
 <p><code><strong>JpaSubscriptionRepository</strong></code>: anti-corruption, delegate persistence operations to <code>SubscriptionPersistenceJpaRepository</code></p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-254">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/ddd/index.adoc-9">
 <p><code><strong>SubscriptionPersistenceJpaRepository</strong></code>: do technology-specified persistence operations</p>
 </li>
 </ul>
 </div>
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-257">
+<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/ddd/index.adoc-13">
 <div class="content">
-<img src="docs/images/ddd-sequence.png" alt="ddd sequence" width="1381" height="528">
+<img src="images/ddd-sequence.svg" alt="ddd sequence" width="1382" height="529">
 </div>
-<div class="title">Figure 6. Sequence Diagram for DDD Architecture</div>
+<div class="title">Figure 5. Sequence Diagram for DDD Architecture</div>
 </div>
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-260">
+<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/ddd/index.adoc-81">
 <div class="content">
-<img src="docs/images/ddd-class.png" alt="ddd class" width="761" height="1936">
+<img src="images/ddd-class.svg" alt="ddd class" width="762" height="1937">
 </div>
-<div class="title">Figure 7. Class Diagram for DDD Architecture</div>
+<div class="title">Figure 6. Class Diagram for DDD Architecture</div>
 </div>
 </div>
-<div class="sect2 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-262">
+<div class="sect2 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hex/index.adoc-1">
 <h3 id="_hexagonal_architecture_ports_and_adapters">Hexagonal Architecture (Ports and Adapters)</h3>
-<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-264">
+<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hex/index.adoc-3">
 <p><strong>Brief Description of Duties &amp; Responsibilities</strong>:</p>
 </div>
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-266">
+<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hex/index.adoc-5">
 <ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-266">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hex/index.adoc-5">
 <p><code><strong>SubscriptionController</strong></code>: receives tasks from specific interface</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-267">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hex/index.adoc-6">
 <p><code><strong>SubscriptionFacadeImpl</strong></code>: task coordination, transaction, anti-corruption</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-268">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hex/index.adoc-7">
 <p><code><strong>CreateSubscription</strong></code>: business logic</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-269">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hex/index.adoc-8">
 <p><code><strong>JpaSubscriptionAdapter</strong></code>: anti-corruption, delegate persistence operations to <code>SubscriptionPersistenceJpaRepository</code></p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-270">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hex/index.adoc-9">
 <p><code><strong>SubscriptionPersistenceJpaRepository</strong></code>: do technology-specified persistence operations</p>
 </li>
 </ul>
 </div>
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-273">
+<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hex/index.adoc-13">
 <div class="content">
-<img src="docs/images/hex-sequence.png" alt="hex sequence" width="1417" height="449">
+<img src="images/hex-sequence.svg" alt="hex sequence" width="1418" height="450">
 </div>
-<div class="title">Figure 8. Sequence Diagram for Hexagonal Architecture</div>
+<div class="title">Figure 7. Sequence Diagram for Hexagonal Architecture</div>
 </div>
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-276">
+<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hex/index.adoc-77">
 <div class="content">
-<img src="docs/images/hex-class.png" alt="hex class" width="724" height="1628">
+<img src="images/hex-class.svg" alt="hex class" width="725" height="1629">
 </div>
-<div class="title">Figure 9. Class Diagram for Hexagonal Architecture</div>
+<div class="title">Figure 8. Class Diagram for Hexagonal Architecture</div>
 </div>
 </div>
-<div class="sect2 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-278">
+<div class="sect2 has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hddd/index.adoc-1">
 <h3 id="_hexagonal_ddd">Hexagonal DDD</h3>
-<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-280">
+<div class="paragraph has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hddd/index.adoc-3">
 <p><strong>Brief Description of Duties &amp; Responsibilities</strong>:</p>
 </div>
-<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-282">
+<div class="ulist has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hddd/index.adoc-5">
 <ul>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-282">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hddd/index.adoc-5">
 <p><code><strong>SubscriptionController</strong></code>: receives tasks from specific interface</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-283">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hddd/index.adoc-6">
 <p><code><strong>SubscriptionFacadeImpl</strong></code>: task coordination, transaction, anti-corruption</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-284">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hddd/index.adoc-7">
 <p><code><strong>CreateSubscription</strong></code>: business logic</p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-285">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hddd/index.adoc-8">
 <p><code><strong>JpaSubscriptionAdapter</strong></code>: anti-corruption, delegate persistence operations to <code>SubscriptionPersistenceJpaRepository</code></p>
 </li>
-<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-286">
+<li class="has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hddd/index.adoc-9">
 <p><code><strong>SubscriptionPersistenceJpaRepository</strong></code>: do technology-specified persistence operations</p>
 </li>
 </ul>
 </div>
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-289">
+<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hddd/index.adoc-13">
 <div class="content">
-<img src="docs/images/hddd-sequence.png" alt="hddd sequence" width="1392" height="488">
+<img src="images/hddd-sequence.svg" alt="hddd sequence" width="1393" height="489">
 </div>
-<div class="title">Figure 10. Sequence Diagram for Hexagonal DDD Architecture</div>
+<div class="title">Figure 9. Sequence Diagram for Hexagonal DDD Architecture</div>
 </div>
-<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/README.adoc-292">
+<div class="imageblock has-source-line data-line-/Users/abchau/Labs/Code Playground Private/2022 ddd-examples/docs/hddd/index.adoc-79">
 <div class="content">
-<img src="docs/images/hddd-class.png" alt="hddd class" width="802" height="1826">
+<img src="images/hddd-class.svg" alt="hddd class" width="803" height="1827">
 </div>
-<div class="title">Figure 11. Class Diagram for Hexagonal DDD Architecture</div>
+<div class="title">Figure 10. Class Diagram for Hexagonal DDD Architecture</div>
 </div>
 </div>
 </div>
@@ -1218,7 +968,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-05-15 18:10:39 +0100
+Last updated 2022-05-15 17:35:48 +0100
 </div>
 </div>
 </body>

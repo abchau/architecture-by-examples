@@ -1,0 +1,61 @@
+@startuml
+
+actor User 
+box Input Adapters
+participant SubscriptionController << (C,#ADD1B2) @Controller >>
+end box
+box Application
+participant SubscriptionFacadeImpl << (C,#ADD1B2) @Bean >>
+end box
+box Application Core
+participant CreateSubscriptionUseCase << (C,#ADD1B2) @Bean >>
+end box
+box Output Adapters
+participant JpaSubscriptionPersistenceAdapter << (C,#ADD1B2) @Bean >>
+participant SubscriptionPersistenceJpaRepository << (C,#ADD1B2) @Repository >>
+end box
+database Datastore
+
+activate User
+
+User --> SubscriptionController
+activate SubscriptionController
+
+note over SubscriptionFacadeImpl: via SubscriptionFacade
+
+SubscriptionController --> SubscriptionFacadeImpl
+activate SubscriptionFacadeImpl
+
+SubscriptionFacadeImpl --> CreateSubscriptionUseCase
+activate CreateSubscriptionUseCase
+
+note over JpaSubscriptionPersistenceAdapter: via SubscriptionPersistencePort
+
+CreateSubscriptionUseCase --> JpaSubscriptionPersistenceAdapter
+activate JpaSubscriptionPersistenceAdapter
+
+JpaSubscriptionPersistenceAdapter --> SubscriptionPersistenceJpaRepository
+activate SubscriptionPersistenceJpaRepository
+
+SubscriptionPersistenceJpaRepository --> Datastore
+activate Datastore
+
+Datastore --> SubscriptionPersistenceJpaRepository
+deactivate Datastore
+
+SubscriptionPersistenceJpaRepository --> JpaSubscriptionPersistenceAdapter
+deactivate SubscriptionPersistenceJpaRepository
+
+JpaSubscriptionPersistenceAdapter --> CreateSubscriptionUseCase
+deactivate JpaSubscriptionPersistenceAdapter
+
+CreateSubscriptionUseCase --> SubscriptionFacadeImpl
+deactivate CreateSubscriptionUseCase
+
+SubscriptionFacadeImpl --> SubscriptionController
+deactivate SubscriptionFacadeImpl
+
+SubscriptionController --> User
+deactivate SubscriptionController
+
+@enduml

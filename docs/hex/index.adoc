@@ -1,138 +1,15 @@
-
 === Hexagonal Architecture (Ports and Adapters)
 
 *Brief Description of Duties & Responsibilities*:
 
-* `*SubscriptionController*`: receives taks from specific interface
+* `*SubscriptionController*`: receives tasks from specific interface
 * `*SubscriptionFacadeImpl*`: task coordination, transaction, anti-corruption
 * `*CreateSubscription*`: business logic
-* `*JpaSubscriptionAdapter*`: anti-corruption, delegate persistence operations to `SubscriptionPersistenceJpaRepositoy`
-* `*SubscriptionPersistenceJpaRepositoy*`: do technology-specified persistence operations
+* `*JpaSubscriptionAdapter*`: anti-corruption, delegate persistence operations to `SubscriptionPersistenceJpaRepository`
+* `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
 
 .Sequence Diagram for Hexagonal Architecture
-[plantuml,target=hex-sequence,format=svg]
-....
-@startuml
-
-actor User 
-box Input Adapters
-participant SubscriptionController << (C,#ADD1B2) @Controller >>
-end box
-box Application
-participant SubscriptionFacadeImpl << (C,#ADD1B2) @Bean >>
-end box
-box Application Core
-participant CreateSubscriptionUseCase << (C,#ADD1B2) @Bean >>
-end box
-box Output Adapters
-participant JpaSubscriptionPersistenceAdapter << (C,#ADD1B2) @Bean >>
-participant SubscriptionPersistenceJpaRepository << (C,#ADD1B2) @Repository >>
-end box
-database Datastore
-
-activate User
-
-User --> SubscriptionController
-activate SubscriptionController
-
-note over SubscriptionFacadeImpl: via SubscriptionFacade
-
-SubscriptionController --> SubscriptionFacadeImpl
-activate SubscriptionFacadeImpl
-
-SubscriptionFacadeImpl --> CreateSubscriptionUseCase
-activate CreateSubscriptionUseCase
-
-note over JpaSubscriptionPersistenceAdapter: via SubscriptionPersistencePort
-
-CreateSubscriptionUseCase --> JpaSubscriptionPersistenceAdapter
-activate JpaSubscriptionPersistenceAdapter
-
-JpaSubscriptionPersistenceAdapter --> SubscriptionPersistenceJpaRepository
-activate SubscriptionPersistenceJpaRepository
-
-SubscriptionPersistenceJpaRepository --> Datastore
-activate Datastore
-
-Datastore --> SubscriptionPersistenceJpaRepository
-deactivate Datastore
-
-SubscriptionPersistenceJpaRepository --> JpaSubscriptionPersistenceAdapter
-deactivate SubscriptionPersistenceJpaRepository
-
-JpaSubscriptionPersistenceAdapter --> CreateSubscriptionUseCase
-deactivate JpaSubscriptionPersistenceAdapter
-
-CreateSubscriptionUseCase --> SubscriptionFacadeImpl
-deactivate CreateSubscriptionUseCase
-
-SubscriptionFacadeImpl --> SubscriptionController
-deactivate SubscriptionFacadeImpl
-
-SubscriptionController --> User
-deactivate SubscriptionController
-....
+plantuml::hex-sequence.puml[target=hex-sequence,format=png]
 
 .Class Diagram for Hexagonal Architecture
-[plantuml,target=hex-class,format=svg]
-....
-@startuml
-allowmixing
-
-rectangle "Input/Driving/Primary Adapter" {
-	package inputadapter {
-		package web {
-			class SubscriptionController
-		}
-	}
-}
-
-rectangle "Application" {
-	package application {
-		interface SubscriptionFacade
-		class SubscriptionFacadeImpl
-
-		package core {
-			class Subscription
-			interface SubscriptionPersistencePort
-
-			package usecase {
-				class CreateSubscriptionUseCase
-			}
-		}
-	}
-}
-
-rectangle "Output/Driven/Secondary Adapter" {
-	package outputadapter {
-		package persistence {
-			package jpa {
-				class JpaSubscriptionPersistenceAdapter
-				class SubscriptionPersistenceJpaRepository
-				class SubscriptionPersistence
-			}
-		}
-	}
-}
-
-actor Http
-Http -down-> SubscriptionController
-
-SubscriptionController -down-> SubscriptionFacade
-SubscriptionFacadeImpl -up-> SubscriptionFacade
-SubscriptionFacadeImpl .down.> Subscription: uses
-
-
-SubscriptionFacadeImpl -down-> CreateSubscriptionUseCase: uses
-CreateSubscriptionUseCase ..> Subscription: uses
-
-SubscriptionPersistencePort .up.> Subscription: uses
-JpaSubscriptionPersistenceAdapter .up.> Subscription: uses
-
-JpaSubscriptionPersistenceAdapter -up-> SubscriptionPersistencePort: implements
-JpaSubscriptionPersistenceAdapter -left-> SubscriptionPersistenceJpaRepository
-SubscriptionPersistenceJpaRepository ..> SubscriptionPersistence: uses
-JpaSubscriptionPersistenceAdapter ..> SubscriptionPersistence: uses
-
-@enduml
-....
+plantuml::hex-class.puml[target=hex-class,format=png]

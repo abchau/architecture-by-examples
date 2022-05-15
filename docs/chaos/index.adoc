@@ -2,108 +2,12 @@
 
 *Brief Description of Duties & Responsibilities*:
 
-* `*SubscriptionController*`: supposed to be receiving taks from specific interface but...
+* `*SubscriptionController*`: supposed to be receiving tasks from specific interface but...
 * `*SubscriptionServiceImpl*`: supposed to be business logic but...
-* `*SubscriptionRepositoy*`: do technology-specified persistence operations
+* `*SubscriptionRepository*`: do technology-specified persistence operations
 
 .Sequence Diagram for Chaos Architecture
-[plantuml,target=chaos-sequence,format=svg]
-....
-@startuml
-
-actor User 
-box Presentation Layer
-participant SubscriptionController << (C,#ADD1B2) MVC Controller >>
-end box
-box Business Logic Layer
-participant SubscriptionService << (C,#ADD1B2) Service >>
-end box
-box Data Layer
-participant SubscriptionRepository << (C,#ADD1B2) Repository >>
-end box
-database Datastore
-
-activate User
-
-User --> SubscriptionController
-activate SubscriptionController
-
-note over SubscriptionRepository: sometimes via this
-
-SubscriptionController --> SubscriptionRepository
-activate SubscriptionRepository
-
-SubscriptionRepository --> Datastore
-activate Datastore
-
-Datastore --> SubscriptionRepository
-deactivate Datastore
-
-SubscriptionRepository --> SubscriptionController
-deactivate SubscriptionRepository
-
-note over SubscriptionService: sometimes via this
-
-SubscriptionController --> SubscriptionService
-activate SubscriptionService
-
-SubscriptionService --> SubscriptionRepository
-activate SubscriptionRepository
-
-SubscriptionRepository --> Datastore
-activate Datastore
-
-Datastore --> SubscriptionRepository
-deactivate Datastore
-
-SubscriptionRepository --> SubscriptionService
-deactivate SubscriptionRepository
-
-SubscriptionService --> SubscriptionController
-deactivate SubscriptionService
-
-SubscriptionController --> User
-deactivate SubscriptionController
-
-....
+plantuml::chaos-sequence.puml[target=chaos-sequence,format=png]
 
 .Class Diagram for Chaos Architecture
-[plantuml,target=chaos-class,format=svg]
-....
-@startuml
-allowmixing
-
-rectangle "Presentation Layer" {
-	package controller {
-		class SubscriptionController
-	}
-}
-
-rectangle "Business Logic Layer" {
-	package service {
-		class SubscriptionService
-	}
-}
-
-rectangle "Data Layer" {
-	package model {
-		class Subscription
-	}
-	package repository {
-		class SubscriptionRepository
-	}
-}
-
-actor Http
-
-Http -down-> SubscriptionController
-SubscriptionController -down-> SubscriptionService
-SubscriptionController -down-> SubscriptionRepository
-SubscriptionService -down-> SubscriptionRepository
-
-SubscriptionController ..> Subscription
-SubscriptionService .down.> Subscription
-SubscriptionRepository .left.> Subscription
-
-@enduml
-....
+plantuml::chaos-class.puml[target=chaos-class,format=png]

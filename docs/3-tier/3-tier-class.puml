@@ -1,0 +1,37 @@
+@startuml
+allowmixing
+
+rectangle "Presentation Layer" {
+	package controller {
+		class SubscriptionController
+		class SubscriptionDto
+	}
+}
+
+rectangle "Business Logic Layer" {
+	package service {
+		class SubscriptionService
+	}
+}
+
+rectangle "Data Layer" {
+	package model {
+		class Subscription
+	}
+
+	package repository {
+		class SubscriptionRepository
+	}
+}
+
+actor Http
+
+Http -down-> SubscriptionController
+SubscriptionController .left.> SubscriptionDto: uses
+SubscriptionController -down-> SubscriptionService
+SubscriptionService -down-> SubscriptionRepository
+
+SubscriptionService .down.> Subscription
+SubscriptionRepository .left.> Subscription
+
+@enduml

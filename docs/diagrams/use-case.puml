@@ -1,0 +1,11 @@
+@startuml
+
+actor browser
+
+rectangle backend
+database datastore
+
+browser -right-> backend: GET, POST /subscribe
+backend -right-> datastore: writes into
+
+@enduml
