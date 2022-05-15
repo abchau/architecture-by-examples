@@ -69,7 +69,7 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 
 			SubscriptionPersistence subscriptionPersistence = new SubscriptionPersistence();
 			subscriptionPersistence.setId(subscription.getId());
-			subscriptionPersistence.setEmail(subscription.getEmailAddress().toString());
+			subscriptionPersistence.setEmail(subscription.getEmailAddress().getValue());
 			subscriptionPersistence.setStatus(subscription.getStatus());
 			subscriptionPersistence.setCreatedAt(subscription.getCreatedAt());
 			subscriptionPersistence.setLastUpdatedAt(subscription.getLastUpdatedAt());

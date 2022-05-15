@@ -84,16 +84,21 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 * Import in your favourite IDE
 * Start each project as a spring boot application individually
 * Go to http://localhost:8080/subscribe
-* *Four* conditions can be tested
 +
-[cols="1,4,2",options=header]
-|===
-|#|Input|Expected outcome
-|1|empty input|fail
-|2|not empty but invalid email format|fail
-|3|correct email format|success
-|4|correct email format but duplicate|fail
-|===
+image::demo1.png[] 
+* *Four* conditions can be tested
+** empty input
++
+image::demo2.png[] 
+** not empty but invalid email format
++
+image::demo3.png[] 
+** correct email format
++
+image::demo4.png[] 
+** correct email format but duplicate
++
+image::demo5.png[] 
 
 * To verify DB records, go to:
 +

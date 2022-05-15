@@ -36,7 +36,7 @@ public class SubscribeController {
 	}
 
     @PostMapping(value = "/subscribe")
-	public ModelAndView processSubscribeForm(@RequestBody CreateSubscriptionCommand createSubscriptionCommand) {
+	public ModelAndView processSubscribeForm(CreateSubscriptionCommand createSubscriptionCommand) {
 		log.trace(() -> "processSubscribeForm()...invoked");
 		log.debug(() -> "createSubscriptionCommand: " + createSubscriptionCommand);
 
