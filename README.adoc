@@ -13,6 +13,8 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
+== Introduction
+
 This repository demonstrates different architectures by implementing a simple use case. 
 
 == Rationale
