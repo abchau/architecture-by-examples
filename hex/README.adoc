@@ -15,7 +15,7 @@ NOTE: idea that are not important to demonstrate *Ports and Adapters* are not in
 
 .Sequence Diagram for Hexagonal Architecture
 ifdef::env-github[]
-image::hex-class.png[]
+image::hex-sequence.png[]
 endif::env-github[]
 ifdef::env-idea,env-vscode[]
 plantuml::docs/diagrams/hex-sequence.puml[target=hex-sequence,format=png]

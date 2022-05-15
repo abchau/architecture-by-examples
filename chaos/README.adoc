@@ -11,7 +11,7 @@
 
 .Sequence Diagram for Chaos Architecture
 ifdef::env-github[]
-image::chaos-class.png[]
+image::chaos-sequence.png[]
 endif::env-github[]
 ifdef::env-idea,env-vscode[]
 plantuml::docs/diagrams/chaos-sequence.puml[target=chaos-sequence,format=png,opts="inline"]
