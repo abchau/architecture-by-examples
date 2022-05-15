@@ -1,6 +1,9 @@
-=== Hexagonal DDD
+= Hexagonal DDD
 
-*Brief Description of Duties & Responsibilities*:
+:imagesdir: docs/images
+:imagesoutdir: docs/images
+
+*Brief Description*:
 
 * `*SubscriptionController*`: receives tasks from specific interface
 * `*SubscriptionFacadeImpl*`: task coordination, transaction, anti-corruption
@@ -9,8 +12,17 @@
 * `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
 
 .Sequence Diagram for Hexagonal DDD Architecture
-plantuml::hddd-sequence.puml[target=hddd-sequence,format=png]
+ifdef::env-github[]
+image::hddd-class.png[]
+endif::env-github[]
+ifdef::env-idea,env-vscode[]
+plantuml::docs/diagrams/hddd-sequence.puml[target=hddd-sequence,format=png]
+endif::env-idea,env-vscode[]
 
 .Class Diagram for Hexagonal DDD Architecture
-plantuml::hddd-class.puml[target=hddd-class,format=png]
-
+ifdef::env-github[]
+image::hddd-class.png[]
+endif::env-github[]
+ifdef::env-idea,env-vscode[]
+plantuml::docs/diagrams/hddd-class.puml[target=hddd-class,format=png]
+endif::env-idea,env-vscode[]

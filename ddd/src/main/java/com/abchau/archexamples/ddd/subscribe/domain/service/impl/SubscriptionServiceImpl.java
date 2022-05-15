@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAddress;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAlreadyExistException;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailFormatException;
+import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailPersistenceErrorException;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.Subscription;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.SubscriptionRepository;
 import com.abchau.archexamples.ddd.subscribe.domain.service.SubscriptionService;
@@ -55,8 +56,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		if (!subscription.getEmailAddress().isValidFormat()) {
 			throw new EmailFormatException("email.format");
 		}
-
-		return subscriptionRepository.save(subscription);
+		
+		try {
+			return Optional.of(subscriptionRepository.save(subscription));
+		} catch (EmailPersistenceErrorException e) {
+			log.error("", e);
+			return Optional.empty();
+		} 
 	}
 
 }

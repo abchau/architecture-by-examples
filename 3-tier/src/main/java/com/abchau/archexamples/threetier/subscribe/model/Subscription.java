@@ -14,16 +14,14 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 // (1) everything is inside the same class
+@AllArgsConstructor
+@Builder
 @Data
-@Getter
-@EqualsAndHashCode
-@ToString
 @Entity(name="subscriptions")
 public class Subscription {
 
@@ -59,15 +57,14 @@ public class Subscription {
 
 	// (2) use factory pattern
 	public static Subscription of(String email) {
-		Subscription subscription = new Subscription();
-
-		subscription.setEmail(email);
 		ZonedDateTime now = ZonedDateTime.now(Clock.systemDefaultZone());
-		subscription.setStatus("COMPLETED");
-		subscription.setCreatedAt(now);
-		subscription.setLastUpdatedAt(now);
 
-		return subscription;
+		return Subscription.builder()
+			.email(email)
+			.status("COMPLETED")
+			.createdAt(now)
+			.lastUpdatedAt(now)
+			.build();
 	}
 
 	public static boolean isEmailValid(String email) {

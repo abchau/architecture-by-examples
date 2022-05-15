@@ -28,15 +28,14 @@ public class CreateSubscriptionUseCase {
 		Objects.requireNonNull(subscription);
 
 		// (2) throw domain exception
-		if (!subscription.getEmail().isValidFormat()) {
+		if (!subscription.getEmailAddress().isValidFormat()) {
 			throw new EmailFormatException("email.format");
 		}
 
-		int count = subscriptionPersistencePort.countByEmail(subscription.getEmail());
+		int count = subscriptionPersistencePort.countByEmail(subscription.getEmailAddress());
 		if (count > 0) {
 			throw new EmailAlreadyExistException("email.duplicate");
 		}
-
 
 		return subscriptionPersistencePort.save(subscription);
 	}

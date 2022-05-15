@@ -1,6 +1,8 @@
 package com.abchau.archexamples.hddd.subscribe.application.facade.impl;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 import com.abchau.archexamples.hddd.subscribe.application.facade.SubscriptionFacade;
 import com.abchau.archexamples.hddd.subscribe.application.dto.SubscriptionDto;
@@ -31,7 +33,7 @@ public class SubscriptionFacadeImpl implements SubscriptionFacade {
 	@Transactional
 	@Override
 	// (1) better method name
-	public SubscriptionDto createSubscription(CreateSubscriptionCommand createSubscriptionCommand) throws IllegalArgumentException, Exception {
+	public Optional<SubscriptionDto> createSubscription(CreateSubscriptionCommand createSubscriptionCommand) throws IllegalArgumentException, Exception {
 		log.trace(() -> "createSubscription()...invoked");
 		Objects.requireNonNull(createSubscriptionCommand);
 
@@ -52,18 +54,23 @@ public class SubscriptionFacadeImpl implements SubscriptionFacade {
 			Subscription subscription = Subscription.of(emailAddress);
 			log.debug(() -> "subscription: " + subscription);
 			
-			Subscription savedSubscription = subscriptionService.save(subscription);
+			Subscription savedSubscription = subscriptionService.save(subscription)
+				.orElseThrow();
 			log.debug(() -> "savedSubscription: " + savedSubscription);
 			
 			// (3) demonstrate ACL
 			SubscriptionDto subscriptionDto = AntiCorruptionLayer.translate(savedSubscription);
 			log.debug(() -> "subscriptionDto: " + subscriptionDto);
 			
-			return subscriptionDto;
+			return Optional.of(subscriptionDto);
+		} catch (NullPointerException e) {
+			throw new IllegalArgumentException("email.empty");
 		} catch (EmailAlreadyExistException e) {
 			throw new IllegalArgumentException("email.duplicate");
 		}  catch (EmailFormatException e) {
 			throw new IllegalArgumentException("email.format");
+		} catch (NoSuchElementException e) { // not necessary to have separate catch block
+			throw new Exception("error.unknown");
 		} catch (Exception e) {
 			throw new Exception("error.unknown");
 		}
@@ -74,15 +81,14 @@ public class SubscriptionFacadeImpl implements SubscriptionFacade {
 
 		public static SubscriptionDto translate(Subscription subscription) {
 			Objects.requireNonNull(subscription);
-	
-			SubscriptionDto subscriptionDto = new SubscriptionDto();
-			subscriptionDto.setId(subscriptionDto.getId());
-			subscriptionDto.setEmail(subscription.getEmailAddress().getValue());
-			subscriptionDto.setStatus(subscription.getStatus());
-			subscriptionDto.setCreatedAt(subscription.getCreatedAt());
-			subscriptionDto.setLastUpdatedAt(subscription.getLastUpdatedAt());
 
-			return subscriptionDto;
+			return SubscriptionDto.builder()
+				.id(subscription.getId())
+				.email(subscription.getEmailAddress().getValue())
+				.status(subscription.getStatus())
+				.createdAt(subscription.getCreatedAt())
+				.lastUpdatedAt(subscription.getLastUpdatedAt())
+				.build();
 		}
 	}
 

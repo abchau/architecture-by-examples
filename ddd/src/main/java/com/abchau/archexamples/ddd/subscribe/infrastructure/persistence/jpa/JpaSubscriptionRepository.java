@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAddress;
+import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailPersistenceErrorException;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.Subscription;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,22 +36,27 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 	}
 
 	@Override
-	public Optional<Subscription> save(Subscription subscription) {
+	public Subscription save(Subscription subscription) throws EmailPersistenceErrorException {
 		log.trace(() -> "save()...invoked");
 		Objects.requireNonNull(subscription);
 		Objects.requireNonNull(subscription.getEmailAddress());
 		Objects.requireNonNull(subscription).getEmailAddress().getValue();
 
-		SubscriptionPersistence subscriptionPersistence = AntiCorruptionLayer.translate(subscription);
-		log.debug(() -> "subscriptionPersistence: " + subscriptionPersistence);
-
-		SubscriptionPersistence savedSubscriptionPersistence = subscriptionPersistenceJpaRepository.save(subscriptionPersistence);
-		log.debug(() -> "savedSubscriptionPersistence: " + savedSubscriptionPersistence);
-
-		Subscription savedSubscription = AntiCorruptionLayer.translate(savedSubscriptionPersistence);
-		log.debug(() -> "savedSubscription: " + savedSubscription);
-
-		return Optional.of(savedSubscription);
+		try {
+			SubscriptionPersistence subscriptionPersistence = AntiCorruptionLayer.translate(subscription);
+			log.debug(() -> "subscriptionPersistence: " + subscriptionPersistence);
+	
+			SubscriptionPersistence savedSubscriptionPersistence = subscriptionPersistenceJpaRepository.save(subscriptionPersistence);
+			log.debug(() -> "savedSubscriptionPersistence: " + savedSubscriptionPersistence);
+	
+			Subscription savedSubscription = AntiCorruptionLayer.translate(savedSubscriptionPersistence);
+			log.debug(() -> "savedSubscription: " + savedSubscription);
+	
+			return savedSubscription;
+		} catch(Exception e) {
+			log.error("couldn't persist data", e);
+			throw new EmailPersistenceErrorException("error.persistence");
+		}
 	}
 
 	private static class AntiCorruptionLayer {
@@ -58,27 +64,25 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 		public static Subscription translate(SubscriptionPersistence subscriptionPersistence) {
 			Objects.requireNonNull(subscriptionPersistence);
 
-			Subscription subscription = new Subscription();
-			subscription.setId(subscriptionPersistence.getId());
-			subscription.setEmailAddress(EmailAddress.of(subscriptionPersistence.getEmail()));
-			subscription.setStatus(subscriptionPersistence.getStatus());
-			subscription.setCreatedAt(subscriptionPersistence.getCreatedAt());
-			subscription.setLastUpdatedAt(subscriptionPersistence.getLastUpdatedAt());
-
-			return subscription;
+			return Subscription.builder()
+				.id(subscriptionPersistence.getId())
+				.emailAddress(EmailAddress.of(subscriptionPersistence.getEmail()))
+				.status(subscriptionPersistence.getStatus())
+				.createdAt(subscriptionPersistence.getCreatedAt())
+				.lastUpdatedAt(subscriptionPersistence.getLastUpdatedAt())
+				.build();
 		}
 
 		public static SubscriptionPersistence translate(Subscription subscription) {
 			Objects.requireNonNull(subscription);
 
-			SubscriptionPersistence subscriptionPersistence = new SubscriptionPersistence();
-			subscriptionPersistence.setId(subscription.getId());
-			subscriptionPersistence.setEmail(subscription.getEmailAddress().getValue());
-			subscriptionPersistence.setStatus(subscription.getStatus());
-			subscriptionPersistence.setCreatedAt(subscription.getCreatedAt());
-			subscriptionPersistence.setLastUpdatedAt(subscription.getLastUpdatedAt());
-
-			return subscriptionPersistence;
+			return SubscriptionPersistence.builder()
+				.id(subscription.getId())
+				.email(subscription.getEmailAddress().getValue())
+				.status(subscription.getStatus())
+				.createdAt(subscription.getCreatedAt())
+				.lastUpdatedAt(subscription.getLastUpdatedAt())
+				.build();
 		}
 	}
 

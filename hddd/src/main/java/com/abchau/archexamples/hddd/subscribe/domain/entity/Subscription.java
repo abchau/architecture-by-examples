@@ -3,15 +3,13 @@ package com.abchau.archexamples.hddd.subscribe.domain.entity;
 import java.time.Clock;
 import java.time.ZonedDateTime;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+@AllArgsConstructor
+@Builder
 @Data
-@Getter
-@EqualsAndHashCode
-@ToString
 public class Subscription {
 
 	private Long id;
@@ -26,19 +24,15 @@ public class Subscription {
 
 	private Long version;
 
-	public Subscription() {
-	}
-
 	public static Subscription of(EmailAddress emailAddress) {
-		Subscription subscription = new Subscription();
-
-		subscription.setEmailAddress(emailAddress);
 		ZonedDateTime now = ZonedDateTime.now(Clock.systemDefaultZone());
-		subscription.setStatus("COMPLETED");
-		subscription.setCreatedAt(now);
-		subscription.setLastUpdatedAt(now);
 
-		return subscription;
+		return Subscription.builder()
+			.emailAddress(emailAddress)
+			.status("COMPLETED")
+			.createdAt(now)
+			.lastUpdatedAt(now)
+			.build();
 	}
-	
+
 }

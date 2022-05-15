@@ -44,11 +44,11 @@ public class SubscribeController {
 		// (2) catch application error and business error
 		try {
 			// (3) pass a command in application layer, not domain object in domain model layer
-			SubscriptionDto savedSubscription = subscriptionServiceFacade.createSubscription(createSubscriptionCommand)
+			SubscriptionDto subscriptionDto = subscriptionServiceFacade.createSubscription(createSubscriptionCommand)
 				.orElseThrow();
-			log.debug(() -> "savedSubscription: " + savedSubscription);
+			log.debug(() -> "subscriptionDto: " + subscriptionDto);
 
-			modelAndView.addObject("email", savedSubscription.getEmail());
+			modelAndView.addObject("email", subscriptionDto.getEmail());
 			modelAndView.addObject("message", "success");
 		} catch (IllegalArgumentException e) {
 			log.error("Known error. ", e);

@@ -1,0 +1,26 @@
+= 3-tier Architecture
+
+:imagesdir: docs/images
+:imagesoutdir: docs/images
+
+*Brief Description*:
+
+* `*SubscriptionController*`: receives tasks from specific interface but...
+* `*SubscriptionServiceImpl*`: do business logic
+* `*SubscriptionRepository*`: do technology-specified persistence operations
+
+.Sequence Diagram for Chaos Architecture
+ifdef::env-github[]
+image::chaos-sequence.png[]
+endif::env-github[]
+ifdef::env-idea[]
+plantuml::docs/diagrams/chaos-sequence.puml[target=chaos-sequence,format=png]
+endif::env-idea[]
+
+.Class Diagram for Chaos Architecture
+ifdef::env-github[]
+image::chaos-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
+plantuml::docs/diagrams/chaos-class.puml[target=chaos-class,format=png]
+endif::env-idea[]

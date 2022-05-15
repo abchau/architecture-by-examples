@@ -8,15 +8,13 @@ import javax.persistence.Version;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+@AllArgsConstructor
+@Builder
 @Data
-@Getter
-@EqualsAndHashCode
-@ToString
 @Entity(name="subscriptions")
 public class SubscriptionPersistence {
 

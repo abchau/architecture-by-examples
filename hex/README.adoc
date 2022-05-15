@@ -1,0 +1,30 @@
+= Hexagonal Architecture (Ports and Adapters)
+
+:imagesdir: docs/images
+:imagesoutdir: docs/images
+
+*Brief Description*:
+
+* `*SubscriptionController*`: receives tasks from specific interface
+* `*SubscriptionFacadeImpl*`: task coordination, transaction, anti-corruption
+* `*CreateSubscription*`: business logic
+* `*JpaSubscriptionAdapter*`: anti-corruption, delegate persistence operations to `SubscriptionPersistenceJpaRepository`
+* `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
+
+NOTE: idea that are not important to demonstrate *Ports and Adapters* are not included
+
+.Sequence Diagram for Hexagonal Architecture
+ifdef::env-github[]
+image::hex-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
+plantuml::docs/diagrams/hex-sequence.puml[target=hex-sequence,format=png]
+endif::env-idea[]
+
+.Class Diagram for Hexagonal Architecture
+ifdef::env-github[]
+image::hex-class.png[]
+endif::env-github[]
+ifdef::env-idea[]
+plantuml::docs/diagrams/hex-class.puml[target=hex-class,format=png]
+endif::env-idea[]

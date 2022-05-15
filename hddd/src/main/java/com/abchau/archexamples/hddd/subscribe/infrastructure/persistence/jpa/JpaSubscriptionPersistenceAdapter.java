@@ -1,8 +1,12 @@
 package com.abchau.archexamples.hddd.subscribe.infrastructure.persistence.jpa;
 
+import java.util.Objects;
+
 import com.abchau.archexamples.hddd.subscribe.domain.entity.EmailAddress;
 import com.abchau.archexamples.hddd.subscribe.domain.entity.Subscription;
+import com.abchau.archexamples.hddd.subscribe.domain.exception.EmailPersistenceErrorException;
 import com.abchau.archexamples.hddd.subscribe.domain.output.SubscriptionPersistencePort;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +26,10 @@ public class JpaSubscriptionPersistenceAdapter implements SubscriptionPersistenc
 	@Override
 	public int countByEmail(EmailAddress emailAddress) {
 		log.trace(() -> "countByEmail()...invoked");
+		Objects.requireNonNull(emailAddress);
+		Objects.requireNonNull(emailAddress.getValue());
 
-		String email = AntiCorruptionLayer.translateEmailAddress(emailAddress);
+		String email = emailAddress.getValue();
 		log.debug(() -> "email: " + email);
 
 		return subscriptionPersistenceJpaRepository.countByEmail(email);
@@ -32,49 +38,51 @@ public class JpaSubscriptionPersistenceAdapter implements SubscriptionPersistenc
 	@Override
 	public Subscription save(Subscription subscription) {
 		log.trace(() -> "save()...invoked");
+		Objects.requireNonNull(subscription);
+		Objects.requireNonNull(subscription.getEmailAddress());
+		Objects.requireNonNull(subscription).getEmailAddress().getValue();
 
-		SubscriptionPersistence subscriptionPersistence = AntiCorruptionLayer.translateSubscription(subscription);
-		log.debug(() -> "subscriptionPersistence: " + subscriptionPersistence);
-		
-		SubscriptionPersistence savedSubscriptionPersistence = subscriptionPersistenceJpaRepository.save(subscriptionPersistence);
-		log.debug(() -> "savedSubscriptionPersistence: " + savedSubscriptionPersistence);
-		
-		Subscription savedSubscription = AntiCorruptionLayer.translateSubscription(savedSubscriptionPersistence);
-		log.debug(() -> "savedSubscription: " + savedSubscription);
-
-		return savedSubscription;
+		try {
+			SubscriptionPersistence subscriptionPersistence = AntiCorruptionLayer.translate(subscription);
+			log.debug(() -> "subscriptionPersistence: " + subscriptionPersistence);
+	
+			SubscriptionPersistence savedSubscriptionPersistence = subscriptionPersistenceJpaRepository.save(subscriptionPersistence);
+			log.debug(() -> "savedSubscriptionPersistence: " + savedSubscriptionPersistence);
+	
+			Subscription savedSubscription = AntiCorruptionLayer.translate(savedSubscriptionPersistence);
+			log.debug(() -> "savedSubscription: " + savedSubscription);
+	
+			return savedSubscription;
+		} catch(Exception e) {
+			log.error("couldn't persist data", e);
+			throw new EmailPersistenceErrorException("error.persistence");
+		}
 	}
 
 	private static class AntiCorruptionLayer {
 
-		public static EmailAddress translateEmailAddress(String email) {
-			return EmailAddress.of(email);
+		public static Subscription translate(SubscriptionPersistence subscriptionPersistence) {
+			Objects.requireNonNull(subscriptionPersistence);
+
+			return Subscription.builder()
+				.id(subscriptionPersistence.getId())
+				.emailAddress(EmailAddress.of(subscriptionPersistence.getEmail()))
+				.status(subscriptionPersistence.getStatus())
+				.createdAt(subscriptionPersistence.getCreatedAt())
+				.lastUpdatedAt(subscriptionPersistence.getLastUpdatedAt())
+				.build();
 		}
 
-		public static String translateEmailAddress(EmailAddress emailAddress) {
-			return emailAddress.getValue();
-		}
+		public static SubscriptionPersistence translate(Subscription subscription) {
+			Objects.requireNonNull(subscription);
 
-		public static Subscription translateSubscription(SubscriptionPersistence subscriptionPersistence) {
-			Subscription subscription = new Subscription();
-			subscription.setId(subscriptionPersistence.getId());
-			subscription.setEmailAddress(translateEmailAddress(subscriptionPersistence.getEmail()));
-			subscription.setStatus(subscriptionPersistence.getStatus());
-			subscription.setCreatedAt(subscriptionPersistence.getCreatedAt());
-			subscription.setLastUpdatedAt(subscriptionPersistence.getLastUpdatedAt());
-
-			return subscription;
-		}
-
-		public static SubscriptionPersistence translateSubscription(Subscription subscription) {
-			SubscriptionPersistence subscriptionPersistence = new SubscriptionPersistence();
-			subscriptionPersistence.setId(subscription.getId());
-			subscriptionPersistence.setEmail(translateEmailAddress(subscription.getEmailAddress()));
-			subscriptionPersistence.setStatus(subscription.getStatus());
-			subscriptionPersistence.setCreatedAt(subscription.getCreatedAt());
-			subscriptionPersistence.setLastUpdatedAt(subscription.getLastUpdatedAt());
-
-			return subscriptionPersistence;
+			return SubscriptionPersistence.builder()
+				.id(subscription.getId())
+				.email(subscription.getEmailAddress().getValue())
+				.status(subscription.getStatus())
+				.createdAt(subscription.getCreatedAt())
+				.lastUpdatedAt(subscription.getLastUpdatedAt())
+				.build();
 		}
 	}
 

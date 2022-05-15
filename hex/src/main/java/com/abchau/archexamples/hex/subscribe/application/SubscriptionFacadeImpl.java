@@ -30,15 +30,21 @@ public class SubscriptionFacadeImpl implements SubscriptionFacade {
 
 	@Transactional
 	@Override
-	public Subscription createSubscription(String email) throws EmailFormatException, EmailAlreadyExistException, Exception {
+	public Subscription createSubscription(String email) throws IllegalArgumentException, Exception {
 		log.trace(() -> "createSubscription()...invoked");
 		Objects.requireNonNull(email);
 
 		// (3) factory pattern
-		Subscription subscription = Subscription.of(email);
+		Subscription subscription = Subscription.of(EmailAddress.of(email));
 		log.debug(() -> "subscription: " + subscription);
 
-		return createSubscriptionUseCase.execute(subscription);
+		try {
+			return createSubscriptionUseCase.execute(subscription);
+		} catch (EmailFormatException | EmailAlreadyExistException e) {
+			throw new IllegalArgumentException(e);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 }

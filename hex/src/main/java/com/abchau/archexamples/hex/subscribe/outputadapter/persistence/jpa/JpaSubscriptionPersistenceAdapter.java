@@ -55,27 +55,25 @@ public class JpaSubscriptionPersistenceAdapter implements SubscriptionPersistenc
 		public static Subscription translate(SubscriptionPersistence subscriptionPersistence) {
 			Objects.requireNonNull(subscriptionPersistence);
 	
-			Subscription subscription = new Subscription();
-			subscription.setId(subscriptionPersistence.getId());
-			subscription.setEmail(EmailAddress.of(subscriptionPersistence.getEmail()));
-			subscription.setStatus(subscriptionPersistence.getStatus());
-			subscription.setCreatedAt(subscriptionPersistence.getCreatedAt());
-			subscription.setLastUpdatedAt(subscriptionPersistence.getLastUpdatedAt());
-
-			return subscription;
+			return Subscription.builder()
+				.id(subscriptionPersistence.getId())
+				.emailAddress(EmailAddress.of(subscriptionPersistence.getEmail()))
+				.status(subscriptionPersistence.getStatus())
+				.createdAt(subscriptionPersistence.getCreatedAt())
+				.lastUpdatedAt(subscriptionPersistence.getLastUpdatedAt())
+				.build();
 		}
 
 		public static SubscriptionPersistence translate(Subscription subscription) {
 			Objects.requireNonNull(subscription);
 	
-			SubscriptionPersistence subscriptionPersistence = new SubscriptionPersistence();
-			subscriptionPersistence.setId(subscription.getId());
-			subscriptionPersistence.setEmail(subscription.getEmail().getValue());
-			subscriptionPersistence.setStatus(subscription.getStatus());
-			subscriptionPersistence.setCreatedAt(subscription.getCreatedAt());
-			subscriptionPersistence.setLastUpdatedAt(subscription.getLastUpdatedAt());
-
-			return subscriptionPersistence;
+			return SubscriptionPersistence.builder()
+				.id(subscription.getId())
+				.email(subscription.getEmailAddress().getValue())
+				.status(subscription.getStatus())
+				.createdAt(subscription.getCreatedAt())
+				.lastUpdatedAt(subscription.getLastUpdatedAt())
+				.build();
 		}
 	}
 

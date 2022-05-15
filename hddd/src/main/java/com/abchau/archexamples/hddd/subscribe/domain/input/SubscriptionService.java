@@ -1,5 +1,7 @@
 package com.abchau.archexamples.hddd.subscribe.domain.input;
 
+import java.util.Optional;
+
 import com.abchau.archexamples.hddd.subscribe.domain.entity.EmailAddress;
 import com.abchau.archexamples.hddd.subscribe.domain.entity.Subscription;
 import com.abchau.archexamples.hddd.subscribe.domain.exception.EmailAlreadyExistException;
@@ -9,6 +11,6 @@ public interface SubscriptionService {
 
 	public boolean isAlreadyExist(EmailAddress emailAddress) throws EmailAlreadyExistException;
 
-	public Subscription save(Subscription subscription) throws EmailFormatException;
+	public Optional<Subscription> save(Subscription subscription) throws EmailFormatException;
 
 }

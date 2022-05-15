@@ -1,6 +1,7 @@
 package com.abchau.archexamples.ddd.subscribe.application.impl;
 
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -70,6 +71,8 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 			throw new IllegalArgumentException("email.format");
 		} catch (EmailAlreadyExistException e) {
 			throw new IllegalArgumentException("email.duplicate");
+		} catch (NoSuchElementException e) { // not necessary to have separate catch block
+			throw new Exception("error.unknown");
 		} catch (Exception e) {
 			throw new Exception("error.unknown");
 		}
@@ -80,15 +83,14 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 
 		public static SubscriptionDto translate(Subscription subscription) {
 			Objects.requireNonNull(subscription);
-	
-			SubscriptionDto subscriptionDto = new SubscriptionDto();
-			subscriptionDto.setId(subscriptionDto.getId());
-			subscriptionDto.setEmail(subscription.getEmailAddress().getValue());
-			subscriptionDto.setStatus(subscription.getStatus());
-			subscriptionDto.setCreatedAt(subscription.getCreatedAt());
-			subscriptionDto.setLastUpdatedAt(subscription.getLastUpdatedAt());
 
-			return subscriptionDto;
+			return SubscriptionDto.builder()
+				.id(subscription.getId())
+				.email(subscription.getEmailAddress().getValue())
+				.status(subscription.getStatus())
+				.createdAt(subscription.getCreatedAt())
+				.lastUpdatedAt(subscription.getLastUpdatedAt())
+				.build();
 		}
 	}
 

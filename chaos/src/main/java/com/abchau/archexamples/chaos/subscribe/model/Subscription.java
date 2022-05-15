@@ -13,16 +13,10 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
 import lombok.Data;
 
 // (1) everything is inside the same class
 @Data
-@Getter
-@EqualsAndHashCode
-@ToString
 @Entity(name="subscriptions")
 public class Subscription {
 
@@ -52,9 +46,6 @@ public class Subscription {
 	@Version
 	@Column(name = "version")
 	private Long version;
-
-	public Subscription() {
-	}
 
 	public static boolean isEmailValid(String email) {
 		Objects.requireNonNull(email, "email.empty");

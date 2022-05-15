@@ -6,17 +6,18 @@ import java.time.ZonedDateTime;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+@AllArgsConstructor
+@Builder
 @Data
-@Getter
-@EqualsAndHashCode
-@ToString
 public class Subscription {
 
 	private Long id;
 	
-	private EmailAddress email;
+	private EmailAddress emailAddress;
 	
 	private String status;
 
@@ -26,19 +27,15 @@ public class Subscription {
 
 	private Long version;
 
-	public Subscription() {
-	}
-
-	public static Subscription of(String email) {
-		Subscription subscription = new Subscription();
-
-		subscription.setEmail(EmailAddress.of(email));
+	public static Subscription of(EmailAddress emailAddress) {
 		ZonedDateTime now = ZonedDateTime.now(Clock.systemDefaultZone());
-		subscription.setStatus("COMPLETED");
-		subscription.setCreatedAt(now);
-		subscription.setLastUpdatedAt(now);
 
-		return subscription;
+		return Subscription.builder()
+			.emailAddress(emailAddress)
+			.status("COMPLETED")
+			.createdAt(now)
+			.lastUpdatedAt(now)
+			.build();
 	}
 
 }

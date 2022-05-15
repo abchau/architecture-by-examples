@@ -2,15 +2,13 @@ package com.abchau.archexamples.hddd.subscribe.application.dto;
 
 import java.time.ZonedDateTime;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+@AllArgsConstructor
+@Builder
 @Data
-@Getter
-@EqualsAndHashCode
-@ToString
 public class SubscriptionDto {
 
 	private Long id;

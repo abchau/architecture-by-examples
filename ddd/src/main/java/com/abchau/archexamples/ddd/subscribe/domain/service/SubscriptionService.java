@@ -11,6 +11,6 @@ public interface SubscriptionService {
 
 	public boolean isAlreadyExist(EmailAddress emailAddress) throws EmailAlreadyExistException;
 
-	Optional<Subscription> save(Subscription subscription) throws EmailFormatException;
+	public Optional<Subscription> save(Subscription subscription) throws EmailFormatException;
 
 }

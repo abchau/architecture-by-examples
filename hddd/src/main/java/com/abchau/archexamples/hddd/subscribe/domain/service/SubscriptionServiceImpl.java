@@ -1,11 +1,13 @@
 package com.abchau.archexamples.hddd.subscribe.domain.service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import com.abchau.archexamples.hddd.subscribe.domain.entity.EmailAddress;
 import com.abchau.archexamples.hddd.subscribe.domain.entity.Subscription;
 import com.abchau.archexamples.hddd.subscribe.domain.exception.EmailAlreadyExistException;
 import com.abchau.archexamples.hddd.subscribe.domain.exception.EmailFormatException;
+import com.abchau.archexamples.hddd.subscribe.domain.exception.EmailPersistenceErrorException;
 import com.abchau.archexamples.hddd.subscribe.domain.input.SubscriptionService;
 import com.abchau.archexamples.hddd.subscribe.domain.output.SubscriptionPersistencePort;
 
@@ -28,7 +30,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	@Override
 	public boolean isAlreadyExist(EmailAddress emailAddress) throws EmailAlreadyExistException {
 		log.trace(() -> "isAlreadyExist()...invoked");
-		Objects.requireNonNull(emailAddress);
+		Objects.requireNonNull(emailAddress, "email.empty");
 		
 		int count = subscriptionPersistencePort.countByEmail(emailAddress);
 
@@ -40,16 +42,27 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public Subscription save(Subscription subscription) throws EmailFormatException {
+	public Optional<Subscription> save(Subscription subscription) throws EmailFormatException {
 		log.trace(() -> "save()...invoked");
-		Objects.requireNonNull(subscription);
+		Objects.requireNonNull(subscription, "email.empty");
+		Objects.requireNonNull(subscription.getEmailAddress(), "email.empty");
 
-		// (2) throw domain exception
+		// (1) domain validation
+		if (subscription.getEmailAddress().getValue() == null || "".equalsIgnoreCase(subscription.getEmailAddress().getValue())) {
+			throw new NullPointerException("email.empty");
+		}
+
+		// (2) domain validation & throw domain error
 		if (!subscription.getEmailAddress().isValidFormat()) {
 			throw new EmailFormatException("email.format");
 		}
-
-		return subscriptionPersistencePort.save(subscription);
+		
+		try {
+			return Optional.of(subscriptionPersistencePort.save(subscription));
+		} catch (EmailPersistenceErrorException e) {
+			log.error("", e);
+			return Optional.empty();
+		} 
 	}
 
 }

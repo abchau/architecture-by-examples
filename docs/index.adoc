@@ -1,7 +1,7 @@
+= Overview
+
 :imagesdir: images
 :imagesoutdir: images
-
-== Overview
 
 [cols="1,1,2,1,1,1,1,2",width="100%",options=header]
 |===
@@ -129,12 +129,12 @@ a|
 
 |===
 
-include::chaos/index.adoc[Chaos Architecture]
+link:chaos/README.adoc[Chaos Architecture]
 
-include::3-tier/index.adoc[3-tier Architecture]
+link:3-tier/README.adoc[3-tier Architecture]
 
-include::ddd/index.adoc[DDD]
+link:ddd/README.adoc[DDD]
 
-include::hex/index.adoc[Hexagonal Architecture]
+link:hex/README.adoc[Hexagonal Architecture]
 
-include::hddd/index.adoc[Hexagonal DDD]
+link:hddd/README.adoc[Hexagonal DDD]
