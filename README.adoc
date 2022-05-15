@@ -2,6 +2,15 @@
 :imagesdir: docs/images
 :imagesoutdir: docs/images
 
+ifdef::env-github[]
+:imagesdir: docs/images/
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
 This repository demonstrates different architectures by implementing a simple use case. 
 
 == Rationale
@@ -34,10 +43,10 @@ The application has
 == Use case
 
 .Single Use case
-ifndef::env-github[]
+ifdef::env-github[]
 image::use-case.png[]
 endif::env-github[]
-ifndef::env-idea[]
+ifdef::env-idea[]
 plantuml::docs/diagrams/use-case.puml[target=use-case,format=png]
 endif::env-idea[]
 
@@ -262,7 +271,7 @@ plantuml::docs/3-tier/3-tier-class.puml[target=3-tier-class,format=png,png-type=
 ifdef::env-github[]
 image::ddd-sequence.png[]
 endif::env-github[]
-ifndef::env-idea[]
+ifdef::env-idea[]
 plantuml::docs/ddd/ddd-sequence.puml[target=ddd-sequence,format=png]
 endif::env-idea[]
 
