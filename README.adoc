@@ -34,7 +34,12 @@ The application has
 == Use case
 
 .Single Use case
+ifndef::env-github[]
+image::docs/images/use-case.png[]
+endif::env-github[]
+ifndef::env-idea[]
 plantuml::docs/diagrams/use-case.puml[target=use-case,format=png]
+endif::env-idea[]
 
 .Database table
 [source,sql]
@@ -254,7 +259,12 @@ plantuml::docs/3-tier/3-tier-class.puml[target=3-tier-class,format=png,png-type=
 * `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
 
 .Sequence Diagram for DDD Architecture
+ifdef::env-github[]
+image::docs/images/ddd-sequence.png[]
+endif::env-github[]
+ifndef::env-idea[]
 plantuml::docs/ddd/ddd-sequence.puml[target=ddd-sequence,format=png]
+endif::env-idea[]
 
 .Class Diagram for DDD Architecture
 plantuml::docs/ddd/ddd-class.puml[target=ddd-class,format=png]
