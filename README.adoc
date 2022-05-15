@@ -1,4 +1,6 @@
 = Architecture By Examples
+:toc: auto
+:toclevels: 5
 :imagesdir: docs/images
 :imagesoutdir: docs/images
 
