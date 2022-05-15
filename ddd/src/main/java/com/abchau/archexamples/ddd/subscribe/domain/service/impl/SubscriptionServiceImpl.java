@@ -1,6 +1,7 @@
 package com.abchau.archexamples.ddd.subscribe.domain.service.impl;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAddress;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAlreadyExistException;
@@ -28,8 +29,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	@Override
 	public boolean isAlreadyExist(EmailAddress emailAddress) throws EmailAlreadyExistException {
 		log.trace(() -> "countByEmail()...invoked");
-		Objects.requireNonNull(emailAddress);
-		
+		Objects.requireNonNull(emailAddress, "email.empty");
+
 		int count = subscriptionRepository.countByEmail(emailAddress);
 
 		if (count > 0) {
@@ -40,11 +41,17 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public Subscription save(Subscription subscription) throws EmailFormatException {
+	public Optional<Subscription> save(Subscription subscription) throws EmailFormatException {
 		log.trace(() -> "save()...invoked");
-		Objects.requireNonNull(subscription);
+		Objects.requireNonNull(subscription, "email.empty");
+		Objects.requireNonNull(subscription.getEmailAddress(), "email.empty");
 
-		// (2) throw domain error
+		// (1) domain validation
+		if (subscription.getEmailAddress().getValue() == null || "".equalsIgnoreCase(subscription.getEmailAddress().getValue())) {
+			throw new NullPointerException("email.empty");
+		}
+
+		// (2) domain validation & throw domain error
 		if (!subscription.getEmailAddress().isValidFormat()) {
 			throw new EmailFormatException("email.format");
 		}

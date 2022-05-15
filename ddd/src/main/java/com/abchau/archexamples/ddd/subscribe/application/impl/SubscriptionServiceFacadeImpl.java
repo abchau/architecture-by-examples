@@ -2,6 +2,7 @@ package com.abchau.archexamples.ddd.subscribe.application.impl;
 
 
 import java.util.Objects;
+import java.util.Optional;
 
 import com.abchau.archexamples.ddd.subscribe.application.SubscriptionServiceFacade;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAddress;
@@ -32,20 +33,21 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 	@Transactional
 	@Override
 	// (2) better method name
-	public SubscriptionDto createSubscription(CreateSubscriptionCommand createSubscriptionCommand) throws IllegalArgumentException, Exception {
+	public Optional<SubscriptionDto> createSubscription(CreateSubscriptionCommand createSubscriptionCommand) throws IllegalArgumentException, Exception {
 		log.trace(() -> "createSubscription()...invoked");
 		Objects.requireNonNull(createSubscriptionCommand);
 
 		String email = createSubscriptionCommand.getEmail();
 		log.debug(() -> "email: " + email);
 
-		// (3) also do validation here
+		// (3) you can also do validation in application layer
 		if (email == null || "".equalsIgnoreCase(email)) {
 			throw new IllegalArgumentException("email.empty");
 		}
 
 		// (3) demonstrate translating domain exception
 		try {
+			// (4) factory pattern
 			EmailAddress emailAddress = EmailAddress.of(email);
 			subscriptionService.isAlreadyExist(emailAddress);
 
@@ -53,18 +55,21 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 			Subscription subscription = Subscription.of(emailAddress);
 			log.debug(() -> "subscription: " + subscription);
 			
-			Subscription savedSubscription = subscriptionService.save(subscription);
+			Subscription savedSubscription = subscriptionService.save(subscription)
+				.orElseThrow();
 			log.debug(() -> "savedSubscription: " + savedSubscription);
 			
 			// (5) demonstrate ACL
 			SubscriptionDto savedSubscriptionDto = AntiCorruptionLayer.translate(savedSubscription);
 			log.debug(() -> "savedSubscriptionDto: " + savedSubscriptionDto);
 			
-			return savedSubscriptionDto;
+			return Optional.of(savedSubscriptionDto);
+		} catch (NullPointerException e) {
+			throw new IllegalArgumentException("email.empty");
+		} catch (EmailFormatException e) {
+			throw new IllegalArgumentException("email.format");
 		} catch (EmailAlreadyExistException e) {
 			throw new IllegalArgumentException("email.duplicate");
-		}  catch (EmailFormatException e) {
-			throw new IllegalArgumentException("email.format");
 		} catch (Exception e) {
 			throw new Exception("error.unknown");
 		}

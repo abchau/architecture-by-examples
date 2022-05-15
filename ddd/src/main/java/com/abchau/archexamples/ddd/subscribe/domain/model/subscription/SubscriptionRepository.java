@@ -1,9 +1,11 @@
 package com.abchau.archexamples.ddd.subscribe.domain.model.subscription;
 
+import java.util.Optional;
+
 public interface SubscriptionRepository {
 
     int countByEmail(EmailAddress emailAddress);
 
-    Subscription save(Subscription subscriptionPersistence);
+    Optional<Subscription> save(Subscription subscription);
 
 }

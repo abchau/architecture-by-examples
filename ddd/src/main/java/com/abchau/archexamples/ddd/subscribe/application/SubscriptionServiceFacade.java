@@ -1,5 +1,7 @@
 package com.abchau.archexamples.ddd.subscribe.application;
 
+import java.util.Optional;
+
 import com.abchau.archexamples.ddd.subscribe.application.dto.SubscriptionDto;
 
 import lombok.Data;
@@ -9,7 +11,7 @@ import lombok.ToString;
 
 public interface SubscriptionServiceFacade {
 
-	public SubscriptionDto createSubscription(CreateSubscriptionCommand createSubscriptionCommand) throws IllegalArgumentException, Exception;
+	public Optional<SubscriptionDto> createSubscription(CreateSubscriptionCommand createSubscriptionCommand) throws IllegalArgumentException, Exception;
 
 	@Data
 	@Getter

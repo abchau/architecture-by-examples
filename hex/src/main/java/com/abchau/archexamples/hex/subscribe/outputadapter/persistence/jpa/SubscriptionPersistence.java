@@ -28,12 +28,6 @@ public class SubscriptionPersistence {
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "username")
-	private String username;
-
-	@Column(name = "password")
-	private String password;
-
 	@Column(name = "status")
 	private String status;
 

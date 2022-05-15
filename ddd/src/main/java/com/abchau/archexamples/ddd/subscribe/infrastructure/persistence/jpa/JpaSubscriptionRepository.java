@@ -1,6 +1,7 @@
 package com.abchau.archexamples.ddd.subscribe.infrastructure.persistence.jpa;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAddress;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.Subscription;
@@ -25,6 +26,7 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 	public int countByEmail(EmailAddress emailAddress) {
 		log.trace(() -> "countByEmail()...invoked");
 		Objects.requireNonNull(emailAddress);
+		Objects.requireNonNull(emailAddress.getValue());
 
 		String email = emailAddress.getValue();
 		log.debug(() -> "email: " + email);
@@ -33,9 +35,11 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 	}
 
 	@Override
-	public Subscription save(Subscription subscription) {
+	public Optional<Subscription> save(Subscription subscription) {
 		log.trace(() -> "save()...invoked");
 		Objects.requireNonNull(subscription);
+		Objects.requireNonNull(subscription.getEmailAddress());
+		Objects.requireNonNull(subscription).getEmailAddress().getValue();
 
 		SubscriptionPersistence subscriptionPersistence = AntiCorruptionLayer.translate(subscription);
 		log.debug(() -> "subscriptionPersistence: " + subscriptionPersistence);
@@ -46,7 +50,7 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 		Subscription savedSubscription = AntiCorruptionLayer.translate(savedSubscriptionPersistence);
 		log.debug(() -> "savedSubscription: " + savedSubscription);
 
-		return savedSubscription;
+		return Optional.of(savedSubscription);
 	}
 
 	private static class AntiCorruptionLayer {
