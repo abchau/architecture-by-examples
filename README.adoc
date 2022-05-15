@@ -50,9 +50,9 @@ The application has
 ifdef::env-github[]
 image::use-case.png[]
 endif::env-github[]
-ifdef::env-idea[]
+ifdef::env-idea,env-vscode[]
 plantuml::docs/diagrams/use-case.puml[target=use-case,format=png]
-endif::env-idea[]
+endif::env-idea,env-vscode[]
 
 .Database table
 [source,sql]

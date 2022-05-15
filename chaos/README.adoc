@@ -9,19 +9,19 @@
 * `*SubscriptionServiceImpl*`: supposed to be business logic but...
 * `*SubscriptionRepository*`: do technology-specified persistence operations
 
-.Sequence Diagram for 3-tier Architecture
+.Sequence Diagram for Chaos Architecture
 ifdef::env-github[]
-image::3-tier-class.png[]
+image::chaos-class.png[]
 endif::env-github[]
-ifdef::env-idea[]
-plantuml::docs/diagrams/3-tier-sequence.puml[target=3-tier-sequence,format=png,opts="inline"]
-endif::env-idea[]
+ifdef::env-idea,env-vscode[]
+plantuml::docs/diagrams/chaos-sequence.puml[target=chaos-sequence,format=png,opts="inline"]
+endif::env-idea,env-vscode[]
 
-.Class Diagram for 3-tier Architecture
+.Class Diagram for Chaos Architecture
 ifdef::env-github[]
-image::3-tier-class.png[]
+image::chaos-class.png[]
 endif::env-github[]
-ifdef::env-idea[]
-plantuml::docs/diagrams/3-tier-class.puml[target=3-tier-class,format=png,png-type="inline"]
-endif::env-idea[]
+ifdef::env-idea,env-vscode[]
+plantuml::docs/diagrams/chaos-class.puml[target=chaos-class,format=png,png-type="inline"]
+endif::env-idea,env-vscode[]
 
