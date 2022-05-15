@@ -18,9 +18,7 @@ import lombok.ToString;
  * @hexarch-name Domain Object
  */
 @Builder
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data
 public class Subscription {
 
 	/**

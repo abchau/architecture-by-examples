@@ -40,4 +40,6 @@ deactivate SubscriptionService
 SubscriptionController --> User
 deactivate SubscriptionController
 
+deactivate User
+
 @enduml

@@ -3,9 +3,6 @@ package com.abchau.archexamples.hex.subscribe.application.core;
 import java.time.Clock;
 import java.time.ZonedDateTime;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

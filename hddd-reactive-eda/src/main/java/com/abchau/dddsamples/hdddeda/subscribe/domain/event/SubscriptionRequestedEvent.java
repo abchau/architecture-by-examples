@@ -10,9 +10,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Builder
-@Getter
-@EqualsAndHashCode
-@ToString
+@Data
 public class SubscriptionRequestedEvent extends DomainEvent {
 
 	protected final String type = getClass().toString();
