@@ -109,6 +109,8 @@ image::demo5.png[]
 |username|`sa`
 |password|`password`
 |===
++
+image::demo6.png[] 
 
 == Overview
 
