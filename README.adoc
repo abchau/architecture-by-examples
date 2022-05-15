@@ -1,0 +1,99 @@
+= Architecture By Examples
+
+This repository demostrates different architectures by implementing a simple use case. 
+
+== Rationale
+
+* marjority of existing examples are often too bulky and too complicated
+
+== Scope
+
+=== In Scope
+
+The application has
+
+* one external e*ndpoint*
+* one *use case*
+* one *aggregate*
+** one *entity*
+** one *value object*
+* one database *table*
+* three *exceptions*
+** one *exception* that can be thrown in presentation layer or application layer or domain layer
+** one *exception* that can be thrown in domain layer
+** one *exception* that can be thrown in domain layer but requires input from infrastructure layer
+
+=== Out Scope
+
+* does not have a bug free and flawless design
+* does not demostrate how to use various approach to tackle on same problem
+* does not demostrate how to use various design patterns
+
+== Use case
+
+.Single Use case
+[plantuml]
+....
+
+actor browser
+
+rectangle backend
+database datastore
+
+browser -right-> backend: GET, POST /subscribe
+backend -right-> datastore: writes into
+
+....
+
+.Database table
+[source,sql]
+----
+CREATE TABLE IF NOT EXISTS subscriptions (
+	id BINARY(36) PRIMARY KEY,
+	email VARCHAR(512) NOT NULL,
+	status VARCHAR(256) NOT NULL,
+	created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+	last_updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
+	version BIGINT NOT NULL
+);
+----
+
+== Architecture
+
+[cols="1,1,2,4",options=header]
+|===
+|#|Name|Architecture|Description
+|1|`chaos`|Chaos Architecture|A big ball of mud. It's jsut &#128169; everywhere. (Or should we call it Anarchy Architecture?)
+|2|`3-tier`|3-tier Architecture|Most comman way. Easy to understand. Easy to build. Difficult to maintain when it grows bigger.
+|3|`ddd`|Domain Driven Design|Implement Eric Evan's masterpiece. Best effort to honor original intention
+|4|`hex`|Hexagonal Architecture (Ports and Adapters)|Implement Alistair Cockburn's masterpiece. Best effort to honor original intention
+|5|`hddd`|Hexagonal Domain Driven Design| Implement DDD using Hexagonal Architecture (also added personal preference)
+|===
+
+== How to test
+
+* Import in your favourite IDE
+* Start each project as a spring boot application individually
+* Go to http://localhost:8080/subscribe
+* *Four* conditions can be tested
++
+[cols="1,4,2",options=header]
+|===
+|#|Input|Expected outcome
+|1|empty input|fail
+|2|not empty but invalid email format|fail
+|3|correct email format|success
+|4|correct email format but duplicate|fail
+|===
+
+* To verify DB records, go to:
++
+[cols="h,4"]
+|===
+|URL|http://localhost:8080/h2-console
+|JDBC URL| `jdbc:h2:mem:testdb`
+|username|`sa`
+|password|`password`
+|===
+
+include::docs/index.adoc[]

@@ -1,0 +1,168 @@
+
+=== Hexagonal DDD
+
+*Brief Description of Duties & Responsibilities*:
+
+* `*SubscriptionController*`: receives taks from specific interface
+* `*SubscriptionFacadeImpl*`: task coordination, transaction, anti-corruption
+* `*CreateSubscription*`: business logic
+* `*JpaSubscriptionAdapter*`: anti-corruption, delegate persistence operations to `SubscriptionPersistenceJpaRepositoy`
+* `*SubscriptionPersistenceJpaRepositoy*`: do technology-specified persistence operations
+
+.Sequence Diagram for Hexagonal DDD Architecture
+[plantuml,target=hddd-sequence,format=svg]
+....
+@startuml
+
+actor User 
+box User Interfaces Layer
+participant SubscriptionController << (C,#ADD1B2) @Controller >>
+end box
+box Application Layer
+participant SubscriptionFacadeImpl << (C,#ADD1B2) @Bean >>
+end box
+box Domain Model Layer
+participant SubscriptionServiceImpl << (C,#ADD1B2) @Bean >>
+end box
+box Infrastructure Layer
+participant JpaSubscriptionPersistenceAdapter << (C,#ADD1B2) @Bean >>
+participant SubscriptionPersistenceJpaRepository << (C,#ADD1B2) @Repository >>
+end box
+database Datastore
+
+activate User
+
+User --> SubscriptionController
+activate SubscriptionController
+
+note over SubscriptionFacadeImpl: via SubscriptionFacade
+
+SubscriptionController --> SubscriptionFacadeImpl
+activate SubscriptionFacadeImpl
+
+note over SubscriptionServiceImpl: via SubscriptionService
+
+SubscriptionFacadeImpl --> SubscriptionServiceImpl
+activate SubscriptionServiceImpl
+
+note over JpaSubscriptionPersistenceAdapter: via SubscriptionPersistencePort
+
+SubscriptionServiceImpl --> JpaSubscriptionPersistenceAdapter
+activate JpaSubscriptionPersistenceAdapter
+
+JpaSubscriptionPersistenceAdapter --> SubscriptionPersistenceJpaRepository
+activate SubscriptionPersistenceJpaRepository
+
+SubscriptionPersistenceJpaRepository --> Datastore
+activate Datastore
+
+Datastore --> SubscriptionPersistenceJpaRepository
+deactivate Datastore
+
+SubscriptionPersistenceJpaRepository --> JpaSubscriptionPersistenceAdapter
+deactivate SubscriptionPersistenceJpaRepository
+
+JpaSubscriptionPersistenceAdapter --> SubscriptionServiceImpl
+deactivate JpaSubscriptionPersistenceAdapter
+
+SubscriptionServiceImpl --> SubscriptionFacadeImpl
+deactivate SubscriptionServiceImpl
+
+SubscriptionFacadeImpl --> SubscriptionController
+deactivate SubscriptionFacadeImpl
+
+SubscriptionController --> User
+deactivate SubscriptionController
+....
+
+.Class Diagram for Hexagonal DDD Architecture
+[plantuml,target=hddd-class,format=svg]
+....
+@startuml
+allowmixing
+
+rectangle "User Interface Layer" {
+	package interfaces {
+		package web {
+			class SubscriptionController
+		}
+	}
+}
+
+rectangle "Application Layer" {
+	package application {
+		package dto {
+			class SubscriptionDto
+		}
+
+		package facade {
+			interface SubscriptionFacade
+			class SubscriptionCommand
+			class SubscriptionFacadeImpl
+
+		}
+	}
+}
+
+rectangle "Domain Model Layer" {
+	package domain {
+		package entity {
+			class Subscription
+		}
+
+		package input {
+			interface SubscriptionService
+		}
+
+		package service {
+			class SubscriptionServiceImpl
+		}
+
+		package output {
+			interface SubscriptionPersistencePort
+		}
+	}
+}
+
+rectangle "Infrastructure Layer" {
+	package infrastructure {
+		package persistence {
+			package jpa {
+				class JpaSubscriptionPersistenceAdapter
+				class SubscriptionPersistenceJpaRepository
+				class SubscriptionPersistence
+			}
+		}
+	}
+}
+
+actor Http
+Http -down-> SubscriptionController
+
+SubscriptionController -down-> SubscriptionFacade
+SubscriptionController .down.> SubscriptionCommand: uses
+SubscriptionController .down.> SubscriptionDto: uses
+
+SubscriptionFacade .left.> SubscriptionCommand: uses
+SubscriptionFacade .right.> SubscriptionDto: uses
+SubscriptionFacadeImpl -up-> SubscriptionFacade: implements
+SubscriptionFacadeImpl .up.> SubscriptionCommand: uses
+SubscriptionFacadeImpl .up.> SubscriptionDto: uses
+
+SubscriptionFacadeImpl -down-> SubscriptionService
+
+SubscriptionServiceImpl -up-> SubscriptionService: implements
+SubscriptionServiceImpl -down-> SubscriptionPersistencePort
+SubscriptionService ..> Subscription: uses
+SubscriptionServiceImpl ..> Subscription: uses
+
+SubscriptionPersistencePort .left.> Subscription: uses
+JpaSubscriptionPersistenceAdapter .up.> Subscription: uses
+
+JpaSubscriptionPersistenceAdapter -up-> SubscriptionPersistencePort: implements
+JpaSubscriptionPersistenceAdapter -left-> SubscriptionPersistenceJpaRepository
+SubscriptionPersistenceJpaRepository ..> SubscriptionPersistence: uses
+JpaSubscriptionPersistenceAdapter ..> SubscriptionPersistence: uses
+
+@enduml
+....

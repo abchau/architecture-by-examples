@@ -1,0 +1,137 @@
+== Overview
+
+[cols="1,1,2,1,1,1,1,2",width="100%",options=header]
+|===
+|#
+|Name
+|Input
+2+|Application Flow
+2+|Business Logic
+|Output
+
+|1|`chaos`
+6+|Presentation Layer, Business Logic Layer, Data Layer (anything could happen anywhere)
+
+2+|
+2+a|*Controller*:
+
+* `SubscriptionController`
+3+a|*Service*:
+
+* `SubscriptionService`
+
+a|* `Subscription`
+* `SubscriptionRepository`
+
+|2|`3-tier`
+2+|Presentation Layer
+3+|Business Logic Layer
+|Data Layer
+
+2+|
+2+a|*Controller*:
+
+* `SubscriptionController`
+3+a|*Service*:
+
+* `SubscriptionService`
+
+a|* `Subscription`
+* `SubscriptionRepository`
+
+
+|3|`ddd`
+|User Interfaces Layer
+2+|Application Layer
+2+|Domain Model Layer
+|Infrastructure Layer
+
+2+|
+a| *Web Interface*: 
+
+* `SubscriptionController`
+
+2+a| *Application Service*: 
+
+* `SubscriptionFacade`
+* `SubscriptionFacadeImpl`
+
+2+a|
+
+* *Domain Service*: 
+** `SubscriptionService`
+** `SubscriptionServiceImpl`
+* *Entity*: 
+** `Subscription`
+* *Repository*: 
+** `SubscriptionRepository`
+
+a| *Spring Data Repository*: 
+
+* `JpaSubscriptionRepository`
+
+
+|4|`hex`
+|Input Adapters
+2+|Application
+2+|Core
+|Output Adapters
+
+2+|
+a|*Web Input Adapter*: 
+
+*`SubscriptionController`
+
+2+| `SubscriptionFacadeImpl`
+2+a|
+* *Input Port*: `SubscriptionFacade`
+* *Entity*: `Subscription`
+* *Use Cases*: `CreateSubscriptionUseCase`
+* *Output Port*: `SubscriptionPersistencePort`
+a| * *Persistence Output Adapter*:
+** `JpaSubscriptionPersistenceAdapter`
+* *Spring Data Repository*:
+** `SubscriptionPersistenceJpaRepository`
+
+|5|`hddd`
+|User Interfaces Layer
+2+|Application Layer
+2+|Domain Model Layer
+|Infrastructure Layer
+
+2+|
+a|*Web Input Adapter*: 
+
+* `SubscriptionController`
+
+2+a| *Application Service*: 
+
+* `SubscriptionFacade`
+* `SubscriptionFacadeImpl`
+
+2+a|
+* *Input Port*: 
+** `SubscriptionService`
+* *Domain Service*: 
+** `SubscriptionServiceImpl`
+* *Entity*: 
+** `Subscription`
+* *Output Port*: 
+** `SubscriptionPersistencePort`
+a|
+* *Persistence Output Adapter*: 
+** `JpaSubscriptionPersistenceAdapter`
+* *Spring Data Repository*:
+** `SubscriptionPersistenceJpaRepository`
+
+|===
+
+include::chaos/index.adoc[]
+
+include::3-tier/index.adoc[]
+
+include::ddd/index.adoc[]
+
+include::hex/index.adoc[]
+
+include::hddd/index.adoc[]

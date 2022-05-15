@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Error</title>
+</head>
+<body style="display: flex; justify-content: center;">
+	tihs is error
+	<ul>
+		<li th:each="entry : ${error}">
+			<th:block th:text="${entry.key}">key</th:block>: <th:block th:text="${entry.value}">value</th:block>
+		</li>
+	</ul>
+</body>
