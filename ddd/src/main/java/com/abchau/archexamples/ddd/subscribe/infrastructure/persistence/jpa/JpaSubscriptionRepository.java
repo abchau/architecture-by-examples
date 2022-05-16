@@ -1,12 +1,13 @@
 package com.abchau.archexamples.ddd.subscribe.infrastructure.persistence.jpa;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAddress;
-import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailPersistenceErrorException;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.Subscription;
+import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.SubscriptionId;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.SubscriptionRepository;
+import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.SubscriptionStatus;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,8 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 	@Override
 	public int countByEmail(EmailAddress emailAddress) {
 		log.trace(() -> "countByEmail()...invoked");
+		log.debug(() -> "emailAddress: " + emailAddress);
+
 		Objects.requireNonNull(emailAddress);
 		Objects.requireNonNull(emailAddress.getValue());
 
@@ -36,8 +39,10 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 	}
 
 	@Override
-	public Subscription save(Subscription subscription) throws EmailPersistenceErrorException {
+	public Subscription save(Subscription subscription) {
 		log.trace(() -> "save()...invoked");
+		log.debug(() -> "subscription: " + subscription);
+
 		Objects.requireNonNull(subscription);
 		Objects.requireNonNull(subscription.getEmailAddress());
 		Objects.requireNonNull(subscription).getEmailAddress().getValue();
@@ -55,33 +60,35 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 			return savedSubscription;
 		} catch(Exception e) {
 			log.error("couldn't persist data", e);
-			throw new EmailPersistenceErrorException("error.persistence");
+			throw e;
 		}
 	}
 
 	private static class AntiCorruptionLayer {
 
 		public static Subscription translate(SubscriptionPersistence subscriptionPersistence) {
+			log.debug(() -> "subscriptionPersistence: " + subscriptionPersistence);
 			Objects.requireNonNull(subscriptionPersistence);
 
 			return Subscription.builder()
-				.id(subscriptionPersistence.getId())
+				.id(SubscriptionId.of(subscriptionPersistence.getId()))
 				.emailAddress(EmailAddress.of(subscriptionPersistence.getEmail()))
-				.status(subscriptionPersistence.getStatus())
-				.createdAt(subscriptionPersistence.getCreatedAt())
-				.lastUpdatedAt(subscriptionPersistence.getLastUpdatedAt())
+				.status(SubscriptionStatus.valueOf(subscriptionPersistence.getStatus()))
+				.subscribedAt(subscriptionPersistence.getSubscribedAt())
+				.confirmedAt(subscriptionPersistence.getConfirmedAt())
 				.build();
 		}
 
 		public static SubscriptionPersistence translate(Subscription subscription) {
+			log.debug(() -> "subscription: " + subscription);
 			Objects.requireNonNull(subscription);
 
 			return SubscriptionPersistence.builder()
-				.id(subscription.getId())
+				.id(subscription.getId() == null ? null : subscription.getId().getValue())
 				.email(subscription.getEmailAddress().getValue())
-				.status(subscription.getStatus())
-				.createdAt(subscription.getCreatedAt())
-				.lastUpdatedAt(subscription.getLastUpdatedAt())
+				.status(subscription.getStatus().toString())
+				.subscribedAt(subscription.getSubscribedAt())
+				.confirmedAt(subscription.getConfirmedAt())
 				.build();
 		}
 	}

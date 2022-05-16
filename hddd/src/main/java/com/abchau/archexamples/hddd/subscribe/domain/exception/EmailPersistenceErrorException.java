@@ -1,6 +1,6 @@
 package com.abchau.archexamples.hddd.subscribe.domain.exception;
 
-public class EmailPersistenceErrorException extends RuntimeException {
+public class EmailPersistenceErrorException extends Exception {
 	
 	public static final String CODE = "error.persistence";
 

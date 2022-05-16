@@ -1,14 +1,18 @@
 package com.abchau.archexamples.ddd.subscribe.application.impl;
 
-
+import java.time.Clock;
+import java.time.ZonedDateTime;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
 import com.abchau.archexamples.ddd.subscribe.application.SubscriptionServiceFacade;
+import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.CannotCreateSubscriptionException;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAddress;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAlreadyExistException;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailFormatException;
+import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailIsEmptyException;
+import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.InvalidSubscriptionStatusException;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.Subscription;
 import com.abchau.archexamples.ddd.subscribe.domain.service.SubscriptionService;
 import com.abchau.archexamples.ddd.subscribe.application.dto.SubscriptionDto;
@@ -36,12 +40,14 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 	// (2) better method name
 	public Optional<SubscriptionDto> createSubscription(CreateSubscriptionCommand createSubscriptionCommand) throws IllegalArgumentException, Exception {
 		log.trace(() -> "createSubscription()...invoked");
+		log.debug(() -> "createSubscriptionCommand: " + createSubscriptionCommand);
+
 		Objects.requireNonNull(createSubscriptionCommand);
 
 		String email = createSubscriptionCommand.getEmail();
 		log.debug(() -> "email: " + email);
 
-		// (3) you can also do validation in application layer
+		// (3) do validation in application layer
 		if (email == null || "".equalsIgnoreCase(email)) {
 			throw new IllegalArgumentException("email.empty");
 		}
@@ -49,15 +55,30 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 		// (3) demonstrate translating domain exception
 		try {
 			// (4) factory pattern
-			EmailAddress emailAddress = EmailAddress.of(email);
-			subscriptionService.isAlreadyExist(emailAddress);
+			Subscription newSubscription = Subscription.of(EmailAddress.of(email), ZonedDateTime.now(Clock.systemDefaultZone()));
+			log.debug(() -> "newSubscription: " + newSubscription);
 
-			// (4) factory pattern
-			Subscription subscription = Subscription.of(emailAddress);
-			log.debug(() -> "subscription: " + subscription);
+			// (3) do validation in application layer
+			if (!newSubscription.getEmailAddress().isValidFormat()) {
+				throw new EmailFormatException("email.format");
+			}
+
+			// (4) validate state before changing
+			if (newSubscription.isValidForValidated()) {
+				newSubscription.toValidated();
+			}
+
+			// (3) do validation in application layer
+			if (subscriptionService.isAlreadyExist(newSubscription.getEmailAddress())) {
+				throw new EmailAlreadyExistException("email.duplicate");
+			}
+
+			// (4) validate state before changing
+			if (newSubscription.isValidForConfirmed()) {
+				newSubscription.toConfirmed(ZonedDateTime.now(Clock.systemDefaultZone()));
+			}
 			
-			Subscription savedSubscription = subscriptionService.save(subscription)
-				.orElseThrow();
+			Subscription savedSubscription = subscriptionService.save(newSubscription);
 			log.debug(() -> "savedSubscription: " + savedSubscription);
 			
 			// (5) demonstrate ACL
@@ -65,13 +86,15 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 			log.debug(() -> "savedSubscriptionDto: " + savedSubscriptionDto);
 			
 			return Optional.of(savedSubscriptionDto);
-		} catch (NullPointerException e) {
-			throw new IllegalArgumentException("email.empty");
+		} catch (EmailIsEmptyException e) {
+			throw new IllegalArgumentException(e.getMessage());
 		} catch (EmailFormatException e) {
-			throw new IllegalArgumentException("email.format");
+			throw new IllegalArgumentException(e.getMessage());
 		} catch (EmailAlreadyExistException e) {
-			throw new IllegalArgumentException("email.duplicate");
-		} catch (NoSuchElementException e) { // not necessary to have separate catch block
+			throw new IllegalArgumentException(e.getMessage());
+		} catch (InvalidSubscriptionStatusException e) {
+			throw new Exception("error.unknown");
+		} catch (CannotCreateSubscriptionException e) {
 			throw new Exception("error.unknown");
 		} catch (Exception e) {
 			throw new Exception("error.unknown");
@@ -82,14 +105,15 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 	private static class AntiCorruptionLayer {
 
 		public static SubscriptionDto translate(Subscription subscription) {
+			log.debug(() -> "subscription: " + subscription);
 			Objects.requireNonNull(subscription);
 
 			return SubscriptionDto.builder()
-				.id(subscription.getId())
+				.id(subscription.getId().getValue())
 				.email(subscription.getEmailAddress().getValue())
-				.status(subscription.getStatus())
-				.createdAt(subscription.getCreatedAt())
-				.lastUpdatedAt(subscription.getLastUpdatedAt())
+				.status(subscription.getStatus().toString())
+				.subscribedAt(subscription.getSubscribedAt())
+				.confirmedAt(subscription.getConfirmedAt())
 				.build();
 		}
 	}

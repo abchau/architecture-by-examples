@@ -1,6 +1,6 @@
 package com.abchau.archexamples.hddd.subscribe.domain.exception;
 
-public class EmailAlreadyExistException extends RuntimeException {
+public class EmailAlreadyExistException extends Exception {
 	
 	public static final String CODE = "email.duplicate";
 

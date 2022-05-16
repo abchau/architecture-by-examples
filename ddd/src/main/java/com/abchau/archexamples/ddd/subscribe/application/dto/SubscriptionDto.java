@@ -1,6 +1,5 @@
 package com.abchau.archexamples.ddd.subscribe.application.dto;
 
-import java.time.Clock;
 import java.time.ZonedDateTime;
 
 import lombok.AllArgsConstructor;
@@ -18,8 +17,8 @@ public class SubscriptionDto {
 	
 	private String status;
 
-	private ZonedDateTime createdAt;
+	private ZonedDateTime subscribedAt;
 
-	private ZonedDateTime lastUpdatedAt;
+	private ZonedDateTime confirmedAt;
 
 }

@@ -6,7 +6,8 @@ import java.util.Optional;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAddress;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAlreadyExistException;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailFormatException;
-import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailPersistenceErrorException;
+import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailIsEmptyException;
+import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.CannotCreateSubscriptionException;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.Subscription;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.SubscriptionRepository;
 import com.abchau.archexamples.ddd.subscribe.domain.service.SubscriptionService;
@@ -18,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-public class SubscriptionServiceImpl implements SubscriptionService {
+public final class SubscriptionServiceImpl implements SubscriptionService {
 
 	private SubscriptionRepository subscriptionRepository;
 
@@ -28,12 +29,19 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public boolean isAlreadyExist(EmailAddress emailAddress) throws EmailAlreadyExistException {
-		log.trace(() -> "countByEmail()...invoked");
-		Objects.requireNonNull(emailAddress, "email.empty");
+	public boolean isAlreadyExist(EmailAddress emailAddress) throws EmailIsEmptyException, EmailAlreadyExistException {
+		log.trace(() -> "isAlreadyExist()...invoked");
+		log.debug(() -> "emailAddress: " + emailAddress);
 
+		// (1) must do domain validation before executing domain logic
+		if (emailAddress == null 
+			|| (emailAddress.getValue() == null || "".equalsIgnoreCase(emailAddress.getValue()))
+		) {
+			throw new EmailIsEmptyException("email.empty");
+		}
+
+		// (2) only execute after domain validation
 		int count = subscriptionRepository.countByEmail(emailAddress);
-
 		if (count > 0) {
 			throw new EmailAlreadyExistException("email.duplicate");
 		}
@@ -42,26 +50,37 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public Optional<Subscription> save(Subscription subscription) throws EmailFormatException {
+	public Subscription save(Subscription subscription) throws EmailIsEmptyException, EmailFormatException, EmailAlreadyExistException, CannotCreateSubscriptionException {
 		log.trace(() -> "save()...invoked");
-		Objects.requireNonNull(subscription, "email.empty");
-		Objects.requireNonNull(subscription.getEmailAddress(), "email.empty");
+		log.debug(() -> "subscription: " + subscription);
+		
+		// (1) must do domain validation before executing domain logic
 
-		// (1) domain validation
-		if (subscription.getEmailAddress().getValue() == null || "".equalsIgnoreCase(subscription.getEmailAddress().getValue())) {
-			throw new NullPointerException("email.empty");
+		if (subscription == null 
+			|| subscription.getEmailAddress() == null
+			|| (subscription.getEmailAddress().getValue() == null || "".equalsIgnoreCase(subscription.getEmailAddress().getValue()))
+		) {
+			throw new EmailIsEmptyException("email.empty");
 		}
 
-		// (2) domain validation & throw domain error
 		if (!subscription.getEmailAddress().isValidFormat()) {
 			throw new EmailFormatException("email.format");
 		}
+
+		if (isAlreadyExist(subscription.getEmailAddress())) {
+			throw new EmailAlreadyExistException("email.duplicate");
+		}
+
+		if (!subscription.isStatusConfirmed()) {
+			throw new EmailAlreadyExistException("error.status.invalid");
+		}
 		
+		// (2) only execute after domain validation
 		try {
-			return Optional.of(subscriptionRepository.save(subscription));
-		} catch (EmailPersistenceErrorException e) {
-			log.error("", e);
-			return Optional.empty();
+			return subscriptionRepository.save(subscription);
+		} catch (Exception e) {
+			log.error("couldn't create subscription", e);
+			throw new CannotCreateSubscriptionException("error.create");
 		} 
 	}
 

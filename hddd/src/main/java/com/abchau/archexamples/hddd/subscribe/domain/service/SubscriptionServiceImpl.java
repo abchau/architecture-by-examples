@@ -59,7 +59,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		
 		try {
 			return Optional.of(subscriptionPersistencePort.save(subscription));
-		} catch (EmailPersistenceErrorException e) {
+		} catch (Exception e) {
 			log.error("", e);
 			return Optional.empty();
 		} 

@@ -1,6 +1,6 @@
 package com.abchau.archexamples.hddd.subscribe.domain.exception;
 
-public class EmailFormatException extends RuntimeException {
+public class EmailFormatException extends Exception {
 	
 	public static final String CODE = "email.format";
 

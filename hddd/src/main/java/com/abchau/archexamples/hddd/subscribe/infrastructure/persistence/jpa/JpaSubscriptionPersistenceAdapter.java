@@ -55,7 +55,7 @@ public class JpaSubscriptionPersistenceAdapter implements SubscriptionPersistenc
 			return savedSubscription;
 		} catch(Exception e) {
 			log.error("couldn't persist data", e);
-			throw new EmailPersistenceErrorException("error.persistence");
+			throw e;
 		}
 	}
 

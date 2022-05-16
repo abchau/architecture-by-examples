@@ -51,27 +51,31 @@ public class SubscribeController {
 		}
 
 		// (2) return immediately
+		// (3) oftern makes call across boundary
+		if (!Subscription.isEmailValid(email)) {
+			modelAndView.addObject("email", email);
+			modelAndView.addObject("message", "email.format");
+			return modelAndView;
+		} 
+
+		// (2) return immediately
 		if (subscriptionService.isAlreadyExist(email)) {
 			modelAndView.addObject("email", email);
 			modelAndView.addObject("message", "email.duplicate");
 			return modelAndView;
 		} 
 
-		// (3) use constructor or factory pattern
+		// (4) use constructor or factory pattern
 		Subscription newSubscription = Subscription.of(email);
 		log.debug(() -> "newSubscription: " + newSubscription);
 
-		// (4) catch application error and business error
+		// (5) catch application error and business error
 		try {
-			// (5) pass a business object, not technology specific object nor map
 			Subscription savedSubscription = subscriptionService.save(newSubscription);
 			log.debug(() -> "savedSubscription: " + savedSubscription);
 
 			modelAndView.addObject("email", savedSubscription.getEmail());
 			modelAndView.addObject("message", "success");
-		} catch (IllegalArgumentException e) {
-			log.error("Known error. ", e);
-			modelAndView.addObject("message", "email.format");
 		} catch (Exception e) {
 			log.error("Unknown error. ", e);
 			modelAndView.addObject("message", "error.unknown");

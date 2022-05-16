@@ -3,7 +3,9 @@ package com.abchau.archexamples.ddd.subscribe.infrastructure.persistence.jpa;
 import java.time.ZonedDateTime;
 
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Version;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,27 +21,22 @@ import lombok.Data;
 public class SubscriptionPersistence {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subscription_generator")
+	@SequenceGenerator(name = "subscription_generator", sequenceName = "seq_subscriptions_id", allocationSize = 1)
 	@Column(name = "id")
 	private Long id;
 
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "username")
-	private String username;
-
-	@Column(name = "password")
-	private String password;
-
 	@Column(name = "status")
 	private String status;
 
-	@Column(name = "created_at")
-	private ZonedDateTime createdAt;
+	@Column(name = "subscribed_at")
+	private ZonedDateTime subscribedAt;
 
-	@Column(name = "last_updated_at")
-	private ZonedDateTime lastUpdatedAt;
+	@Column(name = "confirmed_at")
+	private ZonedDateTime confirmedAt;
 
 	@Version
 	@Column(name = "version")

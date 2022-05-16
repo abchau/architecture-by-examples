@@ -4,6 +4,6 @@ public interface SubscriptionRepository {
 
     int countByEmail(EmailAddress emailAddress);
 
-    Subscription save(Subscription subscription) throws EmailPersistenceErrorException;
+    Subscription save(Subscription subscription);
 
 }

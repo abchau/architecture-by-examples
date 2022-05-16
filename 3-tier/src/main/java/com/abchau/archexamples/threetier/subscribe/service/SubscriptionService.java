@@ -33,17 +33,14 @@ public class SubscriptionService {
 	}
 	
 	@Transactional
-	public Subscription save(Subscription newSubscription) throws IllegalArgumentException, Exception {
+	public Subscription save(Subscription subscription) throws Exception {
 		log.trace(() -> "save()...invoked");
-		log.debug(() -> "subscription: " + newSubscription);
+		log.debug(() -> "subscription: " + subscription);
 
-		if (!Subscription.isEmailValid(newSubscription.getEmail())) {
-			// (2) throw domain error
-			throw new IllegalArgumentException("email.format");
-		}
+		// (2) often not doing domain validation
 
 		// (3) not hanlding exception
-		return subscriptionRepository.save(newSubscription);
+		return subscriptionRepository.save(subscription);
 	}
 
 }
