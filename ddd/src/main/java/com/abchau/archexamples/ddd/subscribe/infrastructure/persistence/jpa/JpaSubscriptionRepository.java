@@ -59,7 +59,7 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 	
 			return savedSubscription;
 		} catch(Exception e) {
-			log.error("couldn't persist data", e);
+			log.error("Unknown infrastructure error", e);
 			throw e;
 		}
 	}

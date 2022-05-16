@@ -86,17 +86,14 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 			log.debug(() -> "savedSubscriptionDto: " + savedSubscriptionDto);
 			
 			return Optional.of(savedSubscriptionDto);
-		} catch (EmailIsEmptyException e) {
-			throw new IllegalArgumentException(e.getMessage());
-		} catch (EmailFormatException e) {
-			throw new IllegalArgumentException(e.getMessage());
-		} catch (EmailAlreadyExistException e) {
-			throw new IllegalArgumentException(e.getMessage());
-		} catch (InvalidSubscriptionStatusException e) {
+		} catch (EmailIsEmptyException | EmailFormatException | EmailAlreadyExistException | InvalidSubscriptionStatusException e) {
+			log.error("known domain error. ", e);
 			throw new Exception("error.unknown");
 		} catch (CannotCreateSubscriptionException e) {
+			log.error("Unknown domain error. ", e);
 			throw new Exception("error.unknown");
 		} catch (Exception e) {
+			log.error("Unknown domain error. ", e);
 			throw new Exception("error.unknown");
 		}
 	}

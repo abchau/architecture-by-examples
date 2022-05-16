@@ -51,11 +51,11 @@ public class SubscribeController {
 			modelAndView.addObject("email", subscriptionDto.getEmail());
 			modelAndView.addObject("message", "success");
 		} catch (IllegalArgumentException e) {
-			log.error("Known error. ", e);
+			log.error("Known application error. ", e);
 			modelAndView.addObject("email", createSubscriptionCommand.getEmail());
 			modelAndView.addObject("message", e.getMessage());
 		} catch (Exception e) {
-			log.error("Unknown error. ", e);
+			log.error("Unknown application error. ", e);
 			modelAndView.addObject("message", e.getMessage());
 		}
 
