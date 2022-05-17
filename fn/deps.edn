@@ -1,0 +1,9 @@
+{:paths ["src" "resources" "lib"]
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+        metosin/malli {:mvn/version "0.8.4"}
+        org.clojure/tools.logging {:mvn/version "1.2.4"}
+        ch.qos.logback/logback-classic {:mvn/version "1.2.11"}
+        org.thymeleaf/thymeleaf {:mvn/version "3.0.15.RELEASE"}
+        ring/ring-defaults {:mvn/version "0.3.3"}
+        ring/ring-jetty-adapter {:mvn/version "1.9.5"}}
+ :jvm-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/slf4j-factory"]}

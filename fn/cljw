@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if test -f ".bin/bb";
+then
+  .bin/bb clojure $@
+else
+  curl -sLO https://raw.githubusercontent.com/babashka/babashka/master/install
+  chmod +x install
+  ./install --dir .bin/
+  .bin/bb clojure $@
+fi
