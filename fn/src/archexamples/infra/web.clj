@@ -3,7 +3,9 @@
     [archexamples.adapter.handler :as h]
     [clojure.tools.logging :as log]
     [ring.middleware.defaults :refer [wrap-defaults site-defaults]])
-  (:import (archexamples.infra ApplicationContext)))
+  (:import
+    (archexamples.infra
+      ApplicationContext)))
 
 
 (defn route-handler
