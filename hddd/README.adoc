@@ -3,7 +3,21 @@
 :imagesdir: docs/images
 :imagesoutdir: docs/images
 
-*Brief Description*:
+== Getting Started
+
+[source,bash]
+----
+./mvnw spring-boot:run
+----
+
+[cols="1,2",options=header]
+|===
+|Package|Description
+|`interfaces`|User Interface Layer
+|`application`|Application Layer
+|`domain`|Domain Model Layer
+|`infrastructure`|Infrastructure Layer
+|===
 
 * `*SubscriptionController*`: receives tasks from specific interface
 * `*SubscriptionFacadeImpl*`: task coordination, transaction, anti-corruption

@@ -3,7 +3,21 @@
 :imagesdir: docs/images
 :imagesoutdir: docs/images
 
-*Brief Description*:
+== Getting Started
+
+[source,bash]
+----
+./mvnw spring-boot:run
+----
+
+[cols="1,2",options=header]
+|===
+|Package|Description
+|`controller`|MVC Controllers
+|`model`|View model/Persistence model/Domain model
+|`repository`|Data Access Layer
+|`service`|Business Logic
+|===
 
 * `*SubscriptionController*`: receives tasks from specific interface but...
 * `*SubscriptionServiceImpl*`: do business logic

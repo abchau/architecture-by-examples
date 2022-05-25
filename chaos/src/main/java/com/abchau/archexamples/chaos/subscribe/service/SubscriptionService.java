@@ -24,7 +24,7 @@ public class SubscriptionService {
 		this.subscriptionRepository = subscriptionRepository;
 	}
 
-	// (1) write transation for readonly task
+	// (1) use write transation for readonly task
 	@Transactional
     public Subscription findByEmail(final String email) {
 		log.trace(() -> "findByEmail()...invoked");

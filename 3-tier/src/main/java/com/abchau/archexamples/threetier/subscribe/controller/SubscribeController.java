@@ -24,7 +24,7 @@ public class SubscribeController {
 		this.subscriptionService = subscriptionService;
 	}
 
-	// (4) bad method name
+	// (4) PRG pattern
     @GetMapping(value = "/subscribe")
 	public ModelAndView showSubscribeForm() {
 		ModelAndView modelAndView = new ModelAndView("subscribe");
@@ -33,6 +33,7 @@ public class SubscribeController {
 		return modelAndView;
 	}
 
+	// (4) PRG pattern
     @PostMapping(value = "/subscribe")
 	public ModelAndView processSubscribeForm(@RequestBody MultiValueMap<String, String> params) {
 		log.trace(() -> "update()...invoked");

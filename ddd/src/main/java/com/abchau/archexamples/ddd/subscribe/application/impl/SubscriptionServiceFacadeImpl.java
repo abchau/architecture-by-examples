@@ -52,7 +52,6 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 			throw new IllegalArgumentException("email.empty");
 		}
 
-		// (3) demonstrate translating domain exception
 		try {
 			// (4) factory pattern
 			Subscription newSubscription = Subscription.of(EmailAddress.of(email), ZonedDateTime.now(Clock.systemDefaultZone()));
@@ -63,7 +62,7 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 				throw new EmailFormatException("email.format");
 			}
 
-			// (4) validate state before changing
+			// (5) validate state before changing
 			if (newSubscription.isValidForValidated()) {
 				newSubscription.toValidated();
 			}
@@ -73,7 +72,7 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 				throw new EmailAlreadyExistException("email.duplicate");
 			}
 
-			// (4) validate state before changing
+			// (5) validate state before changing
 			if (newSubscription.isValidForConfirmed()) {
 				newSubscription.toConfirmed(ZonedDateTime.now(Clock.systemDefaultZone()));
 			}
@@ -81,24 +80,30 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 			Subscription savedSubscription = subscriptionService.save(newSubscription);
 			log.debug(() -> "savedSubscription: " + savedSubscription);
 			
-			// (5) demonstrate ACL
+			// (6) Anti-corruption layer (ACL)
 			SubscriptionDto savedSubscriptionDto = AntiCorruptionLayer.translate(savedSubscription);
 			log.debug(() -> "savedSubscriptionDto: " + savedSubscriptionDto);
 			
 			return Optional.of(savedSubscriptionDto);
-		} catch (EmailIsEmptyException | EmailFormatException | EmailAlreadyExistException | InvalidSubscriptionStatusException e) {
+		}
+		// (7) demonstrate translating domain exception
+		catch (EmailIsEmptyException | EmailFormatException | EmailAlreadyExistException | InvalidSubscriptionStatusException e) {
 			log.error("known domain error. ", e);
-			throw new Exception("error.unknown");
-		} catch (CannotCreateSubscriptionException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		} 
+		// (7) demonstrate translating domain exception
+		catch (CannotCreateSubscriptionException e) {
 			log.error("Unknown domain error. ", e);
 			throw new Exception("error.unknown");
-		} catch (Exception e) {
+		} 
+		// (7) demonstrate translating domain exception
+		catch (Exception e) {
 			log.error("Unknown domain error. ", e);
 			throw new Exception("error.unknown");
 		}
 	}
 
-	// (5) Anti-corruption layer (ACL)
+	// (6) Anti-corruption layer (ACL)
 	private static class AntiCorruptionLayer {
 
 		public static SubscriptionDto translate(Subscription subscription) {

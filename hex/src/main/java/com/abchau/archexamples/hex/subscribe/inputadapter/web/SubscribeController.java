@@ -60,6 +60,7 @@ public class SubscribeController {
 			modelAndView.addObject("message", "success");
 		} catch (IllegalArgumentException e) {
 			log.error("Known error. ", e);
+			modelAndView.addObject("email", email);
 			modelAndView.addObject("message", e.getMessage());
 		} catch (Exception e) {
 			log.error("Unknown error. ", e);
