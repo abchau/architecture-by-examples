@@ -70,12 +70,12 @@ public class SubscribeController {
 			// (10) bad variable scope
 			Subscription subscription = subscriptionRepository.findByEmail(subscriptionService.sanitizeInput(params.getFirst("email")));
 			// (1) dafuq
-			params.add("valid", subscription == null ? "false" : "true");
+			responseMap.put("exist", subscription == null ? false : true);
 
 			// (1) dafuq
 			// (7) everything is a map
 			// (9) arrow code
-			if (Boolean.parseBoolean((String)params.getFirst("valid"))) {
+			if ((Boolean) responseMap.get("exist")) {
 				// (1) dafuq
 				responseMap.put("email", params.getFirst("email"));
 				responseMap.put("message", "email.duplicate");
