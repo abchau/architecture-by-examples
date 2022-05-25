@@ -55,7 +55,6 @@ public class Subscription {
 	public Subscription() {
 	}
 
-	// (2) use factory pattern
 	public static Subscription of(String email) {
 		ZonedDateTime now = ZonedDateTime.now(Clock.systemDefaultZone());
 

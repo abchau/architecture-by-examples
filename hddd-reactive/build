@@ -1,1 +1,0 @@
-docker build -t hddd:0.0.1 .

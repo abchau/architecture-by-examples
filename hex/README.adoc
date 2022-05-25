@@ -3,11 +3,28 @@
 :imagesdir: docs/images
 :imagesoutdir: docs/images
 
-*Brief Description*:
+== Getting Started
+
+[source,bash]
+----
+./mvnw spring-boot:run
+----
+
+== Packages
+
+[cols="1,2",options=header]
+|===
+|Package|Description
+|`inputadapter.web`|Web Input Adapter
+|`application`|Application
+|`application.core`|Application Core
+|`application.core.usecase`|Business Use Cases
+|`outputadapter.persistence.jpa`|JPA Persistence Output Adapter
+|===
 
 * `*SubscriptionController*`: receives tasks from specific interface
 * `*SubscriptionFacadeImpl*`: task coordination, transaction, anti-corruption
-* `*CreateSubscription*`: business logic
+* `*CreateSubscriptionUseCase*`: business logic
 * `*JpaSubscriptionAdapter*`: anti-corruption, delegate persistence operations to `SubscriptionPersistenceJpaRepository`
 * `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
 

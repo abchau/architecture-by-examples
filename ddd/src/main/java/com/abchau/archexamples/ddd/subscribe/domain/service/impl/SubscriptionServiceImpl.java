@@ -1,8 +1,5 @@
 package com.abchau.archexamples.ddd.subscribe.domain.service.impl;
 
-import java.util.Objects;
-import java.util.Optional;
-
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAddress;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailAlreadyExistException;
 import com.abchau.archexamples.ddd.subscribe.domain.model.subscription.EmailFormatException;
@@ -55,7 +52,6 @@ public final class SubscriptionServiceImpl implements SubscriptionService {
 		log.debug(() -> "subscription: " + subscription);
 		
 		// (1) must do domain validation before executing domain logic
-
 		if (subscription == null 
 			|| subscription.getEmailAddress() == null
 			|| (subscription.getEmailAddress().getValue() == null || "".equalsIgnoreCase(subscription.getEmailAddress().getValue()))
@@ -63,14 +59,17 @@ public final class SubscriptionServiceImpl implements SubscriptionService {
 			throw new EmailIsEmptyException("email.empty");
 		}
 
+		// (1) must do domain validation before executing domain logic
 		if (!subscription.getEmailAddress().isValidFormat()) {
 			throw new EmailFormatException("email.format");
 		}
 
+		// (1) must do domain validation before executing domain logic
 		if (isAlreadyExist(subscription.getEmailAddress())) {
 			throw new EmailAlreadyExistException("email.duplicate");
 		}
 
+		// (1) must do domain validation before executing domain logic
 		if (!subscription.isStatusConfirmed()) {
 			throw new EmailAlreadyExistException("error.status.invalid");
 		}
@@ -78,7 +77,9 @@ public final class SubscriptionServiceImpl implements SubscriptionService {
 		// (2) only execute after domain validation
 		try {
 			return subscriptionRepository.save(subscription);
-		} catch (Exception e) {
+		}
+		// (3) wraps whatever thrown from underlying layer into a domain exception
+		catch (Exception e) {
 			log.error("couldn't create subscription", e);
 			throw new CannotCreateSubscriptionException("error.create");
 		} 

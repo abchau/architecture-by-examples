@@ -45,7 +45,7 @@ public class SubscribeController {
 		return modelAndView;
 	}
 
-
+	// (4) bad method name
 	// (5) everything is a map
     @PostMapping(value = "/subscribe")
 	public ModelAndView update(@RequestBody MultiValueMap<String, String> params) {
@@ -68,12 +68,11 @@ public class SubscribeController {
 				modelAndView.addObject("message", "email.duplicate");
 			} else {
 				// (5) everything is a map
-				// (8) bad scope
+				// (8) bad variable scope
 				// (9) no validation
 				// (10) not using exception
 				subscription = subscriptionService.save(params);
 
-				// (11) not using exception
 				if (subscription != null) {
 					modelAndView.addObject("subscription", subscription);
 					modelAndView.addObject("message", "success");
