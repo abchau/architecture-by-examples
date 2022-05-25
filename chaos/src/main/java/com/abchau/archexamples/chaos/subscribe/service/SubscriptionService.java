@@ -2,6 +2,7 @@ package com.abchau.archexamples.chaos.subscribe.service;
 
 import java.time.Clock;
 import java.time.ZonedDateTime;
+import java.util.Map;
 
 import com.abchau.archexamples.chaos.subscribe.model.Subscription;
 import com.abchau.archexamples.chaos.subscribe.repository.SubscriptionRepository;
@@ -15,46 +16,55 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-public class SubscriptionService {
+public class SubscriptionService extends GeneralService { // (1) dafuq
+
+	// (1) dafuq
+	@Autowired
+	private CommonUtils commonUtils;
 
 	private SubscriptionRepository subscriptionRepository;
 
 	@Autowired
-	public SubscriptionService(final SubscriptionRepository subscriptionRepository) {
+	public SubscriptionService(SubscriptionRepository subscriptionRepository) {
 		this.subscriptionRepository = subscriptionRepository;
 	}
 
-	// (1) use write transation for readonly task
+	// (2) use write transation for readonly task
 	@Transactional
-    public Subscription findByEmail(final String email) {
+    public Subscription findByEmail(Map params) {
 		log.trace(() -> "findByEmail()...invoked");
-		log.debug(() -> "email: " + email);
+		log.debug(() -> "email: " + params.get("email"));
 
-		return subscriptionRepository.findByEmail(email);
+		return subscriptionRepository.findByEmail((String) params.get("email"));
 	}
 	
-	// (2) bad method name
-	// (3) spaghetti code
-	// (4) everything is a map
-	// (5) web technology leak into business logic
+	// (3) bad method name
+	// (4) spaghetti code
+	// (5) everything is a map
+	// (6) web technology leak into business logic
 	@Transactional
 	public Subscription save(MultiValueMap<String, String> params) {
 		log.trace(() -> "save()...invoked");
 		log.debug(() -> "params: " + params);
 
-		// (6) not using exception
-		if (!Subscription.isEmailValid(params.getFirst("email"))) {
+		// (7) not using constructor nor factory
+		Subscription subscription = new Subscription();
+
+		// (1) dafuq
+		// (5) everything is a map
+		if (!subscription.isEmailValid(params.getFirst("email"))) {
+			// (8) not using exception
 			return null;
 		}
 
-		// (7) everything is a map
-		// (8) not using constructor nor factory
-		Subscription subscription = new Subscription();
+		// (5) everything is a map
 		subscription.setEmail(params.getFirst("email"));
-		ZonedDateTime now = ZonedDateTime.now(Clock.systemDefaultZone());
-		subscription.setStatus("COMPLETED");
-		subscription.setCreatedAt(now);
-		subscription.setLastUpdatedAt(now);
+		// (1) dafuq
+		subscription.setStatus(params.getFirst("status"));
+		// (1) dafuq
+		subscription.setCreatedAt(commonUtils.getCurrentTime());
+		// (1) dafuq
+		subscription.setLastUpdatedAt(commonUtils.getCurrentTime());
 
 		// (9) not hanlding exception
 		return subscriptionRepository.save(subscription);

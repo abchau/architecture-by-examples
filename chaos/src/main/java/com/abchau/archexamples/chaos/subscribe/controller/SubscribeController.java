@@ -1,5 +1,9 @@
 package com.abchau.archexamples.chaos.subscribe.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.abchau.archexamples.chaos.subscribe.model.Subscription;
 import com.abchau.archexamples.chaos.subscribe.repository.SubscriptionRepository;
 import com.abchau.archexamples.chaos.subscribe.service.SubscriptionService;
@@ -14,15 +18,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
-// (1) a controller with thousands of lines
+// (2) a controller with thousands of lines
 @Log4j2
 @Controller
 public class SubscribeController {
 
-	// (2) redundant api. are you exposing service or data store? pick one
+	// (3) redundant api
 	private SubscriptionRepository subscriptionRepository;
 
-	// (3) every use cases, internal or external logic all in one single service
+	// (4) every use cases, internal or external logic all in one single service
 	private SubscriptionService subscriptionService;
 
 	@Autowired
@@ -34,7 +38,7 @@ public class SubscribeController {
 		this.subscriptionService = subscriptionService;
 	}
 
-	// (4) bad method name
+	// (5) bad method name
     @GetMapping(value = "/subscribe")
 	public ModelAndView create() {
 		log.trace(() -> "create()...invoked");
@@ -45,44 +49,68 @@ public class SubscribeController {
 		return modelAndView;
 	}
 
-	// (4) bad method name
-	// (5) everything is a map
+	// (6) bad method name
+	// (7) everything is a map
     @PostMapping(value = "/subscribe")
 	public ModelAndView update(@RequestBody MultiValueMap<String, String> params) {
 		log.trace(() -> "subscribe()...invoked");
 
-		ModelAndView modelAndView = new ModelAndView("subscribe");
+		// (1) dafuq
+		params.put("email", List.of(subscriptionService.sanitizeInput(params.getFirst("email"))));
 
-		// (6) no validation
-		// (7) arrow code
+		// (1) dafuq
+		// (12) not parameterized
+		Map responseMap = new HashMap<>();
+		
+		// (8) no validation
+		// (9) arrow code
 		if (params.getFirst("email") != null && !"".equalsIgnoreCase(params.getFirst("email"))) {
 
-			// (5) everything is a map
-			// (8) bad scope
-			Subscription subscription = subscriptionRepository.findByEmail(params.getFirst("email"));
+			// (7) everything is a map
+			// (10) bad variable scope
+			Subscription subscription = subscriptionRepository.findByEmail(subscriptionService.sanitizeInput(params.getFirst("email")));
+			// (1) dafuq
+			params.add("valid", subscription == null ? "false" : "true");
 
-			// (5) everything is a map
-			// (7) arrow code
-			if (subscription != null) {
-				modelAndView.addObject("email", params.getFirst("email"));
-				modelAndView.addObject("message", "email.duplicate");
+			// (1) dafuq
+			// (7) everything is a map
+			// (9) arrow code
+			if (Boolean.parseBoolean((String)params.getFirst("valid"))) {
+				// (1) dafuq
+				responseMap.put("email", params.getFirst("email"));
+				responseMap.put("message", "email.duplicate");
 			} else {
-				// (5) everything is a map
-				// (8) bad variable scope
-				// (9) no validation
-				// (10) not using exception
+				// (1) dafuq
+				params.add("status", "COMPLETED");
+
+				// (7) everything is a map
+				// (10) bad variable scope
+				// (8) no validation
+				// (11) not catching exception
 				subscription = subscriptionService.save(params);
+				// (1) dafuq
+				responseMap.put("subscription", subscription);
 
 				if (subscription != null) {
-					modelAndView.addObject("subscription", subscription);
-					modelAndView.addObject("message", "success");
+					// (1) dafuq
+					responseMap.put("message", "success");
 				} else {
-					modelAndView.addObject("message", "email.format");
+					// (1) dafuq
+					responseMap.put("message", "email.format");
 				}
 			}
 		} else {
-			modelAndView.addObject("message", "email.empty");
+			// (1) dafuq
+			responseMap.put("message", "email.empty");
 		}
+
+		ModelAndView modelAndView = new ModelAndView("subscribe");
+		// (1) dafuq
+		modelAndView.addObject("email", responseMap.get("email"));
+		// (1) dafuq
+		modelAndView.addObject("subscription", responseMap.get("subscription"));
+		// (1) dafuq
+		modelAndView.addObject("message", responseMap.get("message"));
 
 		return modelAndView;
 	}
