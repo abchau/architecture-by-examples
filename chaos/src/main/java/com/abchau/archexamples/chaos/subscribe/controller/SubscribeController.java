@@ -56,61 +56,62 @@ public class SubscribeController {
 		log.trace(() -> "subscribe()...invoked");
 
 		// (1) dafuq
+		// just demonstrate how it muddle origin request
 		params.put("email", List.of(subscriptionService.sanitizeInput(params.getFirst("email"))));
 
-		// (1) dafuq
-		// (12) not parameterized
-		Map responseMap = new HashMap<>();
+		ModelAndView modelAndView = new ModelAndView("subscribe");
 		
 		// (8) no validation
 		// (9) arrow code
 		if (params.getFirst("email") != null && !"".equalsIgnoreCase(params.getFirst("email"))) {
+			// (1) dafuq
+			params.add("status", "COMPLETED");
 
 			// (7) everything is a map
 			// (10) bad variable scope
-			Subscription subscription = subscriptionRepository.findByEmail(subscriptionService.sanitizeInput(params.getFirst("email")));
-			// (1) dafuq
-			responseMap.put("exist", subscription == null ? false : true);
+			// (8) no validation
+			// (11) not catching exception
+			Map subscriptionMap = subscriptionService.save(params);
 
 			// (1) dafuq
 			// (7) everything is a map
 			// (9) arrow code
-			if ((Boolean) responseMap.get("exist")) {
+			if (subscriptionMap.get("subscription") == null) {
 				// (1) dafuq
-				responseMap.put("email", params.getFirst("email"));
-				responseMap.put("message", "email.duplicate");
+				subscriptionMap.put("message", "email.empty");
 			} else {
-				// (1) dafuq
-				params.add("status", "COMPLETED");
+				if (subscriptionMap.get("error") != null) {
+					subscriptionMap.put("message", subscriptionMap.get("error"));
 
-				// (7) everything is a map
-				// (10) bad variable scope
-				// (8) no validation
-				// (11) not catching exception
-				subscription = subscriptionService.save(params);
-				// (1) dafuq
-				responseMap.put("subscription", subscription);
-
-				if (subscription != null) {
 					// (1) dafuq
-					responseMap.put("message", "success");
+					switch((String) subscriptionMap.get("error")) {
+						case "empty":
+						subscriptionMap.put("message", "email.empty");
+						break;
+						case "format":
+						subscriptionMap.put("message", "email.format");
+						break;
+						case "duplicate":
+						subscriptionMap.put("message", "email.duplicate");
+						break;
+						default:
+					}
 				} else {
-					// (1) dafuq
-					responseMap.put("message", "email.format");
+					subscriptionMap.put("message", "success");
 				}
 			}
+
+			// (1) dafuq
+			modelAndView.addObject("email", subscriptionMap.get("email"));
+			// (1) dafuq
+			modelAndView.addObject("subscription", subscriptionMap.get("subscription"));
+			// (1) dafuq
+			modelAndView.addObject("message", subscriptionMap.get("message"));
+	
 		} else {
 			// (1) dafuq
-			responseMap.put("message", "email.empty");
+			modelAndView.addObject("message", "email.empty");
 		}
-
-		ModelAndView modelAndView = new ModelAndView("subscribe");
-		// (1) dafuq
-		modelAndView.addObject("email", responseMap.get("email"));
-		// (1) dafuq
-		modelAndView.addObject("subscription", responseMap.get("subscription"));
-		// (1) dafuq
-		modelAndView.addObject("message", responseMap.get("message"));
 
 		return modelAndView;
 	}

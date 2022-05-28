@@ -2,6 +2,7 @@ package com.abchau.archexamples.chaos.subscribe.service;
 
 import java.time.Clock;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.abchau.archexamples.chaos.subscribe.model.Subscription;
@@ -43,21 +44,54 @@ public class SubscriptionService extends GeneralService { // (1) dafuq
 	// (5) everything is a map
 	// (6) web technology leak into business logic
 	@Transactional
-	public Subscription save(MultiValueMap<String, String> params) {
+	public Map save(MultiValueMap<String, String> params) {
 		log.trace(() -> "save()...invoked");
 		log.debug(() -> "params: " + params);
 
+		// (1) dafuq
+		// (5) everything is a map
+		// (12) not parameterized
+		Map subscriptionMap = new HashMap<>();
+
+		// (1) dafuq
+		subscriptionMap.put("email", params.getFirst("email"));
+
+		// (1) dafuq
+		if (params.getFirst("email") == null) {
+			// (1) dafuq
+			subscriptionMap.put("error", "empty");
+
+			return subscriptionMap;
+		}
+
+		// (10) bad variable scope
+		Subscription subscription;
+
+		// (7) everything is a map
+		// (10) bad variable scope
+		subscription = subscriptionRepository.findByEmail(params.getFirst("email"));
+
+		// (1) dafuq
+		if (subscription == null) {
+			// (1) dafuq
+			subscriptionMap.put("error", "duplicate");
+
+			return subscriptionMap;
+		}
+
 		// (7) not using constructor nor factory
-		Subscription subscription = new Subscription();
 
 		// (1) dafuq
 		// (5) everything is a map
 		if (!subscription.isEmailValid(params.getFirst("email"))) {
 			// (8) not using exception
-			return null;
+			// (1) dafuq
+			subscriptionMap.put("error", "format");
+
+			return subscriptionMap;
 		}
 
-		// (5) everything is a map
+		// (1) dafuq
 		subscription.setEmail(params.getFirst("email"));
 		// (1) dafuq
 		subscription.setStatus(params.getFirst("status"));
@@ -67,7 +101,13 @@ public class SubscriptionService extends GeneralService { // (1) dafuq
 		subscription.setLastUpdatedAt(commonUtils.getCurrentTime());
 
 		// (9) not hanlding exception
-		return subscriptionRepository.save(subscription);
+		// (10) bad variable scope
+		subscription = subscriptionRepository.save(subscription);
+
+		// (1) dafuq
+		subscriptionMap.put("subscription", subscription);
+
+		return subscriptionMap;
 	}
 
 }
