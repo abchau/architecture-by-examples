@@ -3,7 +3,7 @@ server:
 logging:
   level:
     root: INFO
-    com.abchau.archexamples.ddd.subscribe: DEBUG
+    com.abchau.archexamples.subscribe: DEBUG
 spring:
   output:
     ansi:
