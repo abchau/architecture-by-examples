@@ -23,20 +23,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class SubscribeController {
 
+	@Autowired
 	// (3) redundant api
 	private SubscriptionRepository subscriptionRepository;
 
+	@Autowired
 	// (4) every use cases, internal or external logic all in one single service
 	private SubscriptionService subscriptionService;
 
-	@Autowired
-	public SubscribeController(
-		SubscriptionRepository subscriptionRepository, 
-		SubscriptionService subscriptionService
-	) {
-		this.subscriptionRepository = subscriptionRepository;
-		this.subscriptionService = subscriptionService;
-	}
+	// (11) Not using constructor injection
+	public SubscribeController() {}
 
 	// (5) bad method name
     @GetMapping(value = "/subscribe")
@@ -59,7 +55,9 @@ public class SubscribeController {
 		// just demonstrate how it muddle origin request
 		params.put("email", List.of(subscriptionService.sanitizeInput(params.getFirst("email"))));
 
-		ModelAndView modelAndView = new ModelAndView("subscribe");
+		// (1) dafuq
+		// (7) everything is a map
+		Map subscriptionMap = new HashMap<>();
 		
 		// (8) no validation
 		// (9) arrow code
@@ -71,7 +69,7 @@ public class SubscribeController {
 			// (10) bad variable scope
 			// (8) no validation
 			// (11) not catching exception
-			Map subscriptionMap = subscriptionService.save(params);
+			 subscriptionMap = subscriptionService.save(params);
 
 			// (1) dafuq
 			// (7) everything is a map
@@ -100,18 +98,14 @@ public class SubscribeController {
 					subscriptionMap.put("message", "success");
 				}
 			}
-
-			// (1) dafuq
-			modelAndView.addObject("email", subscriptionMap.get("email"));
-			// (1) dafuq
-			modelAndView.addObject("subscription", subscriptionMap.get("subscription"));
-			// (1) dafuq
-			modelAndView.addObject("message", subscriptionMap.get("message"));
-	
 		} else {
 			// (1) dafuq
-			modelAndView.addObject("message", "email.empty");
+			subscriptionMap.put("message", "email.empty");
 		}
+
+		// (1) dafuq
+		ModelAndView modelAndView = new ModelAndView("subscribe");
+		modelAndView.addAllObjects(subscriptionMap);
 
 		return modelAndView;
 	}

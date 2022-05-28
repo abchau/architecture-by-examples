@@ -21,9 +21,12 @@ public abstract class GeneralService {
 		return input;
 	}
 
-	// (1) dafuq
+	// // (1) dafuq
 	// public Principal getPrincipal() {
-	// 	SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	// 	// (2) pretend some work in done in this example
+	// 	// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+	// 	return null;
 	// }
 
 }

@@ -17,17 +17,17 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-public class SubscriptionService extends GeneralService { // (1) dafuq
+public class SubscriptionService extends /* (1) dafuq */ GeneralService {
 
-	// (1) dafuq
 	@Autowired
+	// (1) dafuq
 	private CommonUtils commonUtils;
 
+	@Autowired
 	private SubscriptionRepository subscriptionRepository;
 
-	@Autowired
-	public SubscriptionService(SubscriptionRepository subscriptionRepository) {
-		this.subscriptionRepository = subscriptionRepository;
+	// (11) Not using constructor injection
+	public SubscriptionService() {
 	}
 
 	// (2) use write transation for readonly task
@@ -54,6 +54,7 @@ public class SubscriptionService extends GeneralService { // (1) dafuq
 		Map subscriptionMap = new HashMap<>();
 
 		// (1) dafuq
+		// (5) everything is a map
 		subscriptionMap.put("email", params.getFirst("email"));
 
 		// (1) dafuq
@@ -74,6 +75,7 @@ public class SubscriptionService extends GeneralService { // (1) dafuq
 		// (1) dafuq
 		if (subscription == null) {
 			// (1) dafuq
+			// (5) everything is a map
 			subscriptionMap.put("error", "duplicate");
 
 			return subscriptionMap;
@@ -86,6 +88,7 @@ public class SubscriptionService extends GeneralService { // (1) dafuq
 		if (!subscription.isEmailValid(params.getFirst("email"))) {
 			// (8) not using exception
 			// (1) dafuq
+			// (5) everything is a map
 			subscriptionMap.put("error", "format");
 
 			return subscriptionMap;
@@ -105,6 +108,7 @@ public class SubscriptionService extends GeneralService { // (1) dafuq
 		subscription = subscriptionRepository.save(subscription);
 
 		// (1) dafuq
+		// (5) everything is a map
 		subscriptionMap.put("subscription", subscription);
 
 		return subscriptionMap;

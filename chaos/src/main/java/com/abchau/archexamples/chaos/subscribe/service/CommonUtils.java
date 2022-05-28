@@ -18,7 +18,7 @@ public class CommonUtils {
 	}
 
 	// (1) dafuq
-	public boolean valid(String pattern, String string, boolean isCaseSensitive) {
+	public boolean valid(String pattern, String string, /* (1) dafuq */ boolean isCaseSensitive) {
 		// (1) dafuq
 		Pattern PATTERN = isCaseSensitive ? Pattern.compile(pattern) : Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 

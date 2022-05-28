@@ -2,16 +2,12 @@ package com.abchau.archexamples.chaos.subscribe.model;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Version;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.abchau.archexamples.chaos.subscribe.service.CommonUtils;
 
@@ -37,8 +33,6 @@ public class Subscription extends CommonObjectType { // (1) dafuq
 	@Column(name = "id")
 	private Long id;
 	
-    @NotNull(message = "email.empty")
-    @Size(min = 7, max = 512, message = "email.size")
 	@Column(name = "email")
 	private String email;
 	
