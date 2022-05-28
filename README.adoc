@@ -120,13 +120,20 @@ a|* Most common way
 a|* Implement Eric Evan's masterpiece
 * Best effort to honor original intention
 * Does not implement Domain Events
-|4
+|3
+|link:3ddd/[3ddd]
+|Three-Layered Domain Driven Design
+a|* *Simplified* by merging User Interface Layer and Application Layer
+* The word *Simplified* doesn't mean easier nor better
+* Task coordination have to be done in `Controller` or `Service`
+* Differences between combined Application Layer and Domain Model Layer become vague
+|5
 |link:hex/[hex]
 |Hexagonal Architecture (Ports and Adapters)
 a|* Implement Alistair Cockburn's masterpiece
 * Best effort to honor original intention
 * Only implement necessary parts to demostrate idea of using ports and adapters
-|5
+|6
 |link:hddd/[hddd]
 |Hexagonal Domain Driven Design
 a|* Implement DDD using Hexagonal Architecture

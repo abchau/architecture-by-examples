@@ -1,0 +1,40 @@
+= Three-layered Domain Driven Design
+
+:imagesdir: docs/images
+:imagesoutdir: docs/images
+
+== Getting Started
+
+[source,bash]
+----
+./mvnw spring-boot:run
+----
+
+[cols="1,2",options=header]
+|===
+|Package|Description
+|`application`|Application Layer
+|`domain`|Domain Model Layer
+|`infrastructure`|Infrastructure Layer
+|===
+
+* `*SubscriptionController*`: receives tasks from specific interface, task coordination, transaction, anti-corruption
+* `*SubscriptionServiceImpl*`: business logic
+* `*JpaSubscriptionRepository*`: anti-corruption, delegate persistence operations to `SubscriptionPersistenceJpaRepository`
+* `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
+
+.Sequence Diagram for SDDD Architecture
+ifdef::env-github[]
+image::ddd-sequence.png[]
+endif::env-github[]
+ifdef::env-idea,env-vscode[]
+plantuml::docs/diagrams/sddd-sequence.puml[target=ddd-sequence,format=png]
+endif::env-idea,env-vscode[]
+
+.Class Diagram for SDDD Architecture
+ifdef::env-github[]
+image::ddd-class.png[]
+endif::env-github[]
+ifdef::env-idea,env-vscode[]
+plantuml::docs/diagrams/sddd-class.puml[target=ddd-class,format=png]
+endif::env-idea,env-vscode[]
