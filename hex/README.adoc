@@ -32,16 +32,16 @@ NOTE: idea that are not important to demonstrate *Ports and Adapters* are not in
 
 .Sequence Diagram for Hexagonal Architecture
 ifdef::env-github[]
-image::hex-sequence.png[]
+image::sequence.png[]
 endif::env-github[]
 ifdef::env-idea,env-vscode[]
-plantuml::docs/diagrams/hex-sequence.puml[target=hex-sequence,format=png]
+plantuml::docs/diagrams/sequence.puml[target=sequence,format=png]
 endif::env-idea,env-vscode[]
 
 .Class Diagram for Hexagonal Architecture
 ifdef::env-github[]
-image::hex-class.png[]
+image::class.png[]
 endif::env-github[]
 ifdef::env-idea,env-vscode[]
-plantuml::docs/diagrams/hex-class.puml[target=hex-class,format=png]
+plantuml::docs/diagrams/class.puml[target=class,format=png]
 endif::env-idea,env-vscode[]

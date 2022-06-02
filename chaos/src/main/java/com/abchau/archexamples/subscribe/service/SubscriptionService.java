@@ -100,8 +100,6 @@ public class SubscriptionService extends /* (1) dafuq */ GeneralService {
 		subscription.setStatus(params.getFirst("status"));
 		// (1) dafuq
 		subscription.setCreatedAt(commonUtils.getCurrentTime());
-		// (1) dafuq
-		subscription.setLastUpdatedAt(commonUtils.getCurrentTime());
 
 		// (9) not hanlding exception
 		// (10) bad variable scope

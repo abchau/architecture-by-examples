@@ -45,9 +45,6 @@ public class Subscription extends CommonObjectType { // (1) dafuq
 	@Column(name = "created_at")
 	private ZonedDateTime createdAt;
 
-	@Column(name = "last_updated_at")
-	private ZonedDateTime lastUpdatedAt;
-
 	@Version
 	@Column(name = "version")
 	private Long version;

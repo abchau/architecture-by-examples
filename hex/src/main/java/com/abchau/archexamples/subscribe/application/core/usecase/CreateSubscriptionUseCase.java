@@ -27,16 +27,18 @@ public class CreateSubscriptionUseCase {
 		log.trace(() -> "execute()...invoked");
 		Objects.requireNonNull(subscription);
 
-		// (2) throw domain exception
+		// (1) must do domain validation before executing domain logic
 		if (!subscription.getEmailAddress().isValidFormat()) {
 			throw new EmailFormatException("email.format");
 		}
 
+		// (1) must do domain validation before executing domain logic
 		int count = subscriptionPersistencePort.countByEmail(subscription.getEmailAddress());
 		if (count > 0) {
 			throw new EmailAlreadyExistException("email.duplicate");
 		}
 
+		// (2) only execute after validation
 		return subscriptionPersistencePort.save(subscription);
 	}
 

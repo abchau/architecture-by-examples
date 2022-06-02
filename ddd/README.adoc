@@ -27,16 +27,16 @@
 
 .Sequence Diagram for DDD Architecture
 ifdef::env-github[]
-image::ddd-sequence.png[]
+image::sequence.png[]
 endif::env-github[]
 ifdef::env-idea,env-vscode[]
-plantuml::docs/diagrams/ddd-sequence.puml[target=ddd-sequence,format=png]
+plantuml::docs/diagrams/sequence.puml[target=sequence,format=png]
 endif::env-idea,env-vscode[]
 
 .Class Diagram for DDD Architecture
 ifdef::env-github[]
-image::ddd-class.png[]
+image::class.png[]
 endif::env-github[]
 ifdef::env-idea,env-vscode[]
-plantuml::docs/diagrams/ddd-class.puml[target=ddd-class,format=png]
+plantuml::docs/diagrams/ddd-class.puml[target=class,format=png]
 endif::env-idea,env-vscode[]

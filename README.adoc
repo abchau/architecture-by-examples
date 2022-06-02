@@ -13,17 +13,30 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-== Introduction
-
-This repository demonstrates different architectures by implementing a simple use case. 
+This repository demonstrates different architectures by implementing the same use case.
 
 == Rationale
 
-* majority of existing examples are often too bulky and too complicated
+* majority of existing architecture examples are often
+** too bulky
+** too complicated
+** impractical (narrow solution of solving specific problem in specific use case)
+* a dead simple use case without any burden will help understand quicker and better
 
-== Scope
+== What is in the scope of this project?
 
-=== In Scope
+* demonstrate implementation of a simple subscription service
+* demonstrate the original design created by the original author (Best effort to honor original intention but not guarantee. Comments are welcome.)
+
+== What is not in the scope of this project?
+
+* does not provide a sliver bullet recipe
+* does not implement different variants of different architectures
+* does not have a bug free and flawless design
+* does not demonstrates how to use various approaches to tackle on same problem
+* does not demonstrates how to use various design patterns
+
+== Use case
 
 The application has
 
@@ -31,18 +44,10 @@ The application has
 * one *use case*
 * one *aggregate*
 ** one *entity*
-** one *value object*
+** two *value object*
 * one database *table*
 
-=== Out Scope
-
-* does not have a bug free and flawless design
-* does not demonstrates how to use various approach to tackle on same problem
-* does not demonstrates how to use various design patterns
-
-== Use case
-
-.Single Use case
+.A single subscription use case
 ifdef::env-github[]
 image::use-case.png[]
 endif::env-github[]
@@ -58,11 +63,9 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 	email VARCHAR(512) NOT NULL,
 	status VARCHAR(256) NOT NULL,
 	created_at TIMESTAMP WITH TIME ZONE NOT NULL,
-	last_updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
 	version BIGINT NOT NULL
 );
 ----
-
 
 == How to test
 
@@ -99,43 +102,75 @@ image::demo6.png[]
 
 == Architectures
 
-[cols="1,1,2,4",options=header]
+[cols="1,1,2,4,3,3,1",options=header]
 |===
-|#|Name|Architecture|Description
+|#|Name|Architecture|Description|Advantanges|Disadvantages|Status
 |1
 |link:chaos/[chaos]
 |Chaos Architecture
-a|* A big ball of mud. It's just &#128169; everywhere
-* In some sense, it is a failed 3-tier architecture
-* Anarchy Architecture might be a better name
+a|* Just Chaotic Mess
+* Exactly what this industry called "A big ball of mud"
+a|* Job Security until the system got axed
+a|* Untestable
+* Unmaintainable
+* Unmanageable
+* Unreadable
+* ...etc
+|In Progress
+
 |2
 |link:3-tier/[3-tier]
 |3-tier Architecture
 a|* Most common way
-* Easy to understand. Easy to build
-* Difficult to maintain and lost control when it grows bigger.
+a|* Easy to understand
+* Easy to build
+a|* Difficult to maintain
+* lost control when it grows bigger.
+|In Progress
+
 |3
 |link:ddd/[ddd]
 |Domain Driven Design
 a|* Implement Eric Evan's masterpiece
-* Best effort to honor original intention
 * Does not implement Domain Events
-|3
-|link:3ddd/[3ddd]
+a| * manage complexity
+a|* More codes (introduced some complexity)
+|In Progress
+
+|4
+|link:ddd3/[ddd3]
 |Three-Layered Domain Driven Design
-a|* *Simplified* by merging User Interface Layer and Application Layer
-* The word *Simplified* doesn't mean easier nor better
-* Task coordination have to be done in `Controller` or `Service`
-* Differences between combined Application Layer and Domain Model Layer become vague
+a|* *Simplified* by merging User Interface Layer into Application Layer
+* *Simplified* doesn't mean easier nor better
+a| * Handy if not much task coordination required
+a| * Comes with a cost
+|In Progress
+
 |5
 |link:hex/[hex]
 |Hexagonal Architecture (Ports and Adapters)
 a|* Implement Alistair Cockburn's masterpiece
-* Best effort to honor original intention
 * Only implement necessary parts to demostrate idea of using ports and adapters
-|6
-|link:hddd/[hddd]
-|Hexagonal Domain Driven Design
+a|
+a|
+|In Progress
+
+|7
+|link:fn/[fn]
+|Functional Domain Driven Design
+a|* Implement DDD using Clojure
+a|
+a|
+|In Progress
+
+|99
+|link:myddd/[myddd]
+|My DDD
 a|* Implement DDD using Hexagonal Architecture
-* with personal preference
+* Added my personal preferences
+a|* s
+a|
+|In Progress
+
+
 |===

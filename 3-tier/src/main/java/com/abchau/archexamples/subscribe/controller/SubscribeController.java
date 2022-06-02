@@ -66,11 +66,10 @@ public class SubscribeController {
 			return modelAndView;
 		} 
 
-		// (4) use constructor or factory pattern
 		Subscription newSubscription = Subscription.of(email);
 		log.debug(() -> "newSubscription: " + newSubscription);
 
-		// (5) catch application error and business error
+		// (4) catch application error and business error
 		try {
 			Subscription savedSubscription = subscriptionService.save(newSubscription);
 			log.debug(() -> "savedSubscription: " + savedSubscription);

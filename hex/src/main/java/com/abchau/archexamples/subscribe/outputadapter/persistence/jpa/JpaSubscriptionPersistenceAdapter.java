@@ -26,6 +26,7 @@ public class JpaSubscriptionPersistenceAdapter implements SubscriptionPersistenc
 	public int countByEmail(EmailAddress emailAddress) {
 		log.trace(() -> "countByEmail()...invoked");
 		Objects.requireNonNull(emailAddress, "email.empty");
+		Objects.requireNonNull(emailAddress.getValue(), "email.empty");
 
 		String email = emailAddress.getValue();
 		log.debug(() -> "email: " + email);
@@ -37,6 +38,8 @@ public class JpaSubscriptionPersistenceAdapter implements SubscriptionPersistenc
 	public Subscription save(Subscription subscription) {
 		log.trace(() -> "save()...invoked");
 		Objects.requireNonNull(subscription);
+		Objects.requireNonNull(subscription.getEmailAddress(), "email.empty");
+		Objects.requireNonNull(subscription.getEmailAddress().getValue(), "email.empty");
 
 		SubscriptionPersistence subscriptionPersistence = AntiCorruptionLayer.translate(subscription);
 		log.debug(() -> "subscriptionPersistence: " + subscriptionPersistence);
@@ -60,7 +63,6 @@ public class JpaSubscriptionPersistenceAdapter implements SubscriptionPersistenc
 				.emailAddress(EmailAddress.of(subscriptionPersistence.getEmail()))
 				.status(subscriptionPersistence.getStatus())
 				.createdAt(subscriptionPersistence.getCreatedAt())
-				.lastUpdatedAt(subscriptionPersistence.getLastUpdatedAt())
 				.build();
 		}
 
@@ -72,7 +74,6 @@ public class JpaSubscriptionPersistenceAdapter implements SubscriptionPersistenc
 				.email(subscription.getEmailAddress().getValue())
 				.status(subscription.getStatus())
 				.createdAt(subscription.getCreatedAt())
-				.lastUpdatedAt(subscription.getLastUpdatedAt())
 				.build();
 		}
 	}

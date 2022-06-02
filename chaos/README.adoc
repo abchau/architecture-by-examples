@@ -25,17 +25,17 @@
 
 .Sequence Diagram for Chaos Architecture
 ifdef::env-github[]
-image::chaos-sequence.png[]
+image::sequence.png[]
 endif::env-github[]
 ifdef::env-idea,env-vscode[]
-plantuml::docs/diagrams/chaos-sequence.puml[target=chaos-sequence,format=png,opts="inline"]
+plantuml::docs/diagrams/sequence.puml[target=sequence,format=png,opts="inline"]
 endif::env-idea,env-vscode[]
 
 .Class Diagram for Chaos Architecture
 ifdef::env-github[]
-image::chaos-class.png[]
+image::class.png[]
 endif::env-github[]
 ifdef::env-idea,env-vscode[]
-plantuml::docs/diagrams/chaos-class.puml[target=chaos-class,format=png,png-type="inline"]
+plantuml::docs/diagrams/class.puml[target=class,format=png,png-type="inline"]
 endif::env-idea,env-vscode[]
 

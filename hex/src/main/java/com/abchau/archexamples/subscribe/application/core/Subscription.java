@@ -20,8 +20,6 @@ public class Subscription {
 
 	private ZonedDateTime createdAt;
 
-	private ZonedDateTime lastUpdatedAt;
-
 	private Long version;
 
 	public static Subscription of(EmailAddress emailAddress) {
@@ -29,9 +27,8 @@ public class Subscription {
 
 		return Subscription.builder()
 			.emailAddress(emailAddress)
-			.status("COMPLETED")
+			.status("CONFIRMED")
 			.createdAt(now)
-			.lastUpdatedAt(now)
 			.build();
 	}
 

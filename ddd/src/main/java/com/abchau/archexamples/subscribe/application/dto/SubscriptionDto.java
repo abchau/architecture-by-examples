@@ -19,6 +19,4 @@ public class SubscriptionDto {
 
 	private ZonedDateTime subscribedAt;
 
-	private ZonedDateTime confirmedAt;
-
 }

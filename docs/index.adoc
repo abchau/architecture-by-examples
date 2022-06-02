@@ -96,7 +96,7 @@ a| * *Persistence Output Adapter*:
 * *Spring Data Repository*:
 ** `SubscriptionPersistenceJpaRepository`
 
-|5|`hddd`
+|5|`myddd`
 |User Interfaces Layer
 2+|Application Layer
 2+|Domain Model Layer
@@ -137,4 +137,4 @@ link:ddd/[DDD]
 
 link:hex/[Hexagonal Architecture]
 
-link:hddd/[Hexagonal DDD]
+link:myddd/[Hexagonal DDD]

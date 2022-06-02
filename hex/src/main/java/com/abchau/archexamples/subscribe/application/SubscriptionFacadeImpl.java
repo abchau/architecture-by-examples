@@ -6,7 +6,6 @@ import com.abchau.archexamples.subscribe.application.core.EmailAddress;
 import com.abchau.archexamples.subscribe.application.core.EmailAlreadyExistException;
 import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
 import com.abchau.archexamples.subscribe.application.core.Subscription;
-import com.abchau.archexamples.subscribe.application.core.SubscriptionFacade;
 import com.abchau.archexamples.subscribe.application.core.usecase.CreateSubscriptionUseCase;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ public class SubscriptionFacadeImpl implements SubscriptionFacade {
 		log.trace(() -> "createSubscription()...invoked");
 		Objects.requireNonNull(email);
 
-		// (3) factory pattern
 		Subscription subscription = Subscription.of(EmailAddress.of(email));
 		log.debug(() -> "subscription: " + subscription);
 

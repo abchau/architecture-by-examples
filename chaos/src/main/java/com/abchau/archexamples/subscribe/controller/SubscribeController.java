@@ -63,7 +63,7 @@ public class SubscribeController {
 		// (9) arrow code
 		if (params.getFirst("email") != null && !"".equalsIgnoreCase(params.getFirst("email"))) {
 			// (1) dafuq
-			params.add("status", "COMPLETED");
+			params.add("status", "CONFIRMED");
 
 			// (7) everything is a map
 			// (10) bad variable scope

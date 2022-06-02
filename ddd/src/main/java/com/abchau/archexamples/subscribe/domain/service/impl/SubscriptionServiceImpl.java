@@ -5,6 +5,7 @@ import com.abchau.archexamples.subscribe.domain.model.subscription.EmailAddress;
 import com.abchau.archexamples.subscribe.domain.model.subscription.EmailAlreadyExistException;
 import com.abchau.archexamples.subscribe.domain.model.subscription.EmailFormatException;
 import com.abchau.archexamples.subscribe.domain.model.subscription.EmailIsEmptyException;
+import com.abchau.archexamples.subscribe.domain.model.subscription.InvalidSubscriptionStatusException;
 import com.abchau.archexamples.subscribe.domain.model.subscription.Subscription;
 import com.abchau.archexamples.subscribe.domain.model.subscription.SubscriptionRepository;
 import com.abchau.archexamples.subscribe.domain.service.SubscriptionService;
@@ -26,18 +27,18 @@ public final class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public boolean isAlreadyExist(EmailAddress emailAddress) throws EmailIsEmptyException, EmailAlreadyExistException {
-		log.trace(() -> "isAlreadyExist()...invoked");
+	public boolean isEmailAlreadyExist(EmailAddress emailAddress) throws EmailIsEmptyException, EmailAlreadyExistException {
+		log.trace(() -> "isEmailAlreadyExist()...invoked");
 		log.debug(() -> "emailAddress: " + emailAddress);
 
-		// (1) must do domain validation before executing domain logic
+		// (1) must do input validation before executing domain logic
 		if (emailAddress == null 
 			|| (emailAddress.getValue() == null || "".equalsIgnoreCase(emailAddress.getValue()))
 		) {
 			throw new EmailIsEmptyException("email.empty");
 		}
 
-		// (2) only execute after domain validation
+		// (2) only execute after validation
 		int count = subscriptionRepository.countByEmail(emailAddress);
 		if (count > 0) {
 			throw new EmailAlreadyExistException("email.duplicate");
@@ -47,11 +48,11 @@ public final class SubscriptionServiceImpl implements SubscriptionService {
 	}
 
 	@Override
-	public Subscription save(Subscription subscription) throws EmailIsEmptyException, EmailFormatException, EmailAlreadyExistException, CannotCreateSubscriptionException {
-		log.trace(() -> "save()...invoked");
+	public Subscription createSubscription(Subscription subscription) throws EmailIsEmptyException, EmailFormatException, EmailAlreadyExistException, InvalidSubscriptionStatusException, CannotCreateSubscriptionException {
+		log.trace(() -> "createSubscription()...invoked");
 		log.debug(() -> "subscription: " + subscription);
 		
-		// (1) must do domain validation before executing domain logic
+		// (1) must do input validation before executing domain logic
 		if (subscription == null 
 			|| subscription.getEmailAddress() == null
 			|| (subscription.getEmailAddress().getValue() == null || "".equalsIgnoreCase(subscription.getEmailAddress().getValue()))
@@ -59,26 +60,36 @@ public final class SubscriptionServiceImpl implements SubscriptionService {
 			throw new EmailIsEmptyException("email.empty");
 		}
 
-		// (1) must do domain validation before executing domain logic
+		// (2) must do domain validation before executing domain logic
 		if (!subscription.getEmailAddress().isValidFormat()) {
 			throw new EmailFormatException("email.format");
 		}
 
-		// (1) must do domain validation before executing domain logic
-		if (isAlreadyExist(subscription.getEmailAddress())) {
+		// (2) must do domain validation before executing domain logic
+		if (!subscription.isStatusValidated()) {
+			throw new InvalidSubscriptionStatusException("error.status.invalid");
+		}
+
+		// (2) must do domain validation before executing domain logic
+		if (isEmailAlreadyExist(subscription.getEmailAddress())) {
 			throw new EmailAlreadyExistException("email.duplicate");
 		}
 
-		// (1) must do domain validation before executing domain logic
+		// (5) validate state before changing
+		if (subscription.isValidForConfirmed()) {
+			subscription.toConfirmed();
+		}
+
+		// (2) must do domain validation before executing domain logic
 		if (!subscription.isStatusConfirmed()) {
-			throw new EmailAlreadyExistException("error.status.invalid");
+			throw new InvalidSubscriptionStatusException("error.status.invalid");
 		}
 		
-		// (2) only execute after domain validation
+		// (3) only execute after validation
 		try {
 			return subscriptionRepository.save(subscription);
 		}
-		// (3) wraps whatever thrown from underlying layer into a domain exception
+		// (4) wraps whatever thrown from underlying layer into a domain exception
 		catch (Exception e) {
 			log.error("couldn't create subscription", e);
 			throw new CannotCreateSubscriptionException("error.create");

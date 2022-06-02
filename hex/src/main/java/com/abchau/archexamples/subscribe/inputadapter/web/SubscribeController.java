@@ -2,8 +2,8 @@ package com.abchau.archexamples.subscribe.inputadapter.web;
 
 import lombok.extern.log4j.Log4j2;
 
+import com.abchau.archexamples.subscribe.application.SubscriptionFacade;
 import com.abchau.archexamples.subscribe.application.core.Subscription;
-import com.abchau.archexamples.subscribe.application.core.SubscriptionFacade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,10 +40,10 @@ public class SubscribeController {
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 
-		// (1) dp validation in adapter
 		String email = params.getFirst("email");
 		log.debug(() -> "email: " + email);
 
+		// (1) do validation in adapter
 		if (email == null || "".equalsIgnoreCase(email)) {
 			modelAndView.addObject("message", "email.empty");
 
@@ -52,7 +52,6 @@ public class SubscribeController {
 
 		// (2) catch application error and domain error
 		try {
-			// (3) pass a business object, not technology specific object nor map
 			Subscription savedSubscription = subscriptionFacade.createSubscription(email);
 			log.debug(() -> "savedSubscription: " + savedSubscription);
 
@@ -64,6 +63,7 @@ public class SubscribeController {
 			modelAndView.addObject("message", e.getMessage());
 		} catch (Exception e) {
 			log.error("Unknown error. ", e);
+			modelAndView.addObject("email", email);
 			modelAndView.addObject("message", e.getMessage());
 		}
 

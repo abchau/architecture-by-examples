@@ -25,16 +25,16 @@
 
 .Sequence Diagram for 3-tier Architecture
 ifdef::env-github[]
-image::3-tier-sequence.png[]
+image::sequence.png[]
 endif::env-github[]
 ifdef::env-idea,env-vscode[]
-plantuml::docs/diagrams/3-tier-sequence.puml[target=3-tier-sequence,format=png]
+plantuml::docs/diagrams/sequence.puml[target=sequence,format=png]
 endif::env-idea,env-vscode[]
 
 .Class Diagram for 3-tier Architecture
 ifdef::env-github[]
-image::3-tier-class.png[]
+image::class.png[]
 endif::env-github[]
 ifdef::env-idea,env-vscode[]
-plantuml::docs/diagrams/3-tier-class.puml[target=3-tier-class,format=png]
+plantuml::docs/diagrams/class.puml[target=class,format=png]
 endif::env-idea,env-vscode[]

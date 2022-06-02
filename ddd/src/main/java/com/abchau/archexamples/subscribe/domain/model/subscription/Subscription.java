@@ -22,9 +22,6 @@ public final class Subscription {
 
 	// (1) better name
 	private ZonedDateTime subscribedAt;
-
-	// (1) better name
-	private ZonedDateTime confirmedAt;
 	
 	public static Subscription of(EmailAddress emailAddress, ZonedDateTime now) {
 		return Subscription.builder()
@@ -46,6 +43,10 @@ public final class Subscription {
 		this.status = SubscriptionStatus.VALIDATED;
 	}
 
+	public boolean isStatusValidated() {
+		return this.status == SubscriptionStatus.VALIDATED;
+	}
+
 	public boolean isValidForConfirmed() throws InvalidSubscriptionStatusException {
 		if (this.status != SubscriptionStatus.VALIDATED) {
 			throw new InvalidSubscriptionStatusException("error.status.invalid");
@@ -54,10 +55,8 @@ public final class Subscription {
 		return true;
 	}
 
-	public void toConfirmed(ZonedDateTime now) {
+	public void toConfirmed() {
 		this.status = SubscriptionStatus.CONFIRMED;
-
-		this.confirmedAt = now;
 	}
 
 	public boolean isStatusConfirmed() {
