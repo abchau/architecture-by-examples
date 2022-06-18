@@ -26,13 +26,13 @@ public final class Subscription {
 	public static Subscription of(EmailAddress emailAddress, ZonedDateTime now) {
 		return Subscription.builder()
 			.emailAddress(emailAddress)
-			.status(SubscriptionStatus.NONE)
+			.status(SubscriptionStatus.PENDING)
 			.subscribedAt(now)
 			.build();
 	}
 
 	public boolean isValidForValidated() throws InvalidSubscriptionStatusException {
-		if (this.status != SubscriptionStatus.NONE) {
+		if (this.status != SubscriptionStatus.PENDING) {
 			throw new InvalidSubscriptionStatusException("error.status.invalid");
 		}
 

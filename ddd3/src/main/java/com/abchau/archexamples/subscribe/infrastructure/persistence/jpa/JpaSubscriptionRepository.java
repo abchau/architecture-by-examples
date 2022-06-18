@@ -26,22 +26,22 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 
 	@Override
 	public int countByEmail(EmailAddress emailAddress) {
-		log.trace(() -> "countByEmail()...invoked");
-		log.debug(() -> "emailAddress: " + emailAddress);
+		log.trace("countByEmail()...invoked");
+		log.debug("emailAddress: {}", () -> emailAddress);
 
 		Objects.requireNonNull(emailAddress);
 		Objects.requireNonNull(emailAddress.getValue());
 
 		String email = emailAddress.getValue();
-		log.debug(() -> "email: " + email);
+		log.debug("email: {}", () -> email);
 
 		return subscriptionPersistenceJpaRepository.countByEmail(email);
 	}
 
 	@Override
 	public Subscription save(Subscription subscription) {
-		log.trace(() -> "save()...invoked");
-		log.debug(() -> "subscription: " + subscription);
+		log.trace("save()...invoked");
+		log.debug("subscription: {}", () -> subscription);
 
 		Objects.requireNonNull(subscription);
 		Objects.requireNonNull(subscription.getEmailAddress());
@@ -49,13 +49,13 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 
 		try {
 			SubscriptionPersistence subscriptionPersistence = AntiCorruptionLayer.translate(subscription);
-			log.debug(() -> "subscriptionPersistence: " + subscriptionPersistence);
+			log.debug("subscriptionPersistence: {}", () -> subscriptionPersistence);
 	
 			SubscriptionPersistence savedSubscriptionPersistence = subscriptionPersistenceJpaRepository.save(subscriptionPersistence);
-			log.debug(() -> "savedSubscriptionPersistence: " + savedSubscriptionPersistence);
+			log.debug("savedSubscriptionPersistence: {}", () -> savedSubscriptionPersistence);
 	
 			Subscription savedSubscription = AntiCorruptionLayer.translate(savedSubscriptionPersistence);
-			log.debug(() -> "savedSubscription: " + savedSubscription);
+			log.debug("savedSubscription: {}", () -> savedSubscription);
 	
 			return savedSubscription;
 		} catch(Exception e) {
@@ -67,7 +67,7 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 	private static class AntiCorruptionLayer {
 
 		public static Subscription translate(SubscriptionPersistence subscriptionPersistence) {
-			log.debug(() -> "subscriptionPersistence: " + subscriptionPersistence);
+			log.debug("subscriptionPersistence: {}", () -> subscriptionPersistence);
 			Objects.requireNonNull(subscriptionPersistence);
 
 			return Subscription.builder()
@@ -79,7 +79,7 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 		}
 
 		public static SubscriptionPersistence translate(Subscription subscription) {
-			log.debug(() -> "subscription: " + subscription);
+			log.debug("subscription: {}", () -> subscription);
 			Objects.requireNonNull(subscription);
 
 			return SubscriptionPersistence.builder()

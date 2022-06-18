@@ -24,31 +24,31 @@ public class JpaSubscriptionPersistenceAdapter implements SubscriptionPersistenc
 
 	@Override
 	public int countByEmail(EmailAddress emailAddress) {
-		log.trace(() -> "countByEmail()...invoked");
+		log.trace("countByEmail()...invoked");
 		Objects.requireNonNull(emailAddress, "email.empty");
 		Objects.requireNonNull(emailAddress.getValue(), "email.empty");
 
 		String email = emailAddress.getValue();
-		log.debug(() -> "email: " + email);
+		log.debug("email: {}", () -> email);
 
 		return subscriptionPersistenceJpaRepository.countByEmail(email);
 	}
 
 	@Override
 	public Subscription save(Subscription subscription) {
-		log.trace(() -> "save()...invoked");
+		log.trace("save()...invoked");
 		Objects.requireNonNull(subscription);
 		Objects.requireNonNull(subscription.getEmailAddress(), "email.empty");
 		Objects.requireNonNull(subscription.getEmailAddress().getValue(), "email.empty");
 
 		SubscriptionPersistence subscriptionPersistence = AntiCorruptionLayer.translate(subscription);
-		log.debug(() -> "subscriptionPersistence: " + subscriptionPersistence);
+		log.debug("subscriptionPersistence: {}", () -> subscriptionPersistence);
 
 		SubscriptionPersistence savedSubscriptionPersistence = subscriptionPersistenceJpaRepository.save(subscriptionPersistence);
-		log.debug(() -> "savedSubscriptionPersistence: " + savedSubscriptionPersistence);
+		log.debug("savedSubscriptionPersistence: {}", () -> savedSubscriptionPersistence);
 
 		Subscription savedSubscription = AntiCorruptionLayer.translate(savedSubscriptionPersistence);
-		log.debug(() -> "savedSubscription: " + savedSubscription);
+		log.debug("savedSubscription: {}", () -> savedSubscription);
 
 		return savedSubscription;
 	}

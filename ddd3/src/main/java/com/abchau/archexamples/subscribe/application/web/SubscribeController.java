@@ -34,7 +34,7 @@ public class SubscribeController {
 
     @GetMapping(value = "/subscribe")
 	public ModelAndView showSubscribeForm() {
-		log.trace(() -> "showSubscribeForm()...invoked");
+		log.trace("showSubscribeForm()...invoked");
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 		modelAndView.addObject("message", "");
@@ -45,8 +45,8 @@ public class SubscribeController {
 	// (1) use a command
     @PostMapping(value = "/subscribe")
 	public ModelAndView processSubscribeForm(CreateSubscriptionCommand createSubscriptionCommand) {
-		log.trace(() -> "processSubscribeForm()...invoked");
-		log.debug(() -> "createSubscriptionCommand: " + createSubscriptionCommand);
+		log.trace("processSubscribeForm()...invoked");
+		log.debug("createSubscriptionCommand: {}", () -> createSubscriptionCommand);
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 		
@@ -56,7 +56,7 @@ public class SubscribeController {
 			// (3) pass a command in application layer, not domain object in domain model layer
 
 			String email = createSubscriptionCommand.getEmail();
-			log.debug(() -> "email: " + email);
+			log.debug("email: {}", () -> email);
 	
 			// (3) do input validation in application layer
 			if (email == null || "".equalsIgnoreCase(email)) {
@@ -64,7 +64,7 @@ public class SubscribeController {
 			}
 	
 			Subscription newSubscription = Subscription.of(EmailAddress.of(email), ZonedDateTime.now(Clock.systemDefaultZone()));
-			log.debug(() -> "newSubscription: " + newSubscription);
+			log.debug("newSubscription: {}", () -> newSubscription);
 	
 			// (3) do input validation in application layer
 			if (!newSubscription.getEmailAddress().isValidFormat()) {
@@ -77,11 +77,11 @@ public class SubscribeController {
 			}
 	
 			Subscription savedSubscription = subscriptionService.createSubscription(newSubscription);
-			log.debug(() -> "savedSubscription: " + savedSubscription);
+			log.debug("savedSubscription: {}", () -> savedSubscription);
 			
 			// (5) Anti-corruption layer (ACL)
 			SubscriptionDto subscriptionDto = AntiCorruptionLayer.translate(savedSubscription);
-			log.debug(() -> "subscriptionDto: " + subscriptionDto);
+			log.debug("subscriptionDto: {}", () -> subscriptionDto);
 
 			modelAndView.addObject("email", subscriptionDto.getEmail());
 			modelAndView.addObject("message", "success");
@@ -110,7 +110,7 @@ public class SubscribeController {
 	private static class AntiCorruptionLayer {
 
 		public static SubscriptionDto translate(Subscription subscription) {
-			log.debug(() -> "subscription: " + subscription);
+			log.debug("subscription: {}", () -> subscription);
 			Objects.requireNonNull(subscription);
 
 			return SubscriptionDto.builder()

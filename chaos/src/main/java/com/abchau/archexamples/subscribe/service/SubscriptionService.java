@@ -33,8 +33,8 @@ public class SubscriptionService extends /* (1) dafuq */ GeneralService {
 	// (2) use write transation for readonly task
 	@Transactional
     public Subscription findByEmail(Map params) {
-		log.trace(() -> "findByEmail()...invoked");
-		log.debug(() -> "email: " + params.get("email"));
+		log.trace("findByEmail()...invoked");
+		log.debug("email: {}", () -> params.get("email"));
 
 		return subscriptionRepository.findByEmail((String) params.get("email"));
 	}
@@ -45,8 +45,8 @@ public class SubscriptionService extends /* (1) dafuq */ GeneralService {
 	// (6) web technology leak into business logic
 	@Transactional
 	public Map save(MultiValueMap<String, String> params) {
-		log.trace(() -> "save()...invoked");
-		log.debug(() -> "params: " + params);
+		log.trace("save()...invoked");
+		log.debug("params: {}", () -> params);
 
 		// (1) dafuq
 		// (5) everything is a map

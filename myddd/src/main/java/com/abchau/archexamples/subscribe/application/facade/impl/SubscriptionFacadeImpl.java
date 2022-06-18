@@ -33,11 +33,11 @@ public class SubscriptionFacadeImpl implements SubscriptionFacade {
 	@Override
 	// (1) better method name
 	public Optional<SubscriptionDto> createSubscription(CreateSubscriptionCommand createSubscriptionCommand) throws IllegalArgumentException, Exception {
-		log.trace(() -> "createSubscription()...invoked");
+		log.trace("createSubscription()...invoked");
 		Objects.requireNonNull(createSubscriptionCommand);
 
 		String email = createSubscriptionCommand.getEmail();
-		log.debug(() -> "email: " + email);
+		log.debug("email: {}", () -> email);
 
 		// (3) also do validation here
 		if (email == null || "".equalsIgnoreCase(email)) {
@@ -49,15 +49,15 @@ public class SubscriptionFacadeImpl implements SubscriptionFacade {
 			subscriptionService.isEmailAlreadyExist(emailAddress);
 
 			Subscription subscription = Subscription.of(emailAddress);
-			log.debug(() -> "subscription: " + subscription);
+			log.debug("subscription: {}", () -> subscription);
 			
 			Subscription savedSubscription = subscriptionService.createSubscription(subscription)
 				.orElseThrow();
-			log.debug(() -> "savedSubscription: " + savedSubscription);
+			log.debug("savedSubscription: {}", () -> savedSubscription);
 			
 			// (3) demonstrate ACL
 			SubscriptionDto subscriptionDto = AntiCorruptionLayer.translate(savedSubscription);
-			log.debug(() -> "subscriptionDto: " + subscriptionDto);
+			log.debug("subscriptionDto: {}", () -> subscriptionDto);
 			
 			return Optional.of(subscriptionDto);
 		} 

@@ -28,8 +28,8 @@ public final class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public boolean isEmailAlreadyExist(EmailAddress emailAddress) throws EmailIsEmptyException, EmailAlreadyExistException {
-		log.trace(() -> "isEmailAlreadyExist()...invoked");
-		log.debug(() -> "emailAddress: " + emailAddress);
+		log.trace("isEmailAlreadyExist()...invoked");
+		log.debug("emailAddress: {}", () -> emailAddress);
 
 		// (1) must do input validation before executing domain logic
 		if (emailAddress == null 
@@ -49,8 +49,8 @@ public final class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public Subscription createSubscription(Subscription subscription) throws EmailIsEmptyException, EmailFormatException, EmailAlreadyExistException, InvalidSubscriptionStatusException, CannotCreateSubscriptionException {
-		log.trace(() -> "createSubscription()...invoked");
-		log.debug(() -> "subscription: " + subscription);
+		log.trace("createSubscription()...invoked");
+		log.debug("subscription: {}", () -> subscription);
 		
 		// (1) must do input validation before executing domain logic
 		if (subscription == null 

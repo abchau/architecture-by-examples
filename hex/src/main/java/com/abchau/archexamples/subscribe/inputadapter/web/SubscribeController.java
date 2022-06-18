@@ -26,7 +26,7 @@ public class SubscribeController {
 
     @GetMapping(value = "/subscribe")
 	public ModelAndView showSubscribeForm() {
-		log.trace(() -> "showSubscribeForm()...invoked");
+		log.trace("showSubscribeForm()...invoked");
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 		modelAndView.addObject("message", "");
@@ -36,12 +36,12 @@ public class SubscribeController {
 
     @PostMapping(value = "/subscribe")
 	public ModelAndView processSubscribeForm(@RequestBody MultiValueMap<String, String> params) {
-		log.trace(() -> "processSubscribeForm()...invoked");
+		log.trace("processSubscribeForm()...invoked");
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 
 		String email = params.getFirst("email");
-		log.debug(() -> "email: " + email);
+		log.debug("email: {}", () -> email);
 
 		// (1) do validation in adapter
 		if (email == null || "".equalsIgnoreCase(email)) {
@@ -53,7 +53,7 @@ public class SubscribeController {
 		// (2) catch application error and domain error
 		try {
 			Subscription savedSubscription = subscriptionFacade.createSubscription(email);
-			log.debug(() -> "savedSubscription: " + savedSubscription);
+			log.debug("savedSubscription: {}", () -> savedSubscription);
 
 			modelAndView.addObject("email", savedSubscription.getEmailAddress().getValue());
 			modelAndView.addObject("message", "success");

@@ -37,7 +37,7 @@ public class SubscribeController {
 	// (5) bad method name
     @GetMapping(value = "/subscribe")
 	public ModelAndView create() {
-		log.trace(() -> "create()...invoked");
+		log.trace("create()...invoked");
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 		modelAndView.addObject("message", "");
@@ -49,7 +49,7 @@ public class SubscribeController {
 	// (7) everything is a map
     @PostMapping(value = "/subscribe")
 	public ModelAndView update(@RequestBody MultiValueMap<String, String> params) {
-		log.trace(() -> "subscribe()...invoked");
+		log.trace("subscribe()...invoked");
 
 		// (1) dafuq
 		// just demonstrate how it muddle origin request

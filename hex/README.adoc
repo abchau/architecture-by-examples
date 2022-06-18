@@ -3,12 +3,61 @@
 :imagesdir: docs/images
 :imagesoutdir: docs/images
 
-== Getting Started
+== Usage
 
 [source,bash]
 ----
 ./mvnw spring-boot:run
 ----
+
+
+[plantuml]
+....
+@startuml
+'left to right direction
+'skinparam linetype polyline
+'skinparam linetype ortho
+
+circle http
+
+rectangle user_interface as "User Interface" {
+	rectangle input_adapter as "Input Adapter"
+}
+
+	hexagon application as "Application" {
+		rectangle facade as "Facade"
+
+		hexagon domain_model as "Domain Model" {
+			rectangle use_case as "Use Cases"
+			rectangle entity as "Entity"
+		}
+	}
+	
+rectangle infrastructure as "Infrastructure" {
+	rectangle output_adapter as "Output Adapter"
+}
+
+database db
+
+http -right-> input_adapter
+input_adapter -right-> facade 
+facade -right-> use_case
+use_case -right-> output_adapter
+output_adapter -right-> db
+use_case -down-> entity
+
+@enduml
+....
+
+== Flow
+
+.Sequence Diagram for Hexagonal Architecture
+ifdef::env-github[]
+image::sequence.png[]
+endif::env-github[]
+ifdef::env-idea,env-vscode[]
+plantuml::docs/diagrams/sequence.puml[target=sequence,format=png]
+endif::env-idea,env-vscode[]
 
 == Packages
 
@@ -29,14 +78,6 @@
 * `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
 
 NOTE: idea that are not important to demonstrate *Ports and Adapters* are not included
-
-.Sequence Diagram for Hexagonal Architecture
-ifdef::env-github[]
-image::sequence.png[]
-endif::env-github[]
-ifdef::env-idea,env-vscode[]
-plantuml::docs/diagrams/sequence.puml[target=sequence,format=png]
-endif::env-idea,env-vscode[]
 
 .Class Diagram for Hexagonal Architecture
 ifdef::env-github[]

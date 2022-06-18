@@ -38,13 +38,13 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 	@Override
 	// (2) better method name
 	public Optional<SubscriptionDto> createSubscription(CreateSubscriptionCommand createSubscriptionCommand) throws IllegalArgumentException, Exception {
-		log.trace(() -> "createSubscription()...invoked");
-		log.debug(() -> "createSubscriptionCommand: " + createSubscriptionCommand);
+		log.trace("createSubscription()...invoked");
+		log.debug("createSubscriptionCommand: {}", () -> createSubscriptionCommand);
 
 		Objects.requireNonNull(createSubscriptionCommand);
 
 		String email = createSubscriptionCommand.getEmail();
-		log.debug(() -> "email: " + email);
+		log.debug("email: {}", () -> email);
 
 		// (3) do input validation in application layer
 		if (email == null || "".equalsIgnoreCase(email)) {
@@ -53,7 +53,7 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 
 		try {
 			Subscription newSubscription = Subscription.of(EmailAddress.of(email), ZonedDateTime.now(Clock.systemDefaultZone()));
-			log.debug(() -> "newSubscription: " + newSubscription);
+			log.debug("newSubscription: {}", () -> newSubscription);
 
 			// (3) do input validation in application layer
 			if (!newSubscription.getEmailAddress().isValidFormat()) {
@@ -66,11 +66,11 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 			}
 
 			Subscription savedSubscription = subscriptionService.createSubscription(newSubscription);
-			log.debug(() -> "savedSubscription: " + savedSubscription);
+			log.debug("savedSubscription: {}", () -> savedSubscription);
 			
 			// (5) Anti-corruption layer (ACL)
 			SubscriptionDto subscriptionDto = AntiCorruptionLayer.translate(savedSubscription);
-			log.debug(() -> "subscriptionDto: " + subscriptionDto);
+			log.debug("subscriptionDto: {}", () -> subscriptionDto);
 			
 			return Optional.of(subscriptionDto);
 		}
@@ -95,7 +95,7 @@ public class SubscriptionServiceFacadeImpl implements SubscriptionServiceFacade 
 	private static class AntiCorruptionLayer {
 
 		public static SubscriptionDto translate(Subscription subscription) {
-			log.debug(() -> "subscription: " + subscription);
+			log.debug("subscription: {}", () -> subscription);
 			Objects.requireNonNull(subscription);
 
 			return SubscriptionDto.builder()

@@ -26,7 +26,7 @@ public class SubscribeController {
 	// (4) bad method name
     @GetMapping(value = "/subscribe")
 	public ModelAndView showSubscribeForm() {
-		log.trace(() -> "showSubscribeForm()...invoked");
+		log.trace("showSubscribeForm()...invoked");
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 		modelAndView.addObject("message", "");
@@ -36,8 +36,8 @@ public class SubscribeController {
 
     @PostMapping(value = "/subscribe")
 	public ModelAndView processSubscribeForm(CreateSubscriptionCommand createSubscriptionCommand) {
-		log.trace(() -> "processSubscribeForm()...invoked");
-		log.debug(() -> "createSubscriptionCommand: " + createSubscriptionCommand);
+		log.trace("processSubscribeForm()...invoked");
+		log.debug("createSubscriptionCommand: {}", () -> createSubscriptionCommand);
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 

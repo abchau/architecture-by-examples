@@ -23,8 +23,8 @@ public class SubscriptionService {
 	// (1) only return absolute necessary
 	@Transactional(readOnly = true)
     public boolean isAlreadyExist(String email) {
-		log.trace(() -> "isAlreadyExist()...invoked");
-		log.debug(() -> "email: " + email);
+		log.trace("isAlreadyExist()...invoked");
+		log.debug("email: {}", () -> email);
 
 		int count = subscriptionRepository.countByEmail(email);
 		log.debug(() -> "count: " + count);
@@ -34,8 +34,8 @@ public class SubscriptionService {
 	
 	@Transactional
 	public Subscription save(Subscription subscription) throws Exception {
-		log.trace(() -> "save()...invoked");
-		log.debug(() -> "subscription: " + subscription);
+		log.trace("save()...invoked");
+		log.debug("subscription: {}", () -> subscription);
 
 		// (2) often not doing domain validation
 

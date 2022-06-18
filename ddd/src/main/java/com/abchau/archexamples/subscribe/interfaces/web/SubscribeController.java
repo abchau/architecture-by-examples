@@ -25,7 +25,7 @@ public class SubscribeController {
 
     @GetMapping(value = "/subscribe")
 	public ModelAndView showSubscribeForm() {
-		log.trace(() -> "showSubscribeForm()...invoked");
+		log.trace("showSubscribeForm()...invoked");
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 		modelAndView.addObject("message", "");
@@ -36,8 +36,8 @@ public class SubscribeController {
 	// (1) use a command
     @PostMapping(value = "/subscribe")
 	public ModelAndView processSubscribeForm(CreateSubscriptionCommand createSubscriptionCommand) {
-		log.trace(() -> "processSubscribeForm()...invoked");
-		log.debug(() -> "createSubscriptionCommand: " + createSubscriptionCommand);
+		log.trace("processSubscribeForm()...invoked");
+		log.debug("createSubscriptionCommand: {}", () -> createSubscriptionCommand);
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 
@@ -46,7 +46,7 @@ public class SubscribeController {
 			// (3) pass a command in application layer, not domain object in domain model layer
 			SubscriptionDto subscriptionDto = subscriptionServiceFacade.createSubscription(createSubscriptionCommand)
 				.orElseThrow();
-			log.debug(() -> "subscriptionDto: " + subscriptionDto);
+			log.debug("subscriptionDto: {}", () -> subscriptionDto);
 
 			modelAndView.addObject("email", subscriptionDto.getEmail());
 			modelAndView.addObject("message", "success");

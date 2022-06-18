@@ -28,7 +28,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public boolean isEmailAlreadyExist(EmailAddress emailAddress) throws EmailAlreadyExistException {
-		log.trace(() -> "isEmailAlreadyExist()...invoked");
+		log.trace("isEmailAlreadyExist()...invoked");
 		Objects.requireNonNull(emailAddress, "email.empty");
 		
 		int count = subscriptionPersistencePort.countByEmail(emailAddress);
@@ -42,7 +42,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public Optional<Subscription> createSubscription(Subscription subscription) throws EmailFormatException {
-		log.trace(() -> "createSubscription()...invoked");
+		log.trace("createSubscription()...invoked");
 		Objects.requireNonNull(subscription, "email.empty");
 		Objects.requireNonNull(subscription.getEmailAddress(), "email.empty");
 

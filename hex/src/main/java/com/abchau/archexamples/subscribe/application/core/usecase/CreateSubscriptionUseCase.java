@@ -24,7 +24,7 @@ public class CreateSubscriptionUseCase {
 	}
 
 	public Subscription execute(Subscription subscription) throws EmailFormatException, EmailAlreadyExistException, Exception {
-		log.trace(() -> "execute()...invoked");
+		log.trace("execute()...invoked");
 		Objects.requireNonNull(subscription);
 
 		// (1) must do domain validation before executing domain logic

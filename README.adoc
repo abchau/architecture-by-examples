@@ -67,10 +67,19 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 );
 ----
 
-== How to test
+== Usage
+
+=== Requires
+
+* Java 11+
+
+=== Build
 
 * Import in your favourite IDE
 * Start each project as a spring boot application individually or run `./mvnw spring-boot:run`
+
+=== Testing
+
 * Go to http://localhost:8080/subscribe
 +
 image::demo1.png[] 
@@ -102,30 +111,20 @@ image::demo6.png[]
 
 == Architectures
 
-[cols="1,1,2,4,3,3,1",options=header]
+[cols="1,1,2,4,1",options=header]
 |===
-|#|Name|Architecture|Description|Advantanges|Disadvantages|Status
+|#|Name|Architecture|Description|Status
 |1
 |link:chaos/[chaos]
 |Chaos Architecture
 a|* Just Chaotic Mess
 * Exactly what this industry called "A big ball of mud"
-a|* Job Security until the system got axed
-a|* Untestable
-* Unmaintainable
-* Unmanageable
-* Unreadable
-* ...etc
 |In Progress
 
 |2
 |link:3-tier/[3-tier]
 |3-tier Architecture
 a|* Most common way
-a|* Easy to understand
-* Easy to build
-a|* Difficult to maintain
-* lost control when it grows bigger.
 |In Progress
 
 |3
@@ -133,8 +132,6 @@ a|* Difficult to maintain
 |Domain Driven Design
 a|* Implement Eric Evan's masterpiece
 * Does not implement Domain Events
-a| * manage complexity
-a|* More codes (introduced some complexity)
 |In Progress
 
 |4
@@ -142,8 +139,6 @@ a|* More codes (introduced some complexity)
 |Three-Layered Domain Driven Design
 a|* *Simplified* by merging User Interface Layer into Application Layer
 * *Simplified* doesn't mean easier nor better
-a| * Handy if not much task coordination required
-a| * Comes with a cost
 |In Progress
 
 |5
@@ -151,25 +146,18 @@ a| * Comes with a cost
 |Hexagonal Architecture (Ports and Adapters)
 a|* Implement Alistair Cockburn's masterpiece
 * Only implement necessary parts to demostrate idea of using ports and adapters
-a|
-a|
 |In Progress
 
 |7
 |link:fn/[fn]
 |Functional Domain Driven Design
 a|* Implement DDD using Clojure
-a|
-a|
 |In Progress
 
 |99
 |link:myddd/[myddd]
 |My DDD
-a|* Implement DDD using Hexagonal Architecture
-* Added my personal preferences
-a|* s
-a|
+a|* Implement DDD using Hexagonal Architecture with personal preferences
 |In Progress
 
 

@@ -29,11 +29,11 @@ public class SubscriptionFacadeImpl implements SubscriptionFacade {
 	@Transactional
 	@Override
 	public Subscription createSubscription(String email) throws IllegalArgumentException, Exception {
-		log.trace(() -> "createSubscription()...invoked");
+		log.trace("createSubscription()...invoked");
 		Objects.requireNonNull(email);
 
 		Subscription subscription = Subscription.of(EmailAddress.of(email));
-		log.debug(() -> "subscription: " + subscription);
+		log.debug("subscription: {}", () -> subscription);
 
 		try {
 			return createSubscriptionUseCase.execute(subscription);

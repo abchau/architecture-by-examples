@@ -36,11 +36,11 @@ public class SubscribeController {
 	// (4) PRG pattern
     @PostMapping(value = "/subscribe")
 	public ModelAndView processSubscribeForm(@RequestBody MultiValueMap<String, String> params) {
-		log.trace(() -> "update()...invoked");
+		log.trace("update()...invoked");
 
 		// (1) extract values from the request immediate
 		String email = params.getFirst("email");
-		log.debug(() -> "email: " + email);
+		log.debug("email: {}", () -> email);
 
 		ModelAndView modelAndView = new ModelAndView("subscribe");
 
@@ -67,12 +67,12 @@ public class SubscribeController {
 		} 
 
 		Subscription newSubscription = Subscription.of(email);
-		log.debug(() -> "newSubscription: " + newSubscription);
+		log.debug("newSubscription: {}", () -> newSubscription);
 
 		// (4) catch application error and business error
 		try {
 			Subscription savedSubscription = subscriptionService.save(newSubscription);
-			log.debug(() -> "savedSubscription: " + savedSubscription);
+			log.debug("savedSubscription: {}", () -> savedSubscription);
 
 			modelAndView.addObject("email", savedSubscription.getEmail());
 			modelAndView.addObject("message", "success");
