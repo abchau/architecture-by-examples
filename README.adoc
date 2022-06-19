@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 
 === Requires
 
-* Java 17+
+* Java 18
 
 === Build
 
