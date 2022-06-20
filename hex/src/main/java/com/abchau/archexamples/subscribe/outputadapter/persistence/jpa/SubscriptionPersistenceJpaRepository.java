@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 // (1) if use hibernate directly, this class won't exist
 @Repository
-public interface SubscriptionPersistenceJpaRepository extends JpaRepository<SubscriptionPersistence, Long> {
+interface SubscriptionPersistenceJpaRepository extends JpaRepository<SubscriptionPersistence, Long> {
 
     int countByEmail(String email);
 

@@ -16,7 +16,7 @@ import lombok.Data;
 @Builder
 @Data
 @Entity(name="subscriptions")
-public class SubscriptionPersistence {
+final class SubscriptionPersistence {
 
 	@Id
 	@GeneratedValue

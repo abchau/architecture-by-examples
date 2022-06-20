@@ -1,14 +1,4 @@
-package com.abchau.archexamples.subscribe.domain.service.impl;
-
-import com.abchau.archexamples.subscribe.domain.model.subscription.EmailAddress;
-import com.abchau.archexamples.subscribe.domain.model.subscription.EmailAlreadyExistException;
-import com.abchau.archexamples.subscribe.domain.model.subscription.EmailFormatException;
-import com.abchau.archexamples.subscribe.domain.model.subscription.EmailIsEmptyException;
-import com.abchau.archexamples.subscribe.domain.model.subscription.InvalidSubscriptionStatusException;
-import com.abchau.archexamples.subscribe.domain.model.subscription.CannotCreateSubscriptionException;
-import com.abchau.archexamples.subscribe.domain.model.subscription.Subscription;
-import com.abchau.archexamples.subscribe.domain.model.subscription.SubscriptionRepository;
-import com.abchau.archexamples.subscribe.domain.service.SubscriptionService;
+package com.abchau.archexamples.subscribe.domain.model.subscription;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,11 +77,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 			throw new InvalidSubscriptionStatusException("error.status.invalid");
 		}
 		
-		// (2) only execute after domain validation
+		// (3) only execute after domain validation
 		try {
 			return subscriptionRepository.save(subscription);
 		}
-		// (3) wraps whatever thrown from underlying layer into a domain exception
+		// (4) wraps whatever thrown from underlying layer into a domain exception
 		catch (Exception e) {
 			log.error("couldn't create subscription", e);
 			throw new CannotCreateSubscriptionException("error.create");

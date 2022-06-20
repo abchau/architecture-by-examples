@@ -18,7 +18,7 @@ import lombok.Data;
 @Builder
 @Data
 @Entity(name="subscriptions")
-public class SubscriptionPersistence {
+final class SubscriptionPersistence {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subscription_generator")
@@ -34,6 +34,9 @@ public class SubscriptionPersistence {
 
 	@Column(name = "subscribed_at")
 	private ZonedDateTime subscribedAt;
+
+	@Column(name = "confirmed_at")
+	private ZonedDateTime confirmedAt;
 
 	@Version
 	@Column(name = "version")

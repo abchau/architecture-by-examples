@@ -10,7 +10,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 @Data
-public class Subscription {
+public final class Subscription {
 
 	private Long id;
 	

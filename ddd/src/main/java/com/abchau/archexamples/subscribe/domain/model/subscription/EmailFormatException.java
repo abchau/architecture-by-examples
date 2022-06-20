@@ -1,6 +1,6 @@
 package com.abchau.archexamples.subscribe.domain.model.subscription;
 
-public class EmailFormatException extends Exception {
+public final class EmailFormatException extends Exception {
 	
 	public static final String CODE = "email.format";
 

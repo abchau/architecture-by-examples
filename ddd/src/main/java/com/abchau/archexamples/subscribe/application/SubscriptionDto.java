@@ -1,4 +1,4 @@
-package com.abchau.archexamples.subscribe.application.web;
+package com.abchau.archexamples.subscribe.application;
 
 import java.time.ZonedDateTime;
 

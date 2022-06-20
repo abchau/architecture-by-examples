@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Log4j2
 @Controller
-public class SubscribeController {
+final class SubscribeController {
 
 	private SubscriptionFacade subscriptionFacade;
 

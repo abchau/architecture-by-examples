@@ -22,6 +22,9 @@ public final class Subscription {
 
 	// (1) better name
 	private ZonedDateTime subscribedAt;
+
+	// (1) better name
+	private ZonedDateTime confirmedAt;
 	
 	public static Subscription of(EmailAddress emailAddress, ZonedDateTime now) {
 		return Subscription.builder()
@@ -57,6 +60,7 @@ public final class Subscription {
 
 	public void toConfirmed() {
 		this.status = SubscriptionStatus.CONFIRMED;
+		this.confirmedAt = ZonedDateTime.now();
 	}
 
 	public boolean isStatusConfirmed() {

@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-public class JpaSubscriptionRepository implements SubscriptionRepository {
+public final class JpaSubscriptionRepository implements SubscriptionRepository {
 
 	private SubscriptionPersistenceJpaRepository subscriptionPersistenceJpaRepository;
 
@@ -75,6 +75,7 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 				.emailAddress(EmailAddress.of(subscriptionPersistence.getEmail()))
 				.status(SubscriptionStatus.valueOf(subscriptionPersistence.getStatus()))
 				.subscribedAt(subscriptionPersistence.getSubscribedAt())
+				.confirmedAt(subscriptionPersistence.getConfirmedAt())
 				.build();
 		}
 
@@ -87,6 +88,7 @@ public class JpaSubscriptionRepository implements SubscriptionRepository {
 				.email(subscription.getEmailAddress().getValue())
 				.status(subscription.getStatus().toString())
 				.subscribedAt(subscription.getSubscribedAt())
+				.confirmedAt(subscription.getConfirmedAt())
 				.build();
 		}
 	}
