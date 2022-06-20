@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 
 === Requires
 
-* Java 18
+* Java 17
 
 === Build
 
@@ -130,15 +130,15 @@ a|* Most common way
 |3
 |link:ddd/[ddd]
 |Domain Driven Design
-a|* Implement Eric Evan's masterpiece
+a|* Implement Eric Evan's masterpiece using Hexagonal Architecture 
 * Does not implement Domain Events
 |In Progress
 
 |4
 |link:ddd3/[ddd3]
 |Three-Layered Domain Driven Design
-a|* *Simplified* by merging User Interface Layer into Application Layer
-* *Simplified* doesn't mean easier nor better
+a|* Simplified by merging User Interface Layer into Application Layer
+* Simplified doesn't mean easier nor better
 |In Progress
 
 |5
@@ -157,7 +157,7 @@ a|* Implement DDD using Clojure
 |99
 |link:myddd/[myddd]
 |My DDD
-a|* Implement DDD using Hexagonal Architecture with personal preferences
+a|* Implement DDD with personal preferences
 |In Progress
 
 
