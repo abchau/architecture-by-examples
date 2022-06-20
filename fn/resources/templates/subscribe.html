@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Subscribe</title>
-    <style>
-		html,
-		body {
-			height: 100vh;
+	<style>
+		html {
+			display: table;
+			height: 100%;
+			width: 100%;
 		}
 		body {
-			display: flex;
-			justify-content: center;
-			align-items: center;
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
 		}
 		.form {
 			display: flex;
@@ -23,15 +24,15 @@
 			padding-bottom: 16px;
 		}
 		.aa {
-			display: flex;
+			display: flex; 
 			flex-direction: column;
 			padding-bottom: 16px;
 		}
 	</style>
 </head>
-<body style="display: flex; justify-content: center;">
-<div class="form">
-    <h1>Subscribe</h1>
+<body>
+	<div class="form">
+		<h1>Subscribe</h1>
 
     <div th:if="${message == 'email.empty'}" class="ele">
         <em>Input is empty</em>
