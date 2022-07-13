@@ -4,9 +4,6 @@ actor User
 box Input Adapters
 participant SubscriptionController << (C,#ADD1B2) @Controller >>
 end box
-box Application
-participant SubscriptionFacadeImpl << (C,#ADD1B2) @Bean >>
-end box
 box Application Core
 participant CreateSubscriptionUseCase << (C,#ADD1B2) @Bean >>
 end box
@@ -21,12 +18,9 @@ activate User
 User --> SubscriptionController
 activate SubscriptionController
 
-note over SubscriptionFacadeImpl: via SubscriptionFacade
+note over SubscriptionController: via CreateSubscriptionUseCasePort
 
-SubscriptionController --> SubscriptionFacadeImpl
-activate SubscriptionFacadeImpl
-
-SubscriptionFacadeImpl --> CreateSubscriptionUseCase
+SubscriptionController --> CreateSubscriptionUseCase
 activate CreateSubscriptionUseCase
 
 note over JpaSubscriptionPersistenceAdapter: via SubscriptionPersistencePort
@@ -49,11 +43,8 @@ deactivate SubscriptionPersistenceJpaRepository
 JpaSubscriptionPersistenceAdapter --> CreateSubscriptionUseCase
 deactivate JpaSubscriptionPersistenceAdapter
 
-CreateSubscriptionUseCase --> SubscriptionFacadeImpl
+CreateSubscriptionUseCase --> SubscriptionController
 deactivate CreateSubscriptionUseCase
-
-SubscriptionFacadeImpl --> SubscriptionController
-deactivate SubscriptionFacadeImpl
 
 SubscriptionController --> User
 deactivate SubscriptionController

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.abchau.archexamples.subscribe.application.core.EmailAddress;
 import com.abchau.archexamples.subscribe.application.core.Subscription;
-import com.abchau.archexamples.subscribe.application.core.SubscriptionPersistencePort;
+import com.abchau.archexamples.subscribe.application.outputport.SubscriptionPersistencePort;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

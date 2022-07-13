@@ -11,16 +11,19 @@ rectangle "Input/Driving/Primary Adapter" {
 
 rectangle "Application" {
 	package application {
-		interface SubscriptionFacade
-		class SubscriptionFacadeImpl
+		package inputport {
+			interface CreateSubscriptionUseCasePort
+		}
 
 		package core {
 			class Subscription
-			interface SubscriptionPersistencePort
-
 			package usecase {
 				class CreateSubscriptionUseCase
 			}
+		}
+
+		package outputport {
+			interface SubscriptionPersistencePort
 		}
 	}
 }
@@ -40,16 +43,13 @@ rectangle "Output/Driven/Secondary Adapter" {
 actor User
 User -down-> SubscriptionController
 
-SubscriptionController -down-> SubscriptionFacade
-SubscriptionFacadeImpl -up-> SubscriptionFacade
-SubscriptionFacadeImpl .down.> Subscription: uses
-
-
-SubscriptionFacadeImpl -down-> CreateSubscriptionUseCase: uses
-CreateSubscriptionUseCase ..> Subscription: uses
+SubscriptionController -down-> CreateSubscriptionUseCasePort
+CreateSubscriptionUseCasePort .down.> Subscription: uses
+CreateSubscriptionUseCase -up-> CreateSubscriptionUseCasePort: implements
+CreateSubscriptionUseCase .left.> Subscription: uses
+CreateSubscriptionUseCase .down.> SubscriptionPersistencePort: uses
 
 SubscriptionPersistencePort .up.> Subscription: uses
-JpaSubscriptionPersistenceAdapter .up.> Subscription: uses
 
 JpaSubscriptionPersistenceAdapter -up-> SubscriptionPersistencePort: implements
 JpaSubscriptionPersistenceAdapter -left-> SubscriptionPersistenceJpaRepository

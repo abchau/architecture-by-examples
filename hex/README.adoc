@@ -14,38 +14,19 @@
 [plantuml]
 ....
 @startuml
-'left to right direction
-'skinparam linetype polyline
-'skinparam linetype ortho
-
-circle http
-
-rectangle user_interface as "User Interface" {
-	rectangle input_adapter as "Input Adapter"
-}
-
-	hexagon application as "Application" {
-		rectangle facade as "Facade"
-
-		hexagon domain_model as "Domain Model" {
-			rectangle use_case as "Use Cases"
-			rectangle entity as "Entity"
-		}
-	}
-	
-rectangle infrastructure as "Infrastructure" {
-	rectangle output_adapter as "Output Adapter"
-}
-
-database db
-
-http -right-> input_adapter
-input_adapter -right-> facade 
-facade -right-> use_case
-use_case -right-> output_adapter
-output_adapter -right-> db
-use_case -down-> entity
-
+|i|input
+|a|application
+|o|output
+|i|
+start
+:SubscriptionController;
+|a|
+:CreateSubscriptionUseCasePort;
+:CreateSubscriptionUseCase;
+:SubscriptionPersistencePort;
+|o|
+:JpaSubscriptionPersistenceAdapter;
+stop
 @enduml
 ....
 
@@ -65,16 +46,17 @@ endif::env-idea,env-vscode[]
 |===
 |Package|Description
 |`inputadapter.web`|Web Input Adapter
-|`application`|Application
+|`application.inputport`|Input Ports
 |`application.core`|Application Core
 |`application.core.usecase`|Business Use Cases
+|`application.outputport`|Output Ports
 |`outputadapter.persistence.jpa`|JPA Persistence Output Adapter
 |===
 
-* `*SubscriptionController*`: receives tasks from specific interface
-* `*SubscriptionFacadeImpl*`: task coordination, transaction, anti-corruption
-* `*CreateSubscriptionUseCase*`: business logic
-* `*JpaSubscriptionAdapter*`: anti-corruption, delegate persistence operations to `SubscriptionPersistenceJpaRepository`
+* `*SubscriptionController*`: Web Input Adapter, receives tasks from specific interface
+* `*CreateSubscriptionUseCasePort*`: Input Port
+* `*CreateSubscriptionUseCase*`: Business Use Case
+* `*JpaSubscriptionAdapter*`: Persistence Output Adapter, anti-corruption, delegate persistence operations to `SubscriptionPersistenceJpaRepository`
 * `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
 
 NOTE: idea that are not important to demonstrate *Ports and Adapters* are not included

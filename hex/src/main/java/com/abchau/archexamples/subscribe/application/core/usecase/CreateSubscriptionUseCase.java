@@ -5,16 +5,18 @@ import java.util.Objects;
 import com.abchau.archexamples.subscribe.application.core.EmailAlreadyExistException;
 import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
 import com.abchau.archexamples.subscribe.application.core.Subscription;
-import com.abchau.archexamples.subscribe.application.core.SubscriptionPersistencePort;
+import com.abchau.archexamples.subscribe.application.inputport.CreateSubscriptionUseCasePort;
+import com.abchau.archexamples.subscribe.application.outputport.SubscriptionPersistencePort;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-public class CreateSubscriptionUseCase {
+public class CreateSubscriptionUseCase implements CreateSubscriptionUseCasePort {
 
 	private SubscriptionPersistencePort subscriptionPersistencePort;
 
@@ -23,6 +25,7 @@ public class CreateSubscriptionUseCase {
 		this.subscriptionPersistencePort = subscriptionPersistencePort;
 	}
 
+	@Transactional
 	public Subscription execute(Subscription subscription) throws EmailFormatException, EmailAlreadyExistException, Exception {
 		log.trace("execute()...invoked");
 		Objects.requireNonNull(subscription);
@@ -43,3 +46,4 @@ public class CreateSubscriptionUseCase {
 	}
 
 }
+
