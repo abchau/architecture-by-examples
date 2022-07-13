@@ -137,8 +137,8 @@ a|* Implement Eric Evan's masterpiece using Hexagonal Architecture
 |4
 |link:ddd3/[ddd3]
 |Three-Layered Domain Driven Design
-a|* Simplified by merging User Interface Layer into Application Layer
-* Simplified doesn't mean easier nor better
+a|* Implement "common" practice where User Interface Layer and Application Layer are merged
+* It doesn't mean easier nor better than 4 layers
 |In Progress
 
 |5
