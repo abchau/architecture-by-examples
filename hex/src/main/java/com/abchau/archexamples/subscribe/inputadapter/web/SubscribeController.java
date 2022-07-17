@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 
 import com.abchau.archexamples.subscribe.application.core.EmailAddress;
 import com.abchau.archexamples.subscribe.application.core.EmailAlreadyExistException;
+import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
 import com.abchau.archexamples.subscribe.application.core.Subscription;
 import com.abchau.archexamples.subscribe.application.inputport.CreateSubscriptionUseCasePort;
 
