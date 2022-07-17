@@ -16,7 +16,7 @@ import lombok.Data;
 @Builder
 @Data
 @Entity(name="subscriptions")
-final class SubscriptionPersistence {
+final class SubscriptionJpaEntity {
 
 	@Id
 	@GeneratedValue

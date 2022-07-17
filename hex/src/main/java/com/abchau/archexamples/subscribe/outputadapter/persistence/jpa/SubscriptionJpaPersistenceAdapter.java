@@ -13,12 +13,12 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Component
-public class JpaSubscriptionPersistenceAdapter implements CreateSubscriptionPersistencePort {
+public class SubscriptionJpaPersistenceAdapter implements CreateSubscriptionPersistencePort {
 
-	private SubscriptionPersistenceJpaRepository subscriptionPersistenceJpaRepository;
+	private SubscriptionJpaRepository subscriptionPersistenceJpaRepository;
 
 	@Autowired
-	public JpaSubscriptionPersistenceAdapter(final SubscriptionPersistenceJpaRepository subscriptionPersistenceJpaRepository) {
+	public SubscriptionJpaPersistenceAdapter(final SubscriptionJpaRepository subscriptionPersistenceJpaRepository) {
 		this.subscriptionPersistenceJpaRepository = subscriptionPersistenceJpaRepository;
 	}
 
@@ -41,10 +41,10 @@ public class JpaSubscriptionPersistenceAdapter implements CreateSubscriptionPers
 		Objects.requireNonNull(subscription.getEmailAddress(), "email.empty");
 		Objects.requireNonNull(subscription.getEmailAddress().getValue(), "email.empty");
 
-		SubscriptionPersistence subscriptionPersistence = AntiCorruptionLayer.translate(subscription);
+		SubscriptionJpaEntity subscriptionPersistence = AntiCorruptionLayer.translate(subscription);
 		log.debug("subscriptionPersistence: {}", () -> subscriptionPersistence);
 
-		SubscriptionPersistence savedSubscriptionPersistence = subscriptionPersistenceJpaRepository.save(subscriptionPersistence);
+		SubscriptionJpaEntity savedSubscriptionPersistence = subscriptionPersistenceJpaRepository.save(subscriptionPersistence);
 		log.debug("savedSubscriptionPersistence: {}", () -> savedSubscriptionPersistence);
 
 		Subscription savedSubscription = AntiCorruptionLayer.translate(savedSubscriptionPersistence);
@@ -55,7 +55,7 @@ public class JpaSubscriptionPersistenceAdapter implements CreateSubscriptionPers
 
 	private static class AntiCorruptionLayer {
 
-		public static Subscription translate(SubscriptionPersistence subscriptionPersistence) {
+		public static Subscription translate(SubscriptionJpaEntity subscriptionPersistence) {
 			Objects.requireNonNull(subscriptionPersistence);
 	
 			return Subscription.builder()
@@ -66,10 +66,10 @@ public class JpaSubscriptionPersistenceAdapter implements CreateSubscriptionPers
 				.build();
 		}
 
-		public static SubscriptionPersistence translate(Subscription subscription) {
+		public static SubscriptionJpaEntity translate(Subscription subscription) {
 			Objects.requireNonNull(subscription);
 	
-			return SubscriptionPersistence.builder()
+			return SubscriptionJpaEntity.builder()
 				.id(subscription.getId())
 				.email(subscription.getEmailAddress().getValue())
 				.status(subscription.getStatus())

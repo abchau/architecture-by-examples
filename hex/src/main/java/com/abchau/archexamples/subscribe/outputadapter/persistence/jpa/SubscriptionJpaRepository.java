@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 
 // (1) if use hibernate directly, this class won't exist
 @Repository
-interface SubscriptionPersistenceJpaRepository extends JpaRepository<SubscriptionPersistence, Long> {
+interface SubscriptionJpaRepository extends JpaRepository<SubscriptionJpaEntity, Long> {
 
     int countByEmail(String email);
 
 	@Modifying
-    SubscriptionPersistence save(SubscriptionPersistence subscriptionPersistence);
+    SubscriptionJpaEntity save(SubscriptionJpaEntity subscriptionPersistence);
 
 }
