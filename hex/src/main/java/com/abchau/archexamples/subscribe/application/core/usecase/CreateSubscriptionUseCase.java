@@ -7,6 +7,7 @@ import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
 import com.abchau.archexamples.subscribe.application.core.Subscription;
 import com.abchau.archexamples.subscribe.application.inputport.CreateSubscriptionUseCasePort;
 import com.abchau.archexamples.subscribe.application.outputport.CreateSubscriptionPersistencePort;
+import com.abchau.archexamples.subscribe.application.outputport.QuerySubscriptionPersistencePort;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,15 @@ public class CreateSubscriptionUseCase implements CreateSubscriptionUseCasePort 
 
 	private CreateSubscriptionPersistencePort createSubscriptionPersistencePort;
 
+	private QuerySubscriptionPersistencePort querySubscriptionPersistencePort;
+
 	@Autowired
-	public CreateSubscriptionUseCase(final CreateSubscriptionPersistencePort createSubscriptionPersistencePort) {
+	public CreateSubscriptionUseCase(
+		final CreateSubscriptionPersistencePort createSubscriptionPersistencePort,
+		final QuerySubscriptionPersistencePort querySubscriptionPersistencePort
+	) {
 		this.createSubscriptionPersistencePort = createSubscriptionPersistencePort;
+		this.querySubscriptionPersistencePort = querySubscriptionPersistencePort;
 	}
 
 	@Transactional
@@ -31,7 +38,7 @@ public class CreateSubscriptionUseCase implements CreateSubscriptionUseCasePort 
 		Objects.requireNonNull(subscription);
 
 		// (1) must do domain validation before executing domain logic
-		int count = createSubscriptionPersistencePort.countByEmail(subscription.getEmailAddress());
+		int count = querySubscriptionPersistencePort.countByEmail(subscription.getEmailAddress());
 		if (count > 0) {
 			throw new EmailAlreadyExistException("email.duplicate");
 		}

@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.abchau.archexamples.subscribe.application.core.EmailAddress;
 import com.abchau.archexamples.subscribe.application.core.Subscription;
 import com.abchau.archexamples.subscribe.application.outputport.CreateSubscriptionPersistencePort;
+import com.abchau.archexamples.subscribe.application.outputport.QuerySubscriptionPersistencePort;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Component
-public class SubscriptionJpaPersistenceAdapter implements CreateSubscriptionPersistencePort {
+public class SubscriptionJpaPersistenceAdapter implements CreateSubscriptionPersistencePort, QuerySubscriptionPersistencePort {
 
 	private SubscriptionJpaRepository subscriptionPersistenceJpaRepository;
 
