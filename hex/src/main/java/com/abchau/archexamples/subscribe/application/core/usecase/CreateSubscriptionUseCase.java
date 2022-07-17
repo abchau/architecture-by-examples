@@ -31,17 +31,13 @@ public class CreateSubscriptionUseCase implements CreateSubscriptionUseCasePort 
 		Objects.requireNonNull(subscription);
 
 		// (1) must do domain validation before executing domain logic
-		if (!subscription.getEmailAddress().isValidFormat()) {
-			throw new EmailFormatException("email.format");
-		}
-
-		// (1) must do domain validation before executing domain logic
 		int count = subscriptionPersistencePort.countByEmail(subscription.getEmailAddress());
 		if (count > 0) {
 			throw new EmailAlreadyExistException("email.duplicate");
 		}
 
 		// (2) only execute after validation
+		subscription.toConfirmed();
 		return subscriptionPersistencePort.save(subscription);
 	}
 

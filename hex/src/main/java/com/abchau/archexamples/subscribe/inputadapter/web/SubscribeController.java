@@ -4,7 +4,6 @@ import lombok.extern.log4j.Log4j2;
 
 import com.abchau.archexamples.subscribe.application.core.EmailAddress;
 import com.abchau.archexamples.subscribe.application.core.EmailAlreadyExistException;
-import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
 import com.abchau.archexamples.subscribe.application.core.Subscription;
 import com.abchau.archexamples.subscribe.application.inputport.CreateSubscriptionUseCasePort;
 
@@ -47,7 +46,7 @@ final class SubscribeController {
 		String email = params.getFirst("email");
 		log.debug("email: {}", () -> email);
 
-		// (1) do validation in adapter
+		// (1) do input validation in adapter
 		if (email == null || "".equalsIgnoreCase(email)) {
 			modelAndView.addObject("message", "email.empty");
 

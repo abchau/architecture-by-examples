@@ -59,7 +59,7 @@ endif::env-idea,env-vscode[]
 * `*JpaSubscriptionAdapter*`: Persistence Output Adapter, anti-corruption, delegate persistence operations to `SubscriptionPersistenceJpaRepository`
 * `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
 
-NOTE: idea that are not important to demonstrate *Ports and Adapters* are not included
+NOTE: To keep it simple, idea that are not important to demonstrate *Ports and Adapters* are not included. e.g. Value Objects
 
 .Class Diagram for Hexagonal Architecture
 ifdef::env-github[]

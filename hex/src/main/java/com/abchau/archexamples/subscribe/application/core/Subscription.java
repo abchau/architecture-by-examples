@@ -22,14 +22,38 @@ public final class Subscription {
 
 	private Long version;
 
-	public static Subscription of(EmailAddress emailAddress) {
+	public static Subscription of(EmailAddress emailAddress) throws EmailFormatException, InvalidSubscriptionStatusException {
 		ZonedDateTime now = ZonedDateTime.now(Clock.systemDefaultZone());
 
-		return Subscription.builder()
+		Subscription subscription = Subscription.builder()
 			.emailAddress(emailAddress)
-			.status("CONFIRMED")
+			.status("PENDING")
 			.createdAt(now)
 			.build();
+
+		if (subscription.getEmailAddress().isValidFormat()) {
+			subscription.toValidated();
+		} else {
+			throw new EmailFormatException("email.format");
+		}
+
+		return subscription;
+	}
+
+	public void toValidated() throws InvalidSubscriptionStatusException{
+		if (!status.equalsIgnoreCase("PENDING")) {
+			throw new InvalidSubscriptionStatusException("error.status.invalid");
+		}
+
+		this.setStatus("VALIDATED");
+	}
+
+	public void toConfirmed() throws InvalidSubscriptionStatusException {
+		if (!status.equalsIgnoreCase("VALIDATED")) {
+			throw new InvalidSubscriptionStatusException("error.status.invalid");
+		}
+
+		this.setStatus("CONFIRMED");
 	}
 
 }
