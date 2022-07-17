@@ -3,7 +3,7 @@ package com.abchau.archexamples.subscribe.application.outputport;
 import com.abchau.archexamples.subscribe.application.core.EmailAddress;
 import com.abchau.archexamples.subscribe.application.core.Subscription;
 
-public interface SubscriptionPersistencePort {
+public interface CreateSubscriptionPersistencePort {
 
     int countByEmail(EmailAddress emailAddress);
 

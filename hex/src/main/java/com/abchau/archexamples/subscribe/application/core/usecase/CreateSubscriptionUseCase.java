@@ -6,7 +6,7 @@ import com.abchau.archexamples.subscribe.application.core.EmailAlreadyExistExcep
 import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
 import com.abchau.archexamples.subscribe.application.core.Subscription;
 import com.abchau.archexamples.subscribe.application.inputport.CreateSubscriptionUseCasePort;
-import com.abchau.archexamples.subscribe.application.outputport.SubscriptionPersistencePort;
+import com.abchau.archexamples.subscribe.application.outputport.CreateSubscriptionPersistencePort;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,11 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class CreateSubscriptionUseCase implements CreateSubscriptionUseCasePort {
 
-	private SubscriptionPersistencePort subscriptionPersistencePort;
+	private CreateSubscriptionPersistencePort createSubscriptionPersistencePort;
 
 	@Autowired
-	public CreateSubscriptionUseCase(final SubscriptionPersistencePort subscriptionPersistencePort) {
-		this.subscriptionPersistencePort = subscriptionPersistencePort;
+	public CreateSubscriptionUseCase(final CreateSubscriptionPersistencePort createSubscriptionPersistencePort) {
+		this.createSubscriptionPersistencePort = createSubscriptionPersistencePort;
 	}
 
 	@Transactional
@@ -31,14 +31,14 @@ public class CreateSubscriptionUseCase implements CreateSubscriptionUseCasePort 
 		Objects.requireNonNull(subscription);
 
 		// (1) must do domain validation before executing domain logic
-		int count = subscriptionPersistencePort.countByEmail(subscription.getEmailAddress());
+		int count = createSubscriptionPersistencePort.countByEmail(subscription.getEmailAddress());
 		if (count > 0) {
 			throw new EmailAlreadyExistException("email.duplicate");
 		}
 
 		// (2) only execute after validation
 		subscription.toConfirmed();
-		return subscriptionPersistencePort.save(subscription);
+		return createSubscriptionPersistencePort.save(subscription);
 	}
 
 }
