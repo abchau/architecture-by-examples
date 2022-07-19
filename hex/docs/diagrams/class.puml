@@ -9,24 +9,21 @@ rectangle "Input/Driving/Primary Adapter" {
 	}
 }
 
-rectangle "Application" {
-	package application{ 
+rectangle "Application Core" {
+	package applicationcore { 
 		package usecase {
 			class CreateSubscriptionUseCase
 		}
 	
-		package core {
-			class Subscription
+		class Subscription
 
-			package inputport {
-				interface CreateSubscriptionUseCasePort
-			}
+		package inputport {
+			interface CreateSubscriptionUseCasePort
+		}
 
-
-			package outputport {
-				interface CreateSubscriptionPersistencePort
-				interface QuerySubscriptionPersistencePort
-			}
+		package outputport {
+			interface CreateSubscriptionPersistencePort
+			interface QuerySubscriptionPersistencePort
 		}
 	}
 }
