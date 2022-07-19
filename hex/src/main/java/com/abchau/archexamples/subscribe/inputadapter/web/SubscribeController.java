@@ -3,6 +3,7 @@ package com.abchau.archexamples.subscribe.inputadapter.web;
 import lombok.extern.log4j.Log4j2;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,10 +47,12 @@ final class SubscribeController {
 
 		String email = params.getFirst("email");
 		log.debug("email: {}", () -> email);
+		System.out.println("email: {}" +  email);
 
 		// (1) do input validation in adapter
 		if (email == null || "".equalsIgnoreCase(email)) {
 			modelAndView.addObject("message", "email.empty");
+			modelAndView.setStatus(HttpStatus.BAD_REQUEST);
 
 			return modelAndView;
 		}
@@ -62,14 +65,17 @@ final class SubscribeController {
 			Subscription savedSubscription = createSubscriptionUseCasePort.execute(subscription);
 			log.debug("savedSubscription: {}", () -> savedSubscription);
 
+			modelAndView.setStatus(HttpStatus.CREATED);
 			modelAndView.addObject("email", savedSubscription.getEmailAddress().getValue());
 			modelAndView.addObject("message", "success");
 		} catch (EmailFormatException | EmailAlreadyExistException e) {
 			log.error("Known error. ", e);
+			modelAndView.setStatus(HttpStatus.BAD_REQUEST);
 			modelAndView.addObject("email", email);
 			modelAndView.addObject("message", e.getMessage());
 		} catch (Exception e) {
 			log.error("Unknown error. ", e);
+			modelAndView.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 			modelAndView.addObject("email", email);
 			modelAndView.addObject("message", e.getMessage());
 		}
