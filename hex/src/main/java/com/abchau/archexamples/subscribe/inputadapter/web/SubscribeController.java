@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.abchau.archexamples.subscribe.application.core.EmailAddress;
-import com.abchau.archexamples.subscribe.application.core.EmailAlreadyExistException;
-import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
-import com.abchau.archexamples.subscribe.application.core.Subscription;
-import com.abchau.archexamples.subscribe.application.core.inputport.CreateSubscriptionUseCasePort;
+import com.abchau.archexamples.subscribe.domain.EmailAddress;
+import com.abchau.archexamples.subscribe.domain.EmailAlreadyExistException;
+import com.abchau.archexamples.subscribe.domain.EmailFormatException;
+import com.abchau.archexamples.subscribe.domain.Subscription;
+import com.abchau.archexamples.subscribe.application.inputport.CreateSubscriptionUseCasePort;
 
 @Log4j2
 @Controller

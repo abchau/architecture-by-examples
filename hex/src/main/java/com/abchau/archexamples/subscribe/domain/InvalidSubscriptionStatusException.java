@@ -1,4 +1,4 @@
-package com.abchau.archexamples.subscribe.application.core;
+package com.abchau.archexamples.subscribe.domain;
 
 public final class InvalidSubscriptionStatusException extends Exception {
 	

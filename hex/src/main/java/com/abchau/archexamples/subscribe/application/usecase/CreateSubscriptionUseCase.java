@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.abchau.archexamples.subscribe.application.core.EmailAlreadyExistException;
-import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
-import com.abchau.archexamples.subscribe.application.core.Subscription;
-import com.abchau.archexamples.subscribe.application.core.inputport.CreateSubscriptionUseCasePort;
-import com.abchau.archexamples.subscribe.application.core.outputport.CreateSubscriptionPersistencePort;
-import com.abchau.archexamples.subscribe.application.core.outputport.QuerySubscriptionPersistencePort;
+import com.abchau.archexamples.subscribe.domain.EmailAlreadyExistException;
+import com.abchau.archexamples.subscribe.domain.EmailFormatException;
+import com.abchau.archexamples.subscribe.domain.Subscription;
+import com.abchau.archexamples.subscribe.application.inputport.CreateSubscriptionUseCasePort;
+import com.abchau.archexamples.subscribe.application.outputport.CreateSubscriptionPersistencePort;
+import com.abchau.archexamples.subscribe.application.outputport.QuerySubscriptionPersistencePort;
 
 import lombok.extern.log4j.Log4j2;
 

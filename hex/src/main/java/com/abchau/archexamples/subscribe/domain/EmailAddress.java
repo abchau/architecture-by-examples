@@ -1,4 +1,4 @@
-package com.abchau.archexamples.subscribe.application.core;
+package com.abchau.archexamples.subscribe.domain;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

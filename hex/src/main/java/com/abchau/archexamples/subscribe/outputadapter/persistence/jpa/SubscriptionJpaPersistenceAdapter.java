@@ -5,10 +5,10 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.abchau.archexamples.subscribe.application.core.EmailAddress;
-import com.abchau.archexamples.subscribe.application.core.Subscription;
-import com.abchau.archexamples.subscribe.application.core.outputport.CreateSubscriptionPersistencePort;
-import com.abchau.archexamples.subscribe.application.core.outputport.QuerySubscriptionPersistencePort;
+import com.abchau.archexamples.subscribe.domain.EmailAddress;
+import com.abchau.archexamples.subscribe.domain.Subscription;
+import com.abchau.archexamples.subscribe.application.outputport.CreateSubscriptionPersistencePort;
+import com.abchau.archexamples.subscribe.application.outputport.QuerySubscriptionPersistencePort;
 
 import lombok.extern.log4j.Log4j2;
 

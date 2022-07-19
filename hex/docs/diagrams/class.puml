@@ -10,13 +10,11 @@ rectangle "Input/Driving/Primary Adapter" {
 }
 
 rectangle "Application Core" {
-	package applicationcore { 
+	package application { 
 		package usecase {
 			class CreateSubscriptionUseCase
 		}
 	
-		class Subscription
-
 		package inputport {
 			interface CreateSubscriptionUseCasePort
 		}
@@ -25,6 +23,10 @@ rectangle "Application Core" {
 			interface CreateSubscriptionPersistencePort
 			interface QuerySubscriptionPersistencePort
 		}
+	}
+	package domain { 
+		class Subscription
+		class EmailAddress
 	}
 }
 

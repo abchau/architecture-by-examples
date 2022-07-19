@@ -26,10 +26,11 @@ endif::env-idea,env-vscode[]
 |===
 |Package|Description
 |`inputadapter.web`|Web Input Adapter
+|`domain`, `application`|Application Core
+|`application`|Domain Entity
+|`application.inputport`|Input Ports
 |`application.usecase`|Business Use Cases
-|`application.core`|Application Core
-|`application.core.inputport`|Input Ports
-|`application.core.outputport`|Output Ports
+|`application.outputport`|Output Ports
 |`outputadapter.persistence.jpa`|JPA Persistence Output Adapter
 |===
 
