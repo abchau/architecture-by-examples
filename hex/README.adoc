@@ -10,26 +10,6 @@
 ./mvnw spring-boot:run
 ----
 
-
-[plantuml]
-....
-@startuml
-|i|input
-|a|application
-|o|output
-|i|
-start
-:SubscriptionController;
-|a|
-:CreateSubscriptionUseCasePort;
-:CreateSubscriptionUseCase;
-:SubscriptionPersistencePort;
-|o|
-:JpaSubscriptionPersistenceAdapter;
-stop
-@enduml
-....
-
 == Flow
 
 .Sequence Diagram for Hexagonal Architecture
@@ -46,18 +26,18 @@ endif::env-idea,env-vscode[]
 |===
 |Package|Description
 |`inputadapter.web`|Web Input Adapter
-|`application.inputport`|Input Ports
+|`application.usecase`|Business Use Cases
 |`application.core`|Application Core
-|`application.core.usecase`|Business Use Cases
-|`application.outputport`|Output Ports
+|`application.core.inputport`|Input Ports
+|`application.core.outputport`|Output Ports
 |`outputadapter.persistence.jpa`|JPA Persistence Output Adapter
 |===
 
 * `*SubscriptionController*`: Web Input Adapter, receives tasks from specific interface
 * `*CreateSubscriptionUseCasePort*`: Input Port
 * `*CreateSubscriptionUseCase*`: Business Use Case
-* `*JpaSubscriptionAdapter*`: Persistence Output Adapter, anti-corruption, delegate persistence operations to `SubscriptionPersistenceJpaRepository`
-* `*SubscriptionPersistenceJpaRepository*`: do technology-specified persistence operations
+* `*SubscriptionJpaAdapter*`: Persistence Output Adapter, anti-corruption, delegate persistence operations to `SubscriptionJpaRepository`
+* `*SubscriptionpaRepository*`: do technology-specified persistence operations
 
 NOTE: To keep it simple, idea that are not important to demonstrate *Ports and Adapters* are not included. e.g. Value Objects
 

@@ -2,12 +2,6 @@ package com.abchau.archexamples.subscribe.inputadapter.web;
 
 import lombok.extern.log4j.Log4j2;
 
-import com.abchau.archexamples.subscribe.application.core.EmailAddress;
-import com.abchau.archexamples.subscribe.application.core.EmailAlreadyExistException;
-import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
-import com.abchau.archexamples.subscribe.application.core.Subscription;
-import com.abchau.archexamples.subscribe.application.inputport.CreateSubscriptionUseCasePort;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
@@ -15,6 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.abchau.archexamples.subscribe.application.core.EmailAddress;
+import com.abchau.archexamples.subscribe.application.core.EmailAlreadyExistException;
+import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
+import com.abchau.archexamples.subscribe.application.core.Subscription;
+import com.abchau.archexamples.subscribe.application.core.inputport.CreateSubscriptionUseCasePort;
 
 @Log4j2
 @Controller

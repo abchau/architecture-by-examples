@@ -1,4 +1,4 @@
-package com.abchau.archexamples.subscribe.application.inputport;
+package com.abchau.archexamples.subscribe.application.core.inputport;
 
 import com.abchau.archexamples.subscribe.application.core.EmailAlreadyExistException;
 import com.abchau.archexamples.subscribe.application.core.EmailFormatException;
