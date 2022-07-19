@@ -25,12 +25,15 @@ endif::env-idea,env-vscode[]
 [cols="1,2",options=header]
 |===
 |Package|Description
+|`inputadapter`|Input Adapter
 |`inputadapter.web`|Web Input Adapter
-|`domain`, `application`|Application Core
-|`application`|Domain Entity
+|`domain`|Domain Layer
+|`application`|Application Layer
 |`application.inputport`|Input Ports
 |`application.usecase`|Business Use Cases
 |`application.outputport`|Output Ports
+|`outputadapter`|Output Adapter
+|`outputadapter.persistence`|Persistence Output Adapter
 |`outputadapter.persistence.jpa`|JPA Persistence Output Adapter
 |===
 
@@ -40,8 +43,6 @@ endif::env-idea,env-vscode[]
 * `*SubscriptionJpaAdapter*`: Persistence Output Adapter, anti-corruption, delegate persistence operations to `SubscriptionJpaRepository`
 * `*SubscriptionpaRepository*`: do technology-specified persistence operations
 
-NOTE: To keep it simple, idea that are not important to demonstrate *Ports and Adapters* are not included. e.g. Value Objects
-
 .Class Diagram for Hexagonal Architecture
 ifdef::env-github[]
 image::class.png[]
@@ -49,3 +50,8 @@ endif::env-github[]
 ifdef::env-idea,env-vscode[]
 plantuml::docs/diagrams/class.puml[target=class,format=png]
 endif::env-idea,env-vscode[]
+
+
+image:2022-07-19T23-13%3A53-763Z.png[] 
+
+image:2022-07-19T23-14%3A29-945Z.png[] 

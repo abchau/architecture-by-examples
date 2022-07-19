@@ -137,16 +137,15 @@ a|* Implement Eric Evan's masterpiece using Hexagonal Architecture
 |4
 |link:ddd3/[ddd3]
 |Three-Layered Domain Driven Design
-a|* Implement "common" practice where User Interface Layer and Application Layer are merged
-* It doesn't mean easier nor better than 4 layers
+a|* Implement commonly used 3-layer version where User Interface Layer and Application Layer are merged
+* It doesn't mean easier nor better than original version
 |In Progress
 
 |5
 |link:hex/[hex]
 |Hexagonal Architecture (Ports and Adapters)
-a|* Implement Alistair Cockburn's masterpiece
-* Only implement necessary parts to demostrate idea of using ports and adapters
-|In Progress
+a|* Implement Alistair Cockburn's masterpiece in ints purest form
+|Ready
 
 |7
 |link:fn/[fn]
