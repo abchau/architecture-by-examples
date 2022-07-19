@@ -144,7 +144,7 @@ a|* Implement commonly used 3-layer version where User Interface Layer and Appli
 |5
 |link:hex/[hex]
 |Hexagonal Architecture (Ports and Adapters)
-a|* Implement Alistair Cockburn's masterpiece in ints purest form
+a|* Implement Alistair Cockburn's masterpiece in its purest form
 |Ready
 
 |7

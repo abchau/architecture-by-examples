@@ -50,8 +50,3 @@ endif::env-github[]
 ifdef::env-idea,env-vscode[]
 plantuml::docs/diagrams/class.puml[target=class,format=png]
 endif::env-idea,env-vscode[]
-
-
-image:2022-07-19T23-13%3A53-763Z.png[] 
-
-image:2022-07-19T23-14%3A29-945Z.png[] 
