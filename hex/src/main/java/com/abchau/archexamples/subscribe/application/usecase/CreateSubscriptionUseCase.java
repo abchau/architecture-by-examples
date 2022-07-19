@@ -1,4 +1,4 @@
-package com.abchau.archexamples.subscribe.application.core.usecase;
+package com.abchau.archexamples.subscribe.application.usecase;
 
 import java.util.Objects;
 

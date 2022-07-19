@@ -15,15 +15,17 @@ rectangle "Application" {
 			interface CreateSubscriptionUseCasePort
 		}
 
+		package usecase {
+			class CreateSubscriptionUseCase
+		}
+		
 		package core {
 			class Subscription
-			package usecase {
-				class CreateSubscriptionUseCase
-			}
 		}
 
 		package outputport {
-			interface SubscriptionPersistencePort
+			interface CreateSubscriptionPersistencePort
+			interface QuerySubscriptionPersistencePort
 		}
 	}
 }
@@ -32,9 +34,9 @@ rectangle "Output/Driven/Secondary Adapter" {
 	package outputadapter {
 		package persistence {
 			package jpa {
-				class JpaSubscriptionPersistenceAdapter
-				class SubscriptionPersistenceJpaRepository
-				class SubscriptionPersistence
+				class SubscriptionJpaPersistenceAdapter
+				class SubscriptionJpaRepository
+				class SubscriptionJpaEntity
 			}
 		}
 	}
@@ -47,13 +49,16 @@ SubscriptionController -down-> CreateSubscriptionUseCasePort
 CreateSubscriptionUseCasePort .down.> Subscription: uses
 CreateSubscriptionUseCase -up-> CreateSubscriptionUseCasePort: implements
 CreateSubscriptionUseCase .left.> Subscription: uses
-CreateSubscriptionUseCase .down.> SubscriptionPersistencePort: uses
+CreateSubscriptionUseCase .down.> CreateSubscriptionPersistencePort: uses
+CreateSubscriptionUseCase .down.> QuerySubscriptionPersistencePort: uses
 
-SubscriptionPersistencePort .up.> Subscription: uses
+CreateSubscriptionPersistencePort .up.> Subscription: uses
+QuerySubscriptionPersistencePort .up.> Subscription: uses
 
-JpaSubscriptionPersistenceAdapter -up-> SubscriptionPersistencePort: implements
-JpaSubscriptionPersistenceAdapter -left-> SubscriptionPersistenceJpaRepository
-SubscriptionPersistenceJpaRepository ..> SubscriptionPersistence: uses
-JpaSubscriptionPersistenceAdapter ..> SubscriptionPersistence: uses
+SubscriptionJpaPersistenceAdapter -up-> CreateSubscriptionPersistencePort: implements
+SubscriptionJpaPersistenceAdapter -up-> QuerySubscriptionPersistencePort: implements
+SubscriptionJpaPersistenceAdapter -left-> SubscriptionJpaRepository
+SubscriptionJpaRepository ..> SubscriptionJpaEntity: uses
+SubscriptionJpaPersistenceAdapter ..> SubscriptionJpaEntity: uses
 
 @enduml

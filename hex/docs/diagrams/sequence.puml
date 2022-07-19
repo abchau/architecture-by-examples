@@ -8,8 +8,8 @@ box Application Core
 participant CreateSubscriptionUseCase << (C,#ADD1B2) @Bean >>
 end box
 box Output Adapters
-participant JpaSubscriptionPersistenceAdapter << (C,#ADD1B2) @Bean >>
-participant SubscriptionPersistenceJpaRepository << (C,#ADD1B2) @Repository >>
+participant SubscriptionJpaPersistenceAdapter << (C,#ADD1B2) @Bean >>
+participant SubscriptionJpaRepository << (C,#ADD1B2) @Repository >>
 end box
 database Datastore
 
@@ -23,25 +23,25 @@ note over SubscriptionController: via CreateSubscriptionUseCasePort
 SubscriptionController --> CreateSubscriptionUseCase
 activate CreateSubscriptionUseCase
 
-note over JpaSubscriptionPersistenceAdapter: via SubscriptionPersistencePort
+note over SubscriptionJpaPersistenceAdapter: via CreateSubscriptionPersistencePort, \nQueryubscriptionPersistencePort
 
-CreateSubscriptionUseCase --> JpaSubscriptionPersistenceAdapter
-activate JpaSubscriptionPersistenceAdapter
+CreateSubscriptionUseCase --> SubscriptionJpaPersistenceAdapter
+activate SubscriptionJpaPersistenceAdapter
 
-JpaSubscriptionPersistenceAdapter --> SubscriptionPersistenceJpaRepository
-activate SubscriptionPersistenceJpaRepository
+SubscriptionJpaPersistenceAdapter --> SubscriptionJpaRepository
+activate SubscriptionJpaRepository
 
-SubscriptionPersistenceJpaRepository --> Datastore
+SubscriptionJpaRepository --> Datastore
 activate Datastore
 
-Datastore --> SubscriptionPersistenceJpaRepository
+Datastore --> SubscriptionJpaRepository
 deactivate Datastore
 
-SubscriptionPersistenceJpaRepository --> JpaSubscriptionPersistenceAdapter
-deactivate SubscriptionPersistenceJpaRepository
+SubscriptionJpaRepository --> SubscriptionJpaPersistenceAdapter
+deactivate SubscriptionJpaRepository
 
-JpaSubscriptionPersistenceAdapter --> CreateSubscriptionUseCase
-deactivate JpaSubscriptionPersistenceAdapter
+SubscriptionJpaPersistenceAdapter --> CreateSubscriptionUseCase
+deactivate SubscriptionJpaPersistenceAdapter
 
 CreateSubscriptionUseCase --> SubscriptionController
 deactivate CreateSubscriptionUseCase
