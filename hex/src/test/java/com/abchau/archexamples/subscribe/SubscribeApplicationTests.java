@@ -5,6 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
+import com.tngtech.archunit.core.importer.ImportOption.DoNotIncludeTests;
 import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.library.Architectures.LayeredArchitecture;
 import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition;
@@ -21,7 +22,9 @@ class SubscribeApplicationTests {
     
     @Test
     public void input_adapter_should_only_depend_on_application_core_and_input_port() {        
-        JavaClasses jc = new ClassFileImporter().importPackages("com.abchau.archexamples.subscribe");
+        JavaClasses jc = new ClassFileImporter()
+			.withImportOption(new DoNotIncludeTests())
+			.importPackages("com.abchau.archexamples.subscribe");
         
         ArchRule r1 = classes()
           .that()
@@ -50,7 +53,9 @@ class SubscribeApplicationTests {
 	@Test
     public void should_follow_layered_architecture() {
         
-        JavaClasses jc = new ClassFileImporter().importPackages("com.abchau.archexamples.subscribe");
+        JavaClasses jc = new ClassFileImporter()
+			.withImportOption(new DoNotIncludeTests())
+			.importPackages("com.abchau.archexamples.subscribe");
         
         LayeredArchitecture arch = layeredArchitecture()
            // Define layers
@@ -65,14 +70,16 @@ class SubscribeApplicationTests {
           .whereLayer("Input Port").mayOnlyBeAccessedByLayers("Use Case", "Input Adapter")
           .whereLayer("Use Case").mayOnlyBeAccessedByLayers("Input Port")
           .whereLayer("Output Port").mayOnlyBeAccessedByLayers("Use Case", "Output Adapter")
-          .whereLayer("Output Adapter").mayOnlyBeAccessedByLayers("Use Case", "Output Adapter");
+          .whereLayer("Output Adapter").mayOnlyBeAccessedByLayers("Use Case");
         
         arch.check(jc);
     }
 
 	@Test
     public void should_be_free_of_cycle() {
-		JavaClasses jc = new ClassFileImporter().importPackages("com.abchau.archexamples.subscribe");
+		JavaClasses jc = new ClassFileImporter()
+			.withImportOption(new DoNotIncludeTests())
+			.importPackages("com.abchau.archexamples.subscribe");
         
 		ArchRule r1 = SlicesRuleDefinition.slices()
 			.matching("..com.abchau.archexamples.subscribe.(*)..")
