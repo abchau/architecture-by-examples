@@ -35,11 +35,7 @@ public class ArchUnitTests {
 					// Application Core - Domain
 					, "com.abchau.archexamples.subscribe.domain.."
 					// Application Core - Input Port
-					, "com.abchau.archexamples.subscribe.application.inputport.."
-					// Input Adapter (Integration Test)
-					, "org.junit.."
-					, "org.hamcrest.."
-					, "com.abchau.archexamples.subscribe.application.inputadapter..");
+					, "com.abchau.archexamples.subscribe.application.inputport..");
     
 		r1.check(jc);
     }
