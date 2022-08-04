@@ -22,7 +22,7 @@ public final class EmailAddress {
     @Size(min = 7, max = 512, message = "email.size")
 	private String value;
 
-	public boolean isValidFormat() {
+	public boolean isStatusValidFormat() {
 		Objects.requireNonNull(value, "email.empty");
 
         Matcher matcher = PATTERN.matcher(this.value);

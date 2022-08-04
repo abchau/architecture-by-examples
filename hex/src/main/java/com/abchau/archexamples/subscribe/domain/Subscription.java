@@ -31,7 +31,7 @@ public final class Subscription {
 			.createdAt(now)
 			.build();
 
-		if (subscription.getEmailAddress().isValidFormat()) {
+		if (subscription.getEmailAddress().isStatusValidFormat()) {
 			subscription.toValidated();
 		} else {
 			throw new EmailFormatException("email.format");

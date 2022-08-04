@@ -2,6 +2,7 @@ package com.abchau.archexamples.subscribe.inputadapter.web;
 
 import lombok.extern.log4j.Log4j2;
 
+import org.jmolecules.architecture.hexagonal.PrimaryAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import com.abchau.archexamples.subscribe.domain.EmailFormatException;
 import com.abchau.archexamples.subscribe.domain.Subscription;
 import com.abchau.archexamples.subscribe.application.inputport.CreateSubscriptionUseCasePort;
 
+@PrimaryAdapter
 @Log4j2
 @Controller
 final class SubscribeController {

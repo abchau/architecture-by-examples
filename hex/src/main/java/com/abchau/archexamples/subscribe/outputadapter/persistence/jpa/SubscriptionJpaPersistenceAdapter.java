@@ -2,6 +2,7 @@ package com.abchau.archexamples.subscribe.outputadapter.persistence.jpa;
 
 import java.util.Objects;
 
+import org.jmolecules.architecture.hexagonal.SecondaryAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import com.abchau.archexamples.subscribe.application.outputport.QuerySubscriptio
 
 import lombok.extern.log4j.Log4j2;
 
+@SecondaryAdapter
 @Log4j2
 @Component
 public class SubscriptionJpaPersistenceAdapter implements CreateSubscriptionPersistencePort, QuerySubscriptionPersistencePort {
