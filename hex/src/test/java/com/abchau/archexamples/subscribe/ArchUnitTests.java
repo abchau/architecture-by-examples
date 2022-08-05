@@ -27,11 +27,14 @@ public class ArchUnitTests {
 		  	.onlyDependOnClassesThat()
           		.resideInAnyPackage(
 					// JDK
-					"java..", "javax.."
+					"java..", 
+					"javax.."
 					// Spring
 					, "org.springframework.."
 					// Apache Logging
 					, "org.apache.logging.."
+					// jmolecules Annotations
+					, "org.jmolecules.."
 					// Application Core - Domain
 					, "com.abchau.archexamples.subscribe.domain.."
 					// Application Core - Input Port
