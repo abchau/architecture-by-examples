@@ -1,0 +1,41 @@
+= Hexagonal Architecture
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:moduliths-docs: ../../../target/moduliths-docs
+
+[[overview]]
+== Overview
+
+[[modules]]
+== Modules
+
+plantuml::{moduliths-docs}/components.uml[,,svg,title="Component overview"]
+
+
+[[modules.inputadapter]]
+=== Input Adapter
+
+plantuml::{moduliths-docs}/module-inputadapter.uml[,,svg,title="Input Adapter"]
+include::{moduliths-docs}/module-inputadapter.adoc[]
+
+[[modules.application]]
+=== Application
+
+plantuml::{moduliths-docs}/module-application.uml[,,svg,title="Application"]
+include::{moduliths-docs}/module-application.adoc[]
+
+[[modules.domain]]
+=== Domain
+
+plantuml::{moduliths-docs}/module-domain.uml[,,svg,title="Domain"]
+include::{moduliths-docs}/module-domain.adoc[]
+
+[[modules.outputadapter]]
+=== Output Adapter
+
+plantuml::{moduliths-docs}/module-outputadapter.uml[,,svg,title="Output Adapter"]
+include::{moduliths-docs}/module-outputadapter.adoc[]
