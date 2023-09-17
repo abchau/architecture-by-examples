@@ -1,0 +1,62 @@
+= Hexagonal Architecture (Ports and Adapters)
+
+:doctype: book
+:imagesdir: docs/images
+:imagesoutdir: docs/images
+
+== Usage
+
+[source,bash]
+----
+./mvnw spring-boot:run
+----
+
+== Flow
+
+.Sequence Diagram for Hexagonal Architecture
+ifdef::env-github[]
+image::sequence.png[]
+endif::env-github[]
+ifdef::env-idea,env-vscode[]
+plantuml::docs/diagrams/sequence.puml[target=sequence,format=png]
+endif::env-idea,env-vscode[]
+
+== Packages
+
+[cols="1,2",options=header]
+|===
+|Package|Description
+|`inputadapter`|Input Adapter
+|`inputadapter.web`|Web Input Adapter
+|`application`|Application Layer
+|`application.inputport`|Input Ports
+|`application.usecase`|Business Use Cases
+|`application.outputport`|Output Ports
+|`domain`|Domain Layer
+|`outputadapter`|Output Adapter
+|`outputadapter.persistence`|Persistence Output Adapter
+|`outputadapter.persistence.jpa`|JPA Persistence Output Adapter
+|===
+
+* `*SubscriptionController*`: Web Input Adapter, receives tasks from specific interface
+* `*CreateSubscriptionUseCasePort*`: Input Port
+* `*CreateSubscriptionUseCase*`: Business Use Case
+* `*SubscriptionJpaAdapter*`: Persistence Output Adapter, anti-corruption, delegate persistence operations to `SubscriptionJpaRepository`
+* `*SubscriptionpaRepository*`: do technology-specified persistence operations
+
+.Class Diagram for Hexagonal Architecture
+ifdef::env-github[]
+image::class.png[]
+endif::env-github[]
+ifdef::env-idea,env-vscode[]
+plantuml::docs/diagrams/class.puml[target=class,format=png]
+endif::env-idea,env-vscode[]
+
+== Quotes
+
+[quote, Alistair Cockburn, https://alistair.cockburn.us/hexagonal-architecture/]
+use cases should generally be written at the application boundary (the inner hexagon)
+
+[quote, Alistair Cockburn, https://alistair.cockburn.us/hexagonal-architecture/]
+What exactly a port is and isn’t is largely a matter of taste
+

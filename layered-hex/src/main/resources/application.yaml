@@ -1,0 +1,29 @@
+server: 
+  port: 8080
+logging:
+  level:
+    root: INFO
+    com.abchau.archexamples.subscribe: DEBUG
+spring:
+  output:
+    ansi:
+      enabled: DETECT
+  application:
+    name: Hexagonal Architecture
+  debug: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  h2:
+    console.enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.H2Dialect
+  jmx:
+    enabled: false
+  thymeleaf:
+    cache: false
+  

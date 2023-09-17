@@ -21,20 +21,7 @@ This repository demonstrates different architectures by implementing the same us
 ** too bulky
 ** too complicated
 ** impractical (narrow solution of solving specific problem in specific use case)
-* a dead simple use case without any burden will help understand quicker and better
-
-== What is in the scope of this project?
-
-* demonstrate implementation of a simple subscription service
-* demonstrate the original design created by the original author (Best effort to honor original intention but not guarantee. Comments are welcome.)
-
-== What is not in the scope of this project?
-
-* does not provide a sliver bullet recipe
-* does not implement different variants of different architectures
-* does not have a bug free and flawless design
-* does not demonstrates how to use various approaches to tackle on same problem
-* does not demonstrates how to use various design patterns
+* a dead simple use case without any burden will help understand these complicated concepts quicker and easier
 
 == Use case
 
@@ -44,7 +31,7 @@ The application has
 * one *use case*
 * one *aggregate*
 ** one *entity*
-** two *value object*
+** two *value objects*
 * one database *table*
 
 .A single subscription use case
@@ -62,7 +49,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 	id BINARY(36) PRIMARY KEY,
 	email VARCHAR(512) NOT NULL,
 	status VARCHAR(256) NOT NULL,
-	created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
 	version BIGINT NOT NULL
 );
 ----
@@ -113,51 +100,53 @@ image::demo6.png[]
 
 [cols="1,1,2,4,1",options=header]
 |===
-|#|Name|Architecture|Description|Status
+|#|Name|Architecture|Summary|Remarks
 |1
 |link:chaos/[chaos]
 |Chaos Architecture
-a|* Just Chaotic Mess
-* Exactly what this industry called "A big ball of mud"
-|In Progress
+a|* Chaotic Mess
+* A big ball of mud
+|
 
 |2
-|link:3-tier/[3-tier]
-|3-tier Architecture
-a|* Most common way
-|In Progress
+|link:layered/[layered]
+|Layered Architecture
+a|* Traditional way of implementing Layered Architecture
+* poor package name
+* not enough separation of concern
+|
+
+|2
+|link:layered-ddd-1/[layered-ddd-1]
+|Layered Architecture with Domain Driven Design Step 1 
+a|* Layered with better layer names
+|
 
 |3
-|link:ddd/[ddd]
-|Domain Driven Design
-a|* Implement Eric Evan's masterpiece using Hexagonal Architecture 
-* Does not implement Domain Events
-|In Progress
+|link:layered-ddd-2/[layered-ddd-2]
+|Layered Architecture with Domain Driven Design Step 2 
+a|* Layered with better layer names
+* with better separation of concern
+|
 
-|4
-|link:ddd3/[ddd3]
-|Three-Layered Domain Driven Design
-a|* Implement commonly used 3-layer version where User Interface Layer and Application Layer are merged
-* It doesn't mean easier nor better than original version
-|In Progress
+|3
+|link:layered-ddd-2/[layered-ddd-3]
+|Layered Architecture with Domain Driven Design Step 3
+a|* Layered with better layer names
+* with better separation of concern
+* with more examples
+|
 
 |5
-|link:hex/[hex]
+|link:layered-hex/[layered-hex]
 |Hexagonal Architecture (Ports and Adapters)
-a|* Implement Alistair Cockburn's masterpiece in its purest form
-|Ready
+|
+|
 
 |7
 |link:fn/[fn]
 |Functional Domain Driven Design
 a|* Implement DDD using Clojure
-|In Progress
-
-|99
-|link:myddd/[myddd]
-|My DDD
-a|* Implement DDD with personal preferences
-|In Progress
-
+|
 
 |===

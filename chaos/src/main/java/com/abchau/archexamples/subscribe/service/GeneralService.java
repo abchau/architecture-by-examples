@@ -1,32 +1,27 @@
 package com.abchau.archexamples.subscribe.service;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.util.MultiValueMap;
 
 import lombok.extern.log4j.Log4j2;
 
-// (1) dafuq
 @Log4j2
 public abstract class GeneralService {
 
-	// (1) dafuq
-	public static String sanitizeInput(String input) {
-		// (2) pretend some work in done in this example
-		// beep
-		// beep
-		// beep
+	public static String getValue(Map<String, String> params, String key) {
+		if (params.get(key) != null) {
+			return params.get(key);
+		} else {
+			return null;
+		}
+	}
 
+	public static String sanitizeInput(String input) {
+		// fake implementation
 		return input;
 	}
 
-	// // (1) dafuq
-	// public Principal getPrincipal() {
-	// 	// (2) pretend some work in done in this example
-	// 	// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-	// 	return null;
-	// }
 
 }

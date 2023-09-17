@@ -1,0 +1,80 @@
+@startuml
+allowmixing
+
+rectangle "User Interfaces Layer" {
+	package interfaces {
+		package web {
+			class SubscriptionController
+		}
+	}
+}
+
+rectangle "Application Layer" {
+	package application {
+		interface SubscriptionFacade
+		class SubscriptionCommand
+
+		package impl2 as "impl" {
+			class SubscriptionFacadeImpl
+		}
+		package dto {
+			class SubscriptionDto
+		}
+	}
+}
+
+rectangle "Domain Model Layer" {
+	package domain {
+		package model {
+			package subscrition {
+				class Subscription
+				interface SubscriptionRepository
+			}
+		}
+		package service {
+			interface SubscriptionService
+			package impl {
+				class SubscriptionServiceImpl
+			}
+		}
+	}
+}
+
+rectangle "Infrastructure Layer" {
+	package infrastructure {
+		package persistence {
+			package jpa {
+				class JpaSubscriptionRepository
+				class SubscriptionPersistenceRepository
+				class SubscriptionPersistence
+			}
+		}
+	}
+}
+
+actor User
+User -down-> SubscriptionController
+
+SubscriptionController --> SubscriptionFacade
+SubscriptionFacadeImpl -up-> SubscriptionFacade: implements
+SubscriptionController .down.> SubscriptionCommand: uses
+SubscriptionFacade .left.> SubscriptionCommand: uses
+SubscriptionFacadeImpl .up.> SubscriptionCommand: uses
+SubscriptionController .down.> SubscriptionDto: uses
+SubscriptionFacade .right.> SubscriptionDto: uses
+SubscriptionFacadeImpl .up.> SubscriptionDto: uses
+
+SubscriptionFacadeImpl -down-> SubscriptionService
+SubscriptionServiceImpl -up-> SubscriptionService: implements
+
+SubscriptionServiceImpl ..> Subscription: uses
+SubscriptionRepository .left.> Subscription: uses
+JpaSubscriptionRepository .up.> Subscription: uses
+
+SubscriptionServiceImpl -down-> SubscriptionRepository
+JpaSubscriptionRepository -up-> SubscriptionRepository: implements
+JpaSubscriptionRepository -left-> SubscriptionPersistenceRepository
+SubscriptionPersistenceRepository ..> SubscriptionPersistence: uses
+JpaSubscriptionRepository ..> SubscriptionPersistence: uses
+
+@enduml

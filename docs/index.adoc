@@ -26,7 +26,7 @@
 a|* `Subscription`
 * `SubscriptionRepository`
 
-|2|`3-tier`
+|2|`layered`
 2+|Presentation Layer
 3+|Business Logic Layer
 |Data Layer
@@ -131,7 +131,7 @@ a|
 
 link:chaos/[Chaos Architecture]
 
-link:3-tier/[3-tier Architecture]
+link:layered/[layered Architecture]
 
 link:ddd/[DDD]
 
