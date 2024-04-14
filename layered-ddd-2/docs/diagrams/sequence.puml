@@ -8,11 +8,11 @@ box Application Layer
 participant SubscriptionFacadeImpl << (C,#ADD1B2) @Bean >>
 end box
 box Domain Model Layer
-participant SubscriptionServiceImpl << (C,#ADD1B2) @Bean >>
+participant SubscriptionRepository << (I,#ADD1B2) @Bean >>
 end box
 box Infrastructure Layer
-participant JpaSubscriptionRepository << (C,#ADD1B2) @Bean >>
-participant SubscriptionPersistenceJpaRepository << (C,#ADD1B2) @Repository >>
+participant SubscriptionJpaPersistenceAdapter << (C,#ADD1B2) @Bean >>
+participant SubscriptionJpaRepository << (I,#ADD1B2) @Repository >>
 end box
 database Datastore
 
@@ -21,40 +21,32 @@ activate User
 User --> SubscriptionController
 activate SubscriptionController
 
-note over SubscriptionFacadeImpl: via SubscriptionFacade
-
 SubscriptionController --> SubscriptionFacadeImpl
 activate SubscriptionFacadeImpl
 
-note over SubscriptionServiceImpl: via SubscriptionService
+SubscriptionFacadeImpl --> SubscriptionRepository
+activate SubscriptionRepository
 
-SubscriptionFacadeImpl --> SubscriptionServiceImpl
-activate SubscriptionServiceImpl
+SubscriptionRepository --> SubscriptionJpaPersistenceAdapter
+activate SubscriptionJpaPersistenceAdapter
 
-note over JpaSubscriptionRepository: via SubscriptionRepository
+SubscriptionJpaPersistenceAdapter --> SubscriptionJpaRepository
+activate SubscriptionJpaRepository
 
-SubscriptionServiceImpl --> JpaSubscriptionRepository
-activate JpaSubscriptionRepository
-
-note over SubscriptionPersistenceJpaRepository: via Spring data repository
-
-JpaSubscriptionRepository --> SubscriptionPersistenceJpaRepository
-activate SubscriptionPersistenceJpaRepository
-
-SubscriptionPersistenceJpaRepository --> Datastore
+SubscriptionJpaRepository --> Datastore
 activate Datastore
 
-Datastore --> SubscriptionPersistenceJpaRepository
+Datastore --> SubscriptionJpaRepository
 deactivate Datastore
 
-SubscriptionPersistenceJpaRepository --> JpaSubscriptionRepository
-deactivate SubscriptionPersistenceJpaRepository
+SubscriptionJpaRepository --> SubscriptionJpaPersistenceAdapter
+deactivate SubscriptionJpaRepository
 
-JpaSubscriptionRepository --> SubscriptionServiceImpl
-deactivate JpaSubscriptionRepository
+SubscriptionJpaPersistenceAdapter --> SubscriptionRepository
+deactivate SubscriptionJpaPersistenceAdapter
 
-SubscriptionServiceImpl --> SubscriptionFacadeImpl
-deactivate SubscriptionServiceImpl
+SubscriptionRepository --> SubscriptionFacadeImpl
+deactivate SubscriptionRepository
 
 SubscriptionFacadeImpl --> SubscriptionController
 deactivate SubscriptionFacadeImpl

@@ -1,0 +1,35 @@
+@startuml
+allowmixing
+
+rectangle "Presentation Layer" {
+	package controller {
+		class SubscriptionController
+	}
+}
+
+rectangle "Domain Layer" {
+	package model {
+		class Subscription
+	}
+}
+
+
+rectangle "Servuce Layer" {
+	package service {
+		class SubscriptionUtil
+		class SubscriptionDataService
+	}
+}
+
+actor User
+
+User -down-> SubscriptionController
+SubscriptionController -down-> SubscriptionUtil
+SubscriptionController -down-> SubscriptionDataService
+SubscriptionUtil -down-> SubscriptionDataService
+
+SubscriptionController ..> Subscription
+SubscriptionUtil .down.> Subscription
+SubscriptionDataService .left.> Subscription
+
+@enduml

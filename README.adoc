@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 
 === Requires
 
-* Java 17
+* Java 21
 
 === Build
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
 
 === Testing
 
-* Go to http://localhost:8080/subscribe
+* Go to http://localhost:8080/create
 +
 image::demo1.png[] 
 * *Four* conditions can be tested
@@ -98,55 +98,63 @@ image::demo6.png[]
 
 == Architectures
 
-[cols="1,1,2,4,1",options=header]
+[cols="1,1,2,4,4,4",options=header]
 |===
-|#|Name|Architecture|Summary|Remarks
+|#|Name|Architecture|Summary|Pros|Cons
 |1
-|link:chaos/[chaos]
-|Chaos Architecture
-a|* Chaotic Mess
+|link:anarchy/[anarchy]
+|Anarchy Architecture
+a|
+* Everything is completely wrong
+a|
+* Job Security
+a|
+* Chaotic Mess
 * A big ball of mud
-|
+* Tom is a genius
 
 |2
 |link:layered/[layered]
 |Layered Architecture
-a|* Traditional way of implementing Layered Architecture
-* poor package name
-* not enough separation of concern
+a|
+* Traditional way of implementing Layered Architecture
+* Minimum acceptable quality
 |
+a|
+* poor package naming by technical functions
 
 |2
 |link:layered-ddd-1/[layered-ddd-1]
 |Layered Architecture with Domain Driven Design Step 1 
-a|* Layered with better layer names
+a|
+* Improvement of Layered Architecture
+* Package naming by outermost layer
+|
 |
 
 |3
 |link:layered-ddd-2/[layered-ddd-2]
-|Layered Architecture with Domain Driven Design Step 2 
-a|* Layered with better layer names
-* with better separation of concern
+|Layered Architecture with Domain Driven Design Step 2
+a|
+* Improvement of Layered Architecture with Domain Driven Design Step 1
+* Implement more DDD concepts
 |
-
-|3
-|link:layered-ddd-2/[layered-ddd-3]
-|Layered Architecture with Domain Driven Design Step 3
-a|* Layered with better layer names
-* with better separation of concern
-* with more examples
 |
 
 |5
 |link:layered-hex/[layered-hex]
 |Hexagonal Architecture (Ports and Adapters)
+a|
+
 |
 |
 
 |7
 |link:fn/[fn]
 |Functional Domain Driven Design
-a|* Implement DDD using Clojure
+a|
+* Implement DDD using Clojure
+|
 |
 
 |===

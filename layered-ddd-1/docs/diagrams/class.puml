@@ -1,32 +1,35 @@
 @startuml
 allowmixing
 
-rectangle "Presentation Layer" {
-	package controller {
-		class SubscriptionController
+rectangle "User Interface Layer" {
+	package userinterface {
+		class SubscriptionFormController
 	}
 }
 
-rectangle "Business Logic Layer" {
-	package service {
+rectangle "Application Layer" {
+	package application {
 		class SubscriptionService
 	}
 }
 
-rectangle "Data Layer" {
-	package model {
+rectangle "Domain Layer" {
+	package domain {
 		class Subscription
 	}
+}
 
-	package repository {
+rectangle "Infrastructure Layer" {
+
+	package infrastructure {
 		class SubscriptionRepository
 	}
 }
 
 actor User
 
-User -down-> SubscriptionController
-SubscriptionController -down-> SubscriptionService
+User -down-> SubscriptionFormController
+SubscriptionFormController -down-> SubscriptionService
 SubscriptionService -down-> SubscriptionRepository
 
 SubscriptionService .down.> Subscription

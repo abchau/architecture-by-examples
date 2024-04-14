@@ -1,13 +1,15 @@
 @startuml
 
 actor User
-box Presentation Layer
+box User Interface Layer
 participant SubscriptionController << (C,#ADD1B2) @Controller >>
 end box
-box Business Logic Layer
+box Application Layer
 participant SubscriptionService << (C,#ADD1B2) @Bean >>
 end box
-box Data Layer
+box Domain Layer
+end box
+box Infrastructure Layer
 participant SubscriptionRepository << (C,#ADD1B2) @Repository >>
 end box
 database Datastore
@@ -16,8 +18,6 @@ activate User
 
 User --> SubscriptionController
 activate SubscriptionController
-
-note over SubscriptionService: always here
 
 SubscriptionController --> SubscriptionService
 activate SubscriptionService

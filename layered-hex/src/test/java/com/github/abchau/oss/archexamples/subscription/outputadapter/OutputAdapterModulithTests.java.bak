@@ -1,0 +1,27 @@
+package com.github.abchau.oss.archexamples.subscription.outputadapter;
+
+import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.Test;
+import org.moduliths.model.NamedInterface;
+import org.moduliths.model.NamedInterfaces;
+import org.moduliths.test.ModuleTest;
+import org.moduliths.test.ModuleTestExecution;
+
+@ModuleTest
+public class OutputAdapterModulithTests {
+	@Autowired ModuleTestExecution moduleTest;
+
+	@Test
+	void exposesNamedInterfaces() {
+
+		NamedInterfaces interfaces = moduleTest.getModule().getNamedInterfaces();
+
+		interfaces.stream().map(NamedInterface::getName).peek(System.out::println);
+
+		assertThat(interfaces.stream().map(NamedInterface::getName))
+				.containsExactlyInAnyOrder("API", "SPI", "Port 1", "Port 2", "Port 3");
+	}
+
+}

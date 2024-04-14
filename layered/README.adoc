@@ -1,4 +1,4 @@
-= layered Architecture
+= Layered Architecture
 
 :imagesdir: docs/images
 :imagesoutdir: docs/images
@@ -20,10 +20,10 @@
 |===
 
 * `*SubscriptionController*`: receives tasks from specific interface but...
-* `*SubscriptionServiceImpl*`: do business logic
+* `*SubscriptionService*`: do business logic
 * `*SubscriptionRepository*`: do technology-specified persistence operations
 
-.Sequence Diagram for layered Architecture
+.Sequence Diagram for Layered Architecture
 ifdef::env-github[]
 image::sequence.png[]
 endif::env-github[]
@@ -31,7 +31,7 @@ ifdef::env-idea,env-vscode[]
 plantuml::docs/diagrams/sequence.puml[target=sequence,format=png]
 endif::env-idea,env-vscode[]
 
-.Class Diagram for layered Architecture
+.Class Diagram for Layered Architecture
 ifdef::env-github[]
 image::class.png[]
 endif::env-github[]

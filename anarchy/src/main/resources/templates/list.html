@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Subscription</title>
+</head>
+<body>
+	<div>
+		<h1>List</h1>
+
+		<a href="/create">Subscribe</a>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Email</th>
+					<th>Status</th>
+					<th>Created Date</th>
+					<th>Version</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="row: ${rows}">
+					<td th:text="${row.id}"></td>
+					<td th:text="${row.email}"></td>
+					<td th:text="${row.status}"></td>
+					<td th:text="${row.createdDate}"></td>
+					<td th:text="${row.version}"></td>
+				</tr>
+			</tbody>
+		</table>		
+	</div>
+</body>
+</html>

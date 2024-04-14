@@ -24,7 +24,7 @@
 (defn subscribe-handler
   [{:keys [context] :as req} respond raise]
   (let [email (-> req :form-params (get "email"))
-        result (try (s/subscribe context email)
+        result (try (s/create context email)
                     (catch ExceptionInfo ex
                       (respond (render-html context "subscribe" (ex-data ex)))))]
     (respond (render-html context "subscribe" result))))

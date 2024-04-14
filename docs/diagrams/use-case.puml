@@ -5,7 +5,7 @@ actor User
 rectangle backend
 database datastore
 
-User -right-> backend: GET, POST /subscribe
+User -right-> backend: GET, POST /create
 backend -right-> datastore: writes into
 
 @enduml

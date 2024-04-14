@@ -131,7 +131,7 @@ a|
 
 link:chaos/[Chaos Architecture]
 
-link:layered/[layered Architecture]
+link:layered/[Layered Architecture]
 
 link:ddd/[DDD]
 

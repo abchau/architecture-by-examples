@@ -4,13 +4,13 @@ server:
 logging:
   level:
     root: INFO
-    com.abchau.archexamples.subscribe: DEBUG
+    com.github.abchau.oss.archexamples.subscription: DEBUG
 spring:
   output:
     ansi:
       enabled: DETECT
   application:
-    name: layered Architecture
+    name: Subscription
   debug: true
   datasource:
     url: jdbc:h2:mem:testdb

@@ -2,19 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.0</version>
-		<relativePath/>
-		<!-- lookup parent from repository -->
+		<groupId>com.github.abchau.oss.archexamples</groupId>
+		<artifactId>archexamples-parent</artifactId>
+		<version>0.5.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
-
-	<groupId>com.abchau.archexamples</groupId>
 	<artifactId>layered-hex</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 
-	<name>hex</name>
+	<name>layered-hex</name>
 	<description>Hexagonal Architecture</description>
     <url>https://github.com/abchau/arch-examples/layered-hex</url>
     <inceptionYear>2022</inceptionYear>
@@ -22,9 +19,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
-		<java.version>17</java.version>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+		<java.version>21</java.version>
         <lombok.version>1.18.22</lombok.version>
 		<archunit.version>0.23.1</archunit.version>
 		<jmolecules.version>1.6.0</jmolecules.version>
@@ -33,17 +30,18 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-			<optional>true</optional>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -51,14 +49,8 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-	
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
         	<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -69,56 +61,23 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.tngtech.archunit/archunit-junit5 -->
 		<dependency>
 			<groupId>com.tngtech.archunit</groupId>
 			<artifactId>archunit-junit5</artifactId>
 			<version>${archunit.version}</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.jmolecules</groupId>
 			<artifactId>jmolecules-hexagonal-architecture</artifactId>
 			<version>${jmolecules.version}</version>
 		</dependency>
-
-		<!-- For the @Modulith annotation -->
-		<dependency>
-			<groupId>org.moduliths</groupId>
-			<artifactId>moduliths-core</artifactId>
-			<version>${modulith.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.moduliths</groupId>
-			<artifactId>moduliths-docs</artifactId>
-			<version>${modulith.version}</version>
-		</dependency>
-
-		<!-- Test support -->
-		<dependency>
-			<groupId>org.moduliths</groupId>
-			<artifactId>moduliths-test</artifactId>
-			<version>${modulith.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-
-		<!-- Test support -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<version>2.7.0</version>
-			<optional>true</optional>
-		</dependency>
-
 	</dependencies>
 
 	<build>

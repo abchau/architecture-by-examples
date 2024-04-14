@@ -4,11 +4,11 @@ actor User
 box Presentation Layer
 participant SubscriptionController << (C,#ADD1B2) @Controller >>
 end box
-box Business Logic Layer
+box Service Layer
 participant SubscriptionService << (C,#ADD1B2) @Bean >>
 end box
 box Data Layer
-participant SubscriptionRepository << (C,#ADD1B2) @Repository >>
+participant SubscriptionRepository << (I,#ADD1B2) @Repository >>
 end box
 database Datastore
 
@@ -16,8 +16,6 @@ activate User
 
 User --> SubscriptionController
 activate SubscriptionController
-
-note over SubscriptionService: always here
 
 SubscriptionController --> SubscriptionService
 activate SubscriptionService

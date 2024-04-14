@@ -12,10 +12,10 @@
   "Central place for routing"
   [{:keys [request-method uri] :as req} respond raise]
   (case [request-method uri]
-    [:get "/subscribe"]
-    (h/subscribe-index-handler req respond raise)
-    [:post "/subscribe"]
-    (h/subscribe-handler req respond raise)
+    [:get "/create"]
+    (h/create-index-handler req respond raise)
+    [:post "/create"]
+    (h/create-handler req respond raise)
     (respond {:status 404 :body "Not Found"})))
 
 
