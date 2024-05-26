@@ -13,15 +13,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-This repository demonstrates different architectures by implementing the same use case.
-
-== Rationale
-
-* majority of existing architecture examples are often
-** too bulky
-** too complicated
-** impractical (narrow solution of solving specific problem in specific use case)
-* a dead simple use case without any burden will help understand these complicated concepts quicker and easier
+This repository demonstrates different architectures by implementing a simple use case.
 
 == Use case
 
@@ -104,56 +96,42 @@ image::demo6.png[]
 |1
 |link:anarchy/[anarchy]
 |Anarchy Architecture
-a|
-* Everything is completely wrong
-a|
-* Job Security
-a|
-* Chaotic Mess
-* A big ball of mud
-* Tom is a genius
+|Everything is completely wrong
+|Job Security
+|Chaotic Mess
 
 |2
 |link:layered/[layered]
 |Layered Architecture
-a|
-* Traditional way of implementing Layered Architecture
-* Minimum acceptable quality
-|
-a|
-* poor package naming by technical functions
+a|Traditional 3-layer architecture
+|Simple
+|Poor package naming by technical functions
 
 |2
 |link:layered-ddd-1/[layered-ddd-1]
-|Layered Architecture with Domain Driven Design Step 1 
-a|
-* Improvement of Layered Architecture
-* Package naming by outermost layer
-|
-|
+|Minimal DDD Architecture
+|Small Improvement of Layered Architecture
+|Still Simple
+|No "Modeling"
 
 |3
 |link:layered-ddd-2/[layered-ddd-2]
-|Layered Architecture with Domain Driven Design Step 2
-a|
-* Improvement of Layered Architecture with Domain Driven Design Step 1
-* Implement more DDD concepts
-|
-|
+|DDD Architecture
+|More Improvement of Layered Architecture
+|Clear boundary
+|Extra complexity
 
 |5
 |link:layered-hex/[layered-hex]
 |Hexagonal Architecture (Ports and Adapters)
-a|
-
-|
-|
+|More Improvement of Layered Architecture
+|Clear boundary
+|Extra complexity
 
 |7
 |link:fn/[fn]
 |Functional Domain Driven Design
-a|
-* Implement DDD using Clojure
+|Implement DDD using Clojure
 |
 |
 

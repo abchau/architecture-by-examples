@@ -4,9 +4,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,8 +20,6 @@ public final class EmailAddress {
 
 	private static final Pattern PATTERN = Pattern.compile(EMAIL_PATTERN_STR, Pattern.CASE_INSENSITIVE);
 
-    @NotNull(message = "email.empty")
-    @Size(min = 7, max = 512, message = "email.size")
 	private String value;
 
 	public static EmailAddress of(String email) {

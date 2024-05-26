@@ -2,7 +2,7 @@ package com.github.abchau.oss.archexamples.subscription.domain;
 
 import java.util.List;
 
-public interface SubscriptionRepository {
+public interface SubscriptionDataStore {
 
 	public List<Subscription> findAll();
 

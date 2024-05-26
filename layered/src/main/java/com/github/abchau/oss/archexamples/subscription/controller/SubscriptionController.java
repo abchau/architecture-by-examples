@@ -21,6 +21,7 @@ final class SubscriptionController {
 	public SubscriptionController(SubscriptionService subscriptionService) {
 		this.subscriptionService = subscriptionService;
 	}
+
     @GetMapping(value = "/")
 	public String home() {
 		return "redirect:/create";
@@ -53,7 +54,7 @@ final class SubscriptionController {
 			log.error("known error", e);
 			modelAndView.addObject("message", e.getMessage());
 		} catch (Exception e) {
-			log.error("error", e);
+			log.error("unknown error", e);
 			modelAndView.addObject("message", "error.unknown");
 		}
 

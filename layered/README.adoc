@@ -19,9 +19,9 @@
 |`service`|Business Logic
 |===
 
-* `*SubscriptionController*`: receives tasks from specific interface but...
-* `*SubscriptionService*`: do business logic
-* `*SubscriptionRepository*`: do technology-specified persistence operations
+* `*SubscriptionController*`: receives tasks from specific interface
+* `*SubscriptionService*`: business logic
+* `*SubscriptionRepository*`:  technology-specified persistence operations
 
 .Sequence Diagram for Layered Architecture
 ifdef::env-github[]

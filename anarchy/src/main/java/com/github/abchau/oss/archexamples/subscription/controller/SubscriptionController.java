@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.abchau.oss.archexamples.subscription.repository.SubscriptionDataService;
 import com.github.abchau.oss.archexamples.subscription.service.SubscriptionUtil;
 
 @Slf4j

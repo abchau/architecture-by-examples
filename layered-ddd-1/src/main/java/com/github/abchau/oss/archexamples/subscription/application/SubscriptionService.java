@@ -6,9 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.abchau.oss.archexamples.subscription.domain.Subscription;
 import com.github.abchau.oss.archexamples.subscription.infrastructure.SubscriptionRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class SubscriptionService {
 

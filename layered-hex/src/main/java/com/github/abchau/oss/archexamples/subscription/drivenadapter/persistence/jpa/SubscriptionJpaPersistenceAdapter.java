@@ -10,10 +10,7 @@ import com.github.abchau.oss.archexamples.subscription.application.Subscription;
 import com.github.abchau.oss.archexamples.subscription.application.drivenport.EmailVerificationPort;
 import com.github.abchau.oss.archexamples.subscription.application.drivenport.SaveSubscriptionPort;
 
-import lombok.extern.slf4j.Slf4j;
-
 @SecondaryAdapter
-@Slf4j
 @Component
 class SubscriptionJpaPersistenceAdapter implements SaveSubscriptionPort, EmailVerificationPort {
 

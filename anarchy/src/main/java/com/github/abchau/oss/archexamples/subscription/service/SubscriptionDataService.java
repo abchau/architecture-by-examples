@@ -1,4 +1,4 @@
-package com.github.abchau.oss.archexamples.subscription.repository;
+package com.github.abchau.oss.archexamples.subscription.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
