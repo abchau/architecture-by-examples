@@ -30,7 +30,7 @@ final class SubscriptionJpaPersistenceAdapter implements SubscriptionDataStore {
 	@Override
 	public List<Subscription> findAll() {
 		return subscriptionJpaRepository.findAll().stream()
-			.map(PersistenceModelToDomainModel)
+			.map(JPA_TO_DOMAIN)
 			.collect(Collectors.toList());
 	}
 
@@ -50,9 +50,9 @@ final class SubscriptionJpaPersistenceAdapter implements SubscriptionDataStore {
 		Objects.requireNonNull(subscription);
 
 		try {
-			SubscriptionJpaEntity subscriptionJpaEntity = DomainModelToPersistenceModel.apply(subscription);
+			SubscriptionJpaEntity subscriptionJpaEntity = DOMAIN_TO_JPA.apply(subscription);
 			SubscriptionJpaEntity savedSubscriptionJpaEntity = subscriptionJpaRepository.save(subscriptionJpaEntity);
-			Subscription savedSubscription = PersistenceModelToDomainModel.apply(savedSubscriptionJpaEntity);
+			Subscription savedSubscription = JPA_TO_DOMAIN.apply(savedSubscriptionJpaEntity);
 	
 			return savedSubscription;
 		} catch(Exception e) {
@@ -60,21 +60,21 @@ final class SubscriptionJpaPersistenceAdapter implements SubscriptionDataStore {
 		}
 	}
 
-	Function<SubscriptionJpaEntity, Subscription> PersistenceModelToDomainModel = (subscriptionJpaEntity) -> {
+	static final Function<SubscriptionJpaEntity, Subscription> JPA_TO_DOMAIN = (jpaEntity) -> {
 		return Subscription.builder()
-			.id(SubscriptionId.of(subscriptionJpaEntity.getId()))
-			.emailAddress(EmailAddress.of(subscriptionJpaEntity.getEmail()))
-			.status(Subscription.Status.valueOf(subscriptionJpaEntity.getStatus()))
-			.createdAt(subscriptionJpaEntity.getCreatedAt())
+			.id(SubscriptionId.of(jpaEntity.getId()))
+			.emailAddress(EmailAddress.of(jpaEntity.getEmail()))
+			.status(Subscription.Status.valueOf(jpaEntity.getStatus()))
+			.createdAt(jpaEntity.getCreatedAt())
 			.build();
 	};
 
-	Function<Subscription, SubscriptionJpaEntity> DomainModelToPersistenceModel = (subscription) -> {
+	static final Function<Subscription, SubscriptionJpaEntity> DOMAIN_TO_JPA = (domainEntity) -> {
 		return SubscriptionJpaEntity.builder()
-			.id(subscription.getId() == null ? null : subscription.getId().getValue())
-			.email(subscription.getEmailAddress().getValue())
-			.status(subscription.getStatus().toString())
-			.createdAt(subscription.getCreatedAt())
+			.id(domainEntity.getId() == null ? null : domainEntity.getId().getValue())
+			.email(domainEntity.getEmailAddress().getValue())
+			.status(domainEntity.getStatus().toString())
+			.createdAt(domainEntity.getCreatedAt())
 			.build();
 	};
 }

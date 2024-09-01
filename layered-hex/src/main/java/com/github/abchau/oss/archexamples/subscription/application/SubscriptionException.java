@@ -1,10 +1,10 @@
 package com.github.abchau.oss.archexamples.subscription.application;
 
-public final class EmailFormatException extends SubscriptionException {
+public class SubscriptionException extends RuntimeException {
 	
 	public static final String CODE = "email.format";
 
-	public EmailFormatException(String msg) {
+	public SubscriptionException(String msg) {
 		super(msg);
 	}
 

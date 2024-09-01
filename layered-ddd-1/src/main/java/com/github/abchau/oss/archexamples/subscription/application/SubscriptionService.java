@@ -17,7 +17,6 @@ public class SubscriptionService {
 
 	@Transactional
 	public Subscription save(String email) {
-
 		if (!Subscription.isEmailValid(email)) {
 			throw new IllegalArgumentException("email.format");
 		} 

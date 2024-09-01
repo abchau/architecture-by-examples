@@ -13,7 +13,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-This repository demonstrates different architectures by implementing a simple use case.
+This repository demonstrates different architectures of the same simple use case.
 
 == Use case
 
@@ -111,7 +111,7 @@ a|Traditional 3-layer architecture
 |link:layered-ddd-1/[layered-ddd-1]
 |Minimal DDD Architecture
 |Small Improvement of Layered Architecture
-|Still Simple
+|Simple
 |No "Modeling"
 
 |3
@@ -132,7 +132,7 @@ a|Traditional 3-layer architecture
 |link:fn/[fn]
 |Functional Domain Driven Design
 |Implement DDD using Clojure
-|
-|
+|Functional
+|Difficult to get start
 
 |===

@@ -17,6 +17,7 @@ import com.github.abchau.oss.archexamples.subscription.application.EmailAddress;
 import com.github.abchau.oss.archexamples.subscription.application.EmailAlreadyExistException;
 import com.github.abchau.oss.archexamples.subscription.application.EmailFormatException;
 import com.github.abchau.oss.archexamples.subscription.application.Subscription;
+import com.github.abchau.oss.archexamples.subscription.application.SubscriptionException;
 import com.github.abchau.oss.archexamples.subscription.application.drivingport.CreateSubscriptionUseCasePort;
 
 @PrimaryAdapter
@@ -63,7 +64,7 @@ class SubscriptionController {
 			modelAndView.setStatus(HttpStatus.CREATED);
 			modelAndView.addObject("email", savedSubscription.getEmailAddress().getValue());
 			modelAndView.addObject("message", "success");
-		} catch (EmailFormatException | EmailAlreadyExistException e) {
+		} catch (SubscriptionException e) {
 			log.error("Known error. ", e);
 			modelAndView.setStatus(HttpStatus.BAD_REQUEST);
 			modelAndView.addObject("email", email);

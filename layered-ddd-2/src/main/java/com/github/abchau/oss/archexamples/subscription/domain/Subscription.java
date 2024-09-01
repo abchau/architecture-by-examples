@@ -24,7 +24,7 @@ public final class Subscription {
 
 	private LocalDateTime createdAt;
 
-	public static Subscription of(EmailAddress emailAddress, LocalDateTime createdAt) {
+	public static Subscription ofNew(EmailAddress emailAddress, LocalDateTime createdAt) {
 		return Subscription.builder()
 			.emailAddress(emailAddress)
 			.status(Status.NEW)

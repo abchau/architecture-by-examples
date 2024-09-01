@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.abchau.oss.archexamples.subscription.application.SubscriptionFacade;
 import com.github.abchau.oss.archexamples.subscription.application.SubscriptionFacade.CreateSubscriptionCommand;
 import com.github.abchau.oss.archexamples.subscription.domain.Subscription;
+import com.github.abchau.oss.archexamples.subscription.domain.SubscriptionException;
 
 @Slf4j
 @Controller
@@ -48,7 +49,7 @@ final class SubscribeRestController {
 
 			modelAndView.addObject("email", subscription.getEmailAddress().getValue());
 			modelAndView.addObject("message", "success");
-		} catch (IllegalArgumentException e) {
+		} catch (SubscriptionException e) {
 			log.error("Known application error. ", e);
 			modelAndView.addObject("email", createSubscriptionForm.email());
 			modelAndView.addObject("message", e.getMessage());

@@ -1,6 +1,6 @@
 package com.github.abchau.oss.archexamples.subscription.domain;
 
-public final class SubscriptionPersistenceException extends RuntimeException {
+public final class SubscriptionPersistenceException extends SubscriptionException {
 	
 	public static final String CODE = "error.create";
 
